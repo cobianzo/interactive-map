@@ -1,0 +1,17 @@
+
+#main{
+		text-align: 		center;
+		width:				100%;
+		height:				100%;
+}
+
+
+
+#map-container {
+
+	margin:					auto;
+	border:					10 px solid yellow;
+	background:			green;
+	width:					100%;
+	
+}
