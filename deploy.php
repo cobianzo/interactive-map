@@ -51,7 +51,7 @@ if (!defined('BRANCH')) define('BRANCH', 'wolf');
  *
  * @var string Full path including the trailing slash
  */
-if (!defined('TARGET_DIR')) define('TARGET_DIR', '/home/cobianzo/cobianzo.com/interactive-map/');
+if (!defined('TARGET_DIR')) define('TARGET_DIR', '/home/cobianzo/cobianzo.com/map/');
 
 /**
  * Whether to delete the files that are not in the repository but are on the
