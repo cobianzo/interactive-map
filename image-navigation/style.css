@@ -15,3 +15,24 @@
 	width:					100%;
 	
 }
+
+	.hot-spots {
+		
+		
+	
+	}
+	
+	.hot-spots li {
+		position:			absolute;
+		width:				10px;
+		height:				10px;
+
+		background: 		yellow;
+		border:				1px solid green;	
+	
+	}
+	
+	.hot-spots li#merida {
+			left:			430px;
+			top:			100px;
+	}
