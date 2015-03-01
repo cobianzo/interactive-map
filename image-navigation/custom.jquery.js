@@ -6,17 +6,37 @@ $(document).on("ready", function(){
 		
 		
 	});
-				
+
+
+	$(window).resize(function () { 
+		$('#map-container').initMap({
+		
+		
+		});	
+	});
+	
 });
+
 
 
 
 
 (function($) {
 
-	// jQuery plugin definition
+	/* definition of constants for all the plugin */
+
+	/** ... */
+	
+
+	// jQuery plugin definition.   INIT
+	//* ------------------------------------------------------------------------------------------------------------------------------------------------------
+	//* ------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	
 	$.fn.initMap = function(params) {
 
+		/* parámetros a pasar a la función del plugin  $(mielemento).initMap({  'posX' : 20,  etc...  });  */
 		params = $.extend( {
 			posX: 				0, 
 			posY: 				0,  
@@ -32,18 +52,26 @@ $(document).on("ready", function(){
 			if ( imgMapa.length !== 1  )  
 				{  alert('error in plugin to intialize Map. No e encuentra img del mapa o hay más de un mapa');   return; }
 
+			
+			
+			// here the code empieza: ponemos el contenedor de los hotspots en la misma posición de la imagen del mapa
+			
 			var offset = imgMapa.offset();
 	
 			//set
-			hotSpots.css({  "position" : "absolute"   }).offset({ top: offset.top, left: offset.left})
-			
-			
+			hotSpots.css({  "position" : "absolute"   }).offset({ top: offset.top + params.posY, left: offset.left + params.posX})
 		
 		});
-
+		//  Finito recorrer cada nodo
+		
+		
+		
 		// allow jQuery chaining
 		return this;
 	};
-
+	//* ------------------------------------------------------------------------------------------------------------------------------------------------------
+	//* ------------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+	
 })(jQuery);
 
