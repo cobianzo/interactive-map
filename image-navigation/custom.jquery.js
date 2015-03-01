@@ -1,22 +1,29 @@
-$(document).on("ready", function(){		
-
-
+$( document ).ready(function() {
+    
 	/* para que el plugin map funcione tiehe que tener una imagen y un <ul> con hotspots*/
-	$('#map-container').initMap({
-		
-		
-	});
+	 $('a').tooltip();   
 
-
-	$(window).resize(function () { 
-		$('#map-container').initMap({
-		
-		
-		});	
-	});
+	$(window).resize();
 	
+	
+	
+	
+	
+	
+
+
 });
 
+var t = null;
+
+$(window).resize(function () { 
+   if (t!= null) clearTimeout(t);
+   t = setTimeout(function() {
+		
+		$('#map-container').initMap({});	
+       
+   }, 500);
+});
 
 
 
@@ -45,7 +52,7 @@ $(document).on("ready", function(){
 		// traverse all nodes
 		this.each(function() {
 			
-			var $t = $(this);
+			var $t = $(this);										// this es el contenedor del mapa, que tiene la imagen del mapa y el elemento .hot-spots (en este caso la primer <ul> q encuentra)
 			var imgMapa	= $t.find('img').first(); 
 			var hotSpots	= $t.find('ul').first(); 			/* TO_DO: permitir customizar la lista de hotspots */
 			
@@ -53,14 +60,16 @@ $(document).on("ready", function(){
 				{  alert('error in plugin to intialize Map. No e encuentra img del mapa o hay más de un mapa');   return; }
 
 			
+			hotSpots.css("visibility", "hidden");
 			
 			// here the code empieza: ponemos el contenedor de los hotspots en la misma posición de la imagen del mapa
 			
-			var offset = imgMapa.offset();
+			var mapOffset = imgMapa.offset();
 	
 			//set
-			hotSpots.css({  "position" : "absolute"   }).offset({ top: offset.top + params.posY, left: offset.left + params.posX})
+			hotSpots.css({  "position" : "absolute"   }).offset({ top: mapOffset.top, left: mapOffset.left })
 		
+			hotSpots.hide().css("visibility", "visible").fadeIn();
 		});
 		//  Finito recorrer cada nodo
 		

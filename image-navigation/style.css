@@ -16,23 +16,38 @@
 	
 }
 
+	/* these propierties have to be like this to make the Map plugin work (position absolute etc) */
 	.hot-spots {
-		
-		
+		position:			absolute;
+		display:				none;
+		list-style: 			none	;
+		margin:				0;
+		padding:			0;
+		width:	10px;	height:	10px; border: 5px solid white; /* TO_DELETE: */
 	
 	}
 	
 	.hot-spots li {
 		position:			absolute;
-		width:				10px;
-		height:				10px;
-
-		background: 		yellow;
-		border:				1px solid green;	
-	
 	}
+		.hot-spots li > a {
+			display:				block;			
+			border:				1px solid pink;	
+		}
+		.hot-spots li > a img {
+			visibility:				hidden;
+			max-width:			9999px;
+		}
+		.hot-spots li > a:hover img {
+			visibility:				visible;
+		}
+			
+		
 	
 	.hot-spots li#merida {
 			left:			430px;
 			top:			100px;
+	}.hot-spots li#chichen {
+			left:			422px;
+			top:			267px;			
 	}
