@@ -22,6 +22,10 @@
 	overflow:				scroll;
 }
 
+	#map-container > img {  /* The MAP */
+		max-width:			100%;	
+	}
+
 	/* these propierties have to be like this to make the Map plugin work (position absolute etc) */
 	.hot-spots {
 		position:			absolute;
