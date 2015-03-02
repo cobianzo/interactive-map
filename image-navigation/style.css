@@ -1,4 +1,7 @@
 
+
+.text-center  > img.img-responsive { margin: 	auto; }
+
 #main{
 		
 		width:				100%;
@@ -50,6 +53,6 @@
 			left:			430px;
 			top:			100px;
 	}.hot-spots li#chichen {
-			left:			422px;
-			top:			267px;			
+			left:			420px;
+			top:			266px;			
 	}
