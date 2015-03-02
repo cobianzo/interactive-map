@@ -1,11 +1,8 @@
 $( document ).ready(function() {
     
 	/* para que el plugin map funcione tiehe que tener una imagen y un <ul> con hotspots*/
-	 $('a').tooltip();   
-
+	
 	$(window).resize();
-	
-	
 	
 	
 	
@@ -14,6 +11,8 @@ $( document ).ready(function() {
 
 });
 
+
+// colocal los hotspots en el lugar  q corresponde relativo a la imagen del mapa
 var t = null;
 
 $(window).resize(function () { 
