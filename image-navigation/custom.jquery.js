@@ -2,7 +2,7 @@ $( document ).ready(function() {
     
 	/* para que el plugin map funcione tiehe que tener una imagen y un <ul> con hotspots*/
 	
-	$(window).resize();
+	// $(window).resize();
 	
 	
 	
