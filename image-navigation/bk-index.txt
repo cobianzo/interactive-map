@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en" id="css-europe">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+
+
+-->
+  <style> 
+  
+   </style>
+ 
+   <link rel="stylesheet"  href="bootstrap-sass-3.3.2/assets/css/bootstrap.min.css" />
+   <link rel="stylesheet"  href="style.css" />
+    <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+   <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+   <script type="text/javascript" src="bootstrap-sass-3.3.2/assets/javascripts/bootstrap.min.js"></script>   <!-- TO_DO: load only js components we are using -->
+   <script src="custom.jquery.js"></script>
+   
+   <script>
+	</script>
+
+
+	<title>Demo de navegación de mapa en HTML</title>
+</head>
+<body>	
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Chichén-Itzá</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">El mapa</a></li>
+            <li><a href="#about">Dónde comer</a></li>
+            <li><a href="#contact">Dónde dormir</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ES<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-header">select your language</li>
+                <li class='active selected'><a href="#">Español</a></li>
+                <li><a href="#">Inglés</a></li>
+                <li><a href="#">Italiano</a></li>
+                <li><a href="#">Francés</a></li>
+                <li><a href="#">Ruso</a></li>
+                <li><a href="#">Portugués</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Other </a></li>
+              </ul>
+            </li>		  
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+</nav>
+
+
+<div id='main' class='container'>
+
+    
+	<section id='map-container' class='row'>
+	
+		<img src='img/chichen-map.jpg' >
+		
+		<ul class='hot-spots'>
+			<li id='merida'>			
+				<a href="#" data-toggle="tooltip" data-placement="top" data-original-title="Default tooltip"   >
+				
+				</a>
+			</li>
+			<li id='chichen'>			
+				<a href="#" data-toggle="modal" data-placement="top" data-target="#basicModal" data-original-title="Haga click para  más info">
+					<img src='img/chichen-izta-highlight.jpg'>
+				</a>
+				
+				<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+								<div>
+									<img width=35 height=35 class='pull-left img-responsive' src='img/chichen-pic-small.jpg'> 
+									<h4 class="modal-title"><img alt="Chichén-Itza" class='img-responsive' src= 'img/chichen-itza-titulo.png'></h4>
+								</div>
+							</div>
+							<div class="modal-body">
+								<div id="myCarousel" class="carousel slide">
+									<div class="carousel-inner">
+										<div class="item active">
+											<img src="img/chichen-pic-1.jpg"/>
+										</div>
+										<div class="item">
+											<img src="img/chichen-pic-2.jpg"/>
+										</div>
+										<div class="item">
+											<img src="img/chichen-pic-3.jpg"/>
+										</div>
+									</div>
+									
+									<!-- Controls -->
+									<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+											<span class="glyphicon glyphicon-chevron-left"></span>
+									</a>
+
+									<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+											<span class="glyphicon glyphicon-chevron-right"></span>
+									</a>
+																	
+																	
+									
+								</div>
+								
+									<section>
+									La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente del área Maya, a finales del periodo Clásico e inicios del Postclásico. 
+									A la llegada de los españoles se constituía como el centro de culto y de peregrinación más reverenciado de la península de Yucatán. En la actualidad es un Centro Sagrado para los mayas. ¡Bienvenido! 
+									</section>		
+
+									<hr>
+									
+									<section class='row'>
+										<div class='col-xs-12 col-sm-6'>
+											<a href='http://www.chichenitza.inah.gob.mx/'><img src='img/chichen-pic-360.jpg' class='img-responsive'></a>
+										</div>
+										<div class='col-xs-12 col-sm-6'>
+											<h3>Chichén Itzá a 360 grados</h3>
+											<p>
+												Visita Chichén Itzá como si estuvieras allí. 
+											</p>
+											<a class='btn btn-primary' href='http://www.chichenitza.inah.gob.mx/' target='_new'>Visita el recorrido virtual del INAH</a>
+										</div>
+									</section>
+									
+									<hr>
+									
+									<section class='row'>
+										<h3>Video</h3>
+										<iframe width="420" height="300" src="https://www.youtube.com/embed/kEISjLgSQzs" frameborder="10" allowfullscreen></iframe>									
+									</section>
+									
+									<hr>
+									
+									<section class='row-flujid clearfix'>
+										<h3>eBooks relacionados</h3>
+										<div class='col-xs-12 col-sm-6'>
+											<a href='http://www.amazon.com/Chichen-Yucat%C3%A1n-M%C3%A9xico-Victor-Castillo/dp/9685160155' class='text-center'  target='_new'>
+												<img src='img/chichen-ebook.jpg' class='img-responsive'>
+											</a>
+										</div>
+										<div class='col-xs-12 col-sm-6 '  >
+											<h4>Guía del visitante de Chichén Itzá</h4>
+											<i>Víctor Vera Castillo</i><br>
+											<p class='text-justify'>
+											Este kit de viaje consiste de una guía de viaje, un mapa tamaño póster, y un suplemento conocido como la Agenda del Viajero. La guía contiene fotos, ilustraciones, atracciones turísticas, información cultural, la fauna, y la población de la región. El mapa provee servicios y actividades en la región y también distancias y un glosario geográfico. 
+											</p>
+											<a class='btn btn-primary' href='http://www.amazon.com/Chichen-Yucat%C3%A1n-M%C3%A9xico-Victor-Castillo/dp/9685160155' target='_new'>
+												Compra el ebook en Amazon
+											</a>
+										</div>
+									</section>
+									
+																	
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>								
+							</div>
+						</div>
+					</div>
+				</div>
+				<script>
+				 $('#basicModal').on('shown', function () {
+					$('#myCarousel').carousel(); 
+				 })				
+				</script>
+				
+				
+				
+			</li>
+
+
+			</ul>
+		
+		
+	</section>
+
+	
+	<section id='donde-comer' class='row-fluid'>
+		<h2>Dónde comer</h2>
+		<div class='row-fluid text-justify'>
+
+			<div class='row-xs-6  row-sm-4'>
+				<h3>Restaurante Chichén</h3>
+				<i>Típica comida mexicana yucateca</i>
+				<ul>
+					<li> Precios: 15 - 50 USD </li>
+					<li> Lugar:    Al ingreso del recinto </li>
+					<li> Valoración en trip advisor:   4 estrellas </li>
+				</ul>
+			</div>
+			<div class='row-xs-6  row-sm-4'>
+			</div>
+			<div class='row-xs-6  row-sm-4'>
+			</div>
+		
+		
+		</div>
+	</section>
+	
+	
+
+
+</div> <!-- main -->
+</body>
+</html>
