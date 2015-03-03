@@ -1,0 +1,75 @@
+{
+	"mapwidth": "2500",
+	"mapheight": "1953",
+	"categories": [
+		{
+			"id": "chichen-site",
+			"title": "Chichén-Itza",
+			"color": "#63aa9c",
+			"show": "true"
+		},
+		{
+			"id": "tulum-site",
+			"title": "Tulúm",
+			"color": "#63aa9c",
+			"show": "true"
+		},
+		{
+			"id": "yucatan-general-map",
+			"title": "Emplazamientos Arqueológicos",
+			"color": "#63aa9c",
+			"show": "true"
+		}
+	],
+	"levels": [
+		{
+			"id": "yucatan",
+			"name": "0",
+			"title": "Mapa Yucatán",
+			"map": "images/yucatan/yucatan-map.jpg",
+			"minimap": "images/yucatan/yucatan-map-small.jpg",
+			"locations": [
+				{
+					"id": "chichen",
+					"title": "Chichén Itzá",
+					"about": "La séptima maravilla del mundo",
+					"description": "<p>La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente del área Maya, a finales del periodo Clásico e inicios del Postclásico. </p><p> A la llegada de los espanoles se constituía como el centro de culto y de peregrinación más reverenciado de la península de Yucatán. En la actualidad es un Centro Sagrado para los mayas. </p><p><b> ¡Bienvenido! <b></p>",
+					"link": "abre-mapa-con-js",
+					"category": "yucatan-general-map",
+					"x": "0.4746",
+					"y": "0.2883",
+					"zoom": "2"
+				},
+				{
+					"id": "tulum",
+					"title": "Tulúm",
+					"about": "El sitio arqueológico maya sobre el mismo Caribe",
+					"description": "Bla bla bla",
+					"category": "yucatan-general-map",
+					"x": "0.67",
+					"y": "0.395",
+					"zoom": "2"
+				}
+			]
+		},
+		{
+			"id": "chichen-itza-map",
+			"name": "1",
+			"title": "Sitio Arqueológico Chichén Itzá",
+			"map": "images/yucatan/chichen-itza-map.jpg",
+			"minimap": "images/yucatan/chichen-itza-map-small.jpg",
+			"locations": [
+				{
+					"id": "chichen-itza-castillo",
+					"title": "El Castillo",
+					"about": "La séptima maravilla del mundo",
+					"description": "Pirámide de Kukulkán",
+					"category": "chichen-site",
+					"x": "0.5",
+					"y": "0.45",
+					"zoom": "2"
+				}
+			]
+		}
+	]
+}

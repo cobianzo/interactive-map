@@ -1,0 +1,79 @@
+body {
+	background-color: #fff;
+	color: #888;
+	font-family:  Arial;  /* TO_DO: usar mis fuentes */
+	font-size: 14px;
+	margin: 0;
+}
+
+/* Icons */
+.icon {
+	background-repeat: no-repeat;
+	background-position: center 10px;
+	padding-top: 60px;
+}
+
+.icon.landmark { background-image: url(../images/icon-landmark.png); }
+.icon.layer { background-image: url(../images/icon-layer.png); }
+.icon.link { background-image: url(../images/icon-link.png); }
+.icon.browser { background-image: url(../images/icon-browser.png); }
+.icon.responsive { background-image: url(../images/icon-responsive.png); }
+.icon.mobile { background-image: url(../images/icon-mobile.png); }
+
+
+.one-third {
+	float: left;
+	padding-left: 2%;
+	padding-right: 2%;
+	width: 29%;
+}
+
+.features {
+	text-align: center;
+}
+
+section {
+	padding: 60px 0;
+}
+
+section .inner {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+section.purple {
+	background-color: #b7a6bd;
+	color: #fff;
+	padding: 60px 0;
+}
+
+section.blue {
+	background-color: #7DD5C9;
+	color: #fff;
+	padding: 20px 0;
+}
+
+
+#map-section{
+	padding:			51px 0;
+	height:				700px;
+}
+	.map-container {
+		height:			700px;
+	}
+
+/* Responsivity */
+@media all and (max-width: 667px) {
+	#header {
+		display: none;
+	}
+
+	.inner.over {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	.window-mockup {
+		display: none;
+	}
+}
