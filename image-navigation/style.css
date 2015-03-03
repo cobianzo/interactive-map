@@ -19,7 +19,7 @@
 	background:			green;
 	width:					100%;
 	
-	overflow:				scroll;
+	overflow:				hidden;
 }
 
 	/* these propierties have to be like this to make the Map plugin work (position absolute etc) */
