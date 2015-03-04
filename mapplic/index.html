@@ -13,6 +13,9 @@
 		<link rel="stylesheet"  href="bootstrap-sass-3.3.2/assets/css/bootstrap.min.css" />		
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="mapplic/mapplic.css">
+
+
+
 		
 		<!-- Internet Explorer -->
 		<!--[if lt IE 9]>
@@ -36,9 +39,9 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav">
-				<li class="active"><a href="#">El mapa</a></li>
-				<li><a href="#about">Dónde comer</a></li>
-				<li><a href="#contact">Dónde dormir</a></li>
+				<li class="active"><a href="#mapa">El mapa</a></li>
+				<li><a href="#donde-comer">Dónde comer</a></li>
+				<li><a href="#donde-dormir">Dónde dormir</a></li>
 			  </ul>
 			  <ul class="nav navbar-nav navbar-right">
 				<li class="dropdown active">
@@ -62,7 +65,7 @@
 
 			<!-- Site content -->
 			<div id="content" class='row-fluid'>
-				
+				<a name="mapa" id='mapa' href="#"></a>
 				<section id="map-section" class="inner over">
 
 					<!-- Map -->
@@ -173,7 +176,64 @@
 		<!-- end modal windows -->
 			
 			
+		<a name="donde-comer" href="#"></a>
+		<section id='donde-comer' class='row container'>
+			<h2>Dónde comer</h2>
+			<div class='row-fluid text-justify'>
+
+				<div class='row-xs-6  row-sm-4'>
+					<h3>Restaurante Chichén</h3>
+					<i>Típica comida mexicana yucateca</i>
+					<ul>
+						<li> Precios: 15 - 50 USD </li>
+						<li> Lugar:    Al ingreso del recinto </li>
+						<li> Valoración en trip advisor:   4 estrellas </li>
+					</ul>
+				</div>
+				<div class='row-xs-6  row-sm-4'>
+				</div>
+				<div class='row-xs-6  row-sm-4'>
+				</div>
 			
+			
+			</div>
+		</section>
+	
+		
+		
+		<a name="donde-dormir" href="#"></a>
+		<section id='donde-dormir' class='row container'>
+			<h2>Dónde comer</h2>
+			<div class='row-fluid text-justify'>
+
+				<div class='row-xs-6  row-sm-4'>
+					<h3>Restaurante Chichén</h3>
+					<i>Típica comida mexicana yucateca</i>
+					<ul>
+						<li> Precios: 15 - 50 USD </li>
+						<li> Lugar:    Al ingreso del recinto </li>
+						<li> Valoración en trip advisor:   4 estrellas </li>
+					</ul>
+				</div>
+				<div class='row-xs-6  row-sm-4'>
+				</div>
+				<div class='row-xs-6  row-sm-4'>
+				</div>
+			
+			
+			</div>
+		</section>
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 			
 			
 
@@ -187,7 +247,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#mapplic').mapplic({
-					source: 'yucatan.json',
+					source: 'yucatan.json?v=10',
 					height: 460,
 					animate: true,
 					mapfill: true,
@@ -213,6 +273,6 @@
 		</script>
 
 		<script type="text/javascript" src="bootstrap-sass-3.3.2/assets/javascripts/bootstrap.min.js"></script>   <!-- TO_DO: load only js components we are using -->
-
+		
 	</body>
 </html>

@@ -33,7 +33,7 @@ body {
 }
 
 section {
-	padding: 60px 0;
+/*	padding: 60px 0; */
 }
 
 section .inner {
@@ -56,10 +56,8 @@ section.blue {
 
 #map-section{
 	padding:			51px 0;
-	height:				700px;
 }
 	.map-container {
-		height:			700px;
 	}
 
 /* Responsivity */
