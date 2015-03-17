@@ -1,6 +1,6 @@
 {
-	"mapwidth": "2500",
-	"mapheight": "1953",
+	"mapwidth": "5304",
+	"mapheight": "3766",
 	"categories": [
 		{
 			"id": "yucatan-general-map",
@@ -36,6 +36,7 @@
 					"description": "<p>La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente del área Maya, a finales del periodo Clásico e inicios del Postclásico. </p><p> A la llegada de los espanoles se constituía como el centro de culto y de peregrinación más reverenciado de la península de Yucatán. En la actualidad es un Centro Sagrado para los mayas. </p><p><b> ¡Bienvenido! <b></p>",
 					"link": "javascript:$('.mapplic-levels-select').val('chichen-itza-map').change();",
 					"category": "yucatan-general-map",
+					"thumbnail": "images/thumbs/icon-chichen.png",
 					"x": "0.4746",
 					"y": "0.2883",
 					"zoom": "2"
@@ -46,8 +47,42 @@
 					"about": "El sitio arqueológico maya sobre el mismo Caribe",
 					"description": "Bla bla bla",
 					"category": "yucatan-general-map",
+					"thumbnail": "images/thumbs/icon-tulum.png",
 					"x": "0.67",
 					"y": "0.395",
+					"zoom": "2"
+				},
+				{
+					"id": "uxmal",
+					"title": "Uxmal",
+					"about": "Una ciudad maya en la jungla",
+					"description": "Ciudad Maya en la foresta",
+					"category": "yucatan-general-map",
+					"thumbnail": "images/thumbs/icon-uxmal.png",
+					"x": "0.3082",
+					"y": "0.3608",
+					"zoom": "2"
+				},
+				{
+					"id": "kabah",
+					"title": "Kabah",
+					"about": "Kabah, maravilla maya",
+					"description": "Emplazamiento único",
+					"category": "yucatan-general-map",
+					"thumbnail": "images/thumbs/icon-kabah.png",					
+					"x": "0.33",
+					"y": "0.41",
+					"zoom": "2"
+				},
+				{
+					"id": "coba",
+					"title": "Cobá",
+					"about": "Sitio Arqueológico aún en exploración",
+					"description": "Algunas ruinas no están abiertas al público",
+					"category": "yucatan-general-map",
+					"thumbnail": "images/thumbs/icon-coba.png",
+					"x": "0.6287",
+					"y": "0.3222",
 					"zoom": "2"
 				}
 			]
