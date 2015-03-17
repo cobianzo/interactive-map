@@ -538,8 +538,8 @@ if (wheelEvent && isChrome) {
 
 
 
-// esto es para q el scroll de la pag tb sea smooth
-$(document).ready(function(){
+// esto es para q el scroll de la pag tb sea smooth: OJO, rompe en carousel de bootstrap!!! 
+/*$(document).ready(function(){
   $('a[href*=#]').click(function() {
     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
     && location.hostname == this.hostname) {
@@ -553,7 +553,5 @@ $(document).ready(function(){
        return false;
       }
     }
-  });
-
-	
-});
+  });	
+}); */
