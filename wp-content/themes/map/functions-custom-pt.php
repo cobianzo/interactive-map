@@ -8,27 +8,22 @@ function veras_custom_post_types() {
 	// REGISTRAR LOS MAPAS PRINCIPALES: corresponderán al mapa de Yucatán, el de Tulúm ...
 	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
 		'name'                => _x( 'Mapas', 'Mapa General Name', 'veras' ),		'singular_name'       => _x( 'Mapa', 'Mapa Singular Name', 'veras' ),
-		'menu_name'           => __( 'Mapa', 'veras' ),										'parent_item_colon'   => __( 'Item padre:', 'veras' ),
+		'menu_name'           => __( 'Mapa Principal', 'veras' ),										'parent_item_colon'   => __( 'Item padre:', 'veras' ),
 		'all_items'           => __( 'Todos los items', 'veras' ),							'view_item'           => __( 'Ver Item', 'veras' ),
 		'add_new_item'        => __( 'Nuevo Item', 'veras' ),								'add_new'             => __( 'Añade nuevo', 'veras' ),
 		'edit_item'           => __( 'Edita Item', 'veras' ),									'update_item'         => __( 'Actualiza Item', 'veras' ),
 		'search_items'        => __( 'Busca Item', 'veras' ),								'not_found'           => __( 'No encontrado', 'veras' ),	);
 		
 	$args = array(
-		'label'               => __( 'mapa', 'veras' ),
-		'description'         => __( 'Mapa Description', 'veras' ),
+		'label'               => __( 'mapa', 'veras' ),		'description'         => __( 'Mapa Description', 'veras' ),
 		'labels'              => $labels,
-		'supports'            => array( ),  /* thumbnail, */
+		'supports'            => array( 'title',  'page-attributes' ,'thumbnail' , 'excerpt' ) ,  /* thumbnail, */
 		/*'taxonomies'          => array( 'category', 'post_tag' ),*/
 		'hierarchical'        => false,
 		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'show_in_nav_menus'   => true,
-		'show_in_admin_bar'   => true,
+		'show_ui'             => true,		'show_in_menu'        => true,		'show_in_nav_menus'   => true,		'show_in_admin_bar'   => true,
 		'menu_position'       => 5,
-		'can_export'          => true,
-		'has_archive'         => true,
+		'can_export'          => true,		'has_archive'         => true,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
@@ -37,43 +32,31 @@ function veras_custom_post_types() {
 
 	
 	
-	$labels = array(
-		'name'                => _x( 'Monumentos', 'Monumento General Name', 'veras' ),
-		'singular_name'       => _x( 'Monumento', 'Monumento Singular Name', 'veras' ),
-		'menu_name'           => __( 'Monumento', 'veras' ),
-		'parent_item_colon'   => __( 'Item padre:', 'veras' ),
-		'all_items'           => __( 'Todos los items', 'veras' ),
-		'view_item'           => __( 'Ver Item', 'veras' ),
-		'add_new_item'        => __( 'Nuevo Item', 'veras' ),
-		'add_new'             => __( 'Añade nuevo', 'veras' ),
-		'edit_item'           => __( 'Edita Item', 'veras' ),
-		'update_item'         => __( 'Actualiza Item', 'veras' ),
-		'search_items'        => __( 'Busca Item', 'veras' ),
-		'not_found'           => __( 'No encontrado', 'veras' ),
-		'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
+	$labels = array(		'name'                => _x( 'Monumentos', 'Monumento General Name', 'veras' ),
+		'singular_name'       => _x( 'Monumento', 'Monumento Singular Name', 'veras' ),		'menu_name'           => __( 'Monumento', 'veras' ),
+		'parent_item_colon'   => __( 'Item padre:', 'veras' ),												'all_items'           => __( 'Todos los items', 'veras' ),
+		'view_item'           => __( 'Ver Item', 'veras' ),															'add_new_item'        => __( 'Nuevo Item', 'veras' ),
+		'add_new'             => __( 'Añade nuevo', 'veras' ),													'edit_item'           => __( 'Edita Item', 'veras' ),
+		'update_item'         => __( 'Actualiza Item', 'veras' ),												'search_items'        => __( 'Busca Item', 'veras' ),
+		'not_found'           => __( 'No encontrado', 'veras' ),												'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
 	);
 	$args = array(
-		'label'               => __( 'monumento', 'veras' ),
-		'description'         => __( 'Monumento Description', 'veras' ),
+		'label'               => __( 'monumento', 'veras' ),		'description'         => __( 'Monumento Description', 'veras' ),
 		'labels'              => $labels,
-		'supports'            => array( ),
+		'supports'            => array( 'title',  'page-attributes' , 'thumbnail' , 'excerpt' ),
 		/*'taxonomies'          => array( 'category', 'post_tag' ),*/
 		'hierarchical'        => false,
 		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'show_in_nav_menus'   => true,
-		'show_in_admin_bar'   => true,
+		'show_ui'             => true,		'show_in_menu'        => true,		'show_in_nav_menus'   => true,		'show_in_admin_bar'   => true,
 		'menu_position'       => 5,
-		'can_export'          => true,
-		'has_archive'         => true,
+		'can_export'          => true,		'has_archive'         => true,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
 	);
 	register_post_type( 'monumento', $args );
 	
-	 unregister_post_type( 'post' ) ;
+	// unregister_post_type( 'post' ) ;
 }
 
 add_action('admin_menu', 'post_remove');   //adding action for triggering function call
