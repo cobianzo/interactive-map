@@ -311,7 +311,7 @@ final class ITSEC_Logger {
 
 			$sanitized_data = $this->sanitize_array( $data ); //array of sanitized data
 
-			if ( $itsec_globals['settings']['log_type'] === 0 || $itsec_globals['settings']['log_type'] == 2 ) {
+			if ( ! isset( $itsec_globals['settings']['log_type'] ) || $itsec_globals['settings']['log_type'] === 0 || $itsec_globals['settings']['log_type'] == 2 ) {
 
 				$wpdb->hide_errors(); //Don't show error if table isn't present. Instead we'll just try to reconstruct the tables.
 
@@ -340,7 +340,7 @@ final class ITSEC_Logger {
 
 			}
 
-			if ( $itsec_globals['settings']['log_type'] === 1 || $itsec_globals['settings']['log_type'] == 2 ) {
+			if ( isset( $itsec_globals['settings']['log_type'] ) && ( $itsec_globals['settings']['log_type'] === 1 || $itsec_globals['settings']['log_type'] == 2 ) ) {
 
 				$message =
 					$options['type'] . ',' .

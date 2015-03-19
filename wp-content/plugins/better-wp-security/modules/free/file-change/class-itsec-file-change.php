@@ -1,12 +1,54 @@
 <?php
 
+/**
+ * File Change Detection Execution and Processing
+ *
+ * Handles all file change detection execution once the feature has been
+ * enabled by the user.
+ *
+ * @since   4.0.0
+ *
+ * @package iThemes_Security
+ */
 class ITSEC_File_Change {
 
-	private
-		$excludes,
-		$running,
-		$settings;
+	/**
+	 * Files and directories to be excluded from the scan
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $excludes;
 
+	/**
+	 * Flag to indicate if a file change scan is in process
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var bool
+	 */
+	private $running;
+
+	/**
+	 * The module's saved options
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $settings;
+
+	/**
+	 * Setup the module's functionality
+	 *
+	 * Loads the file change detection module's unpriviledged functionality including
+	 * performing the scans themselves
+	 *
+	 * @since 4.0.0
+	 *
+	 * @return void
+	 */
 	function run() {
 
 		global $itsec_globals;
@@ -19,49 +61,105 @@ class ITSEC_File_Change {
 			$itsec_globals['ithemes_log_dir'],
 			'.lock',
 		);
+		$interval       = 86400; //Run daily
 
-		add_filter( 'itsec_logger_modules', array( $this, 'register_logger' ) );
-
-		// If we're splitting the file check run it every 6 hours. Else daily.
-		if ( isset( $this->settings['split'] ) && $this->settings['split'] === true ) {
+		// If we're splitting the file check run it every 6 hours.
+		if ( isset( $this->settings['split'] ) && true === $this->settings['split'] ) {
 			$interval = 12342;
-		} else {
-			$interval = 86400;
 		}
+
+		add_filter( 'itsec_logger_modules', array( $this, 'itsec_logger_modules' ) );
+		add_filter( 'itsec_sync_modules', array( $this, 'itsec_sync_modules' ) ); //register sync modules
+		add_action( 'itsec_execute_file_check_cron', array( $this, 'execute_file_check' ) ); //Action to execute during a cron run.
 
 		if (
 			( ! defined( 'DOING_AJAX' ) || DOING_AJAX === false ) &&
 			isset( $this->settings['enabled'] ) &&
-			$this->settings['enabled'] === true &&
+			true === $this->settings['enabled'] &&
 			isset( $this->settings['last_run'] ) &&
 			( $itsec_globals['current_time'] - $interval ) > $this->settings['last_run'] &&
-			( ! defined( 'ITSEC_FILE_CHECK_CRON' ) || ITSEC_FILE_CHECK_CRON === false )
+			( ! defined( 'ITSEC_FILE_CHECK_CRON' ) || false === ITSEC_FILE_CHECK_CRON )
 		) {
+
 			wp_clear_scheduled_hook( 'itsec_file_check' );
 			add_action( 'init', array( $this, 'execute_file_check' ) );
-		}
 
-		//Use Cron if registered
-		if ( defined( 'ITSEC_FILE_CHECK_CRON' ) && ITSEC_FILE_CHECK_CRON === true && ! wp_next_scheduled( 'itsec_execute_file_check_cron' ) ) {
+		} elseif ( defined( 'ITSEC_FILE_CHECK_CRON' ) && true === ITSEC_FILE_CHECK_CRON && ! wp_next_scheduled( 'itsec_execute_file_check_cron' ) ) { //Use cron if needed
+
 			wp_schedule_event( time(), 'daily', 'itsec_execute_file_check_cron' );
+
 		}
 
-		add_action( 'itsec_execute_file_check_cron', array( $this, 'execute_file_check' ) );
+	}
+
+	/**
+	 * Builds table section for file report
+	 *
+	 * Builds the individual table areas for files added, changed and deleted that goes in the file
+	 * change notification emails.
+	 *
+	 * @since  4.6.0
+	 *
+	 * @access private
+	 *
+	 * @param string $title User readable title to display
+	 * @param array  $files array of files to build the report on
+	 *
+	 * @return string the markup with the given files to be added to the report
+	 */
+	private function build_table_section( $title, $files ) {
+
+		$section = '<h4>' . __( 'Files', 'it-l10n-better-wp-security' ) . ' ' . $title . '</h4>';
+		$section .= '<table border="1" style="width: 100%; text-align: center;">' . PHP_EOL;
+		$section .= '<tr>' . PHP_EOL;
+		$section .= '<th>' . __( 'File', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
+		$section .= '<th>' . __( 'Modified', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
+		$section .= '<th>' . __( 'File Hash', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
+		$section .= '</tr>' . PHP_EOL;
+
+		if ( isset( $files ) && is_array( $files ) && 0 < sizeof( $files ) ) {
+
+			foreach ( $files as $item => $attr ) {
+
+				$section .= '<tr>' . PHP_EOL;
+				$section .= '<td>' . $item . '</td>' . PHP_EOL;
+				$section .= '<td>' . date( 'l F jS, Y \a\t g:i a e', ( isset( $attr['mod_date'] ) ? $attr['mod_date'] : $attr['d'] ) ) . '</td>' . PHP_EOL;
+				$section .= '<td>' . ( isset( $attr['hash'] ) ? $attr['hash'] : $attr['h'] ) . '</td>' . PHP_EOL;
+				$section .= '</tr>' . PHP_EOL;
+
+			}
+
+		} else {
+
+			$section .= '<tr>' . PHP_EOL;
+			$section .= '<td colspan="3">' . __( 'No files were changed.', 'it-l10n-better-wp-security' ) . '</td>' . PHP_EOL;
+			$section .= '</tr>' . PHP_EOL;
+
+		}
+
+		$section .= '</table>' . PHP_EOL;
+
+		return $section;
 
 	}
 
 	/**
 	 * Executes file checking
 	 *
-	 * @param bool $scheduled_call [optional] is this an automatic check
+	 * Performs the actual execution of a file scan after determining that such an execution is needed.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param bool $scheduled_call [optional] true if this is an automatic check
+	 * @param bool $data           whether to return a data array (true) or not (false)
 	 *
 	 * @return mixed
-	 **/
-	public function execute_file_check( $scheduled_call = true ) {
+	 */
+	public function execute_file_check( $scheduled_call = true, $data = false ) {
 
 		global $itsec_files, $itsec_logger, $itsec_globals;
 
-		if ( $this->running === false ) {
+		if ( false === $this->running ) {
 
 			$this->running = true;
 			$send_email    = true;
@@ -73,9 +171,9 @@ class ITSEC_File_Change {
 				define( 'ITSEC_DOING_FILE_CHECK', true );
 
 				//figure out what chunk we're on
-				if ( isset( $this->settings['split'] ) && $this->settings['split'] === true ) {
+				if ( isset( $this->settings['split'] ) && true === $this->settings['split'] ) {
 
-					if ( isset( $this->settings['last_chunk'] ) && $this->settings['last_chunk'] !== false && $this->settings['last_chunk'] < 6 ) {
+					if ( isset( $this->settings['last_chunk'] ) && false !== $this->settings['last_chunk'] && 6 > $this->settings['last_chunk'] ) {
 
 						$chunk = $this->settings['last_chunk'] + 1;
 
@@ -91,7 +189,7 @@ class ITSEC_File_Change {
 
 				}
 
-				if ( $chunk !== false ) {
+				if ( false !== $chunk ) {
 
 					$db_field = 'itsec_local_file_list_' . $chunk;
 
@@ -107,7 +205,7 @@ class ITSEC_File_Change {
 				$logged_files = get_site_option( $db_field );
 
 				//if there are no old files old file list is an empty array
-				if ( $logged_files === false ) {
+				if ( false === $logged_files ) {
 
 					$send_email = false;
 
@@ -141,11 +239,25 @@ class ITSEC_File_Change {
 					if ( array_key_exists( $current_file, $logged_minus_deleted ) ) {
 
 						//if attributes differ added to changed files array
-						if ( ( ( isset( $current_attr['mod_date'] ) && strcmp( $current_attr['mod_date'], $logged_minus_deleted[ $current_file ]['mod_date'] ) != 0 ) || strcmp( $current_attr['d'], $logged_minus_deleted[ $current_file ]['d'] ) != 0 ) || ( ( isset( $current_attr['hash'] ) && strcmp( $current_attr['hash'], $logged_minus_deleted[ $current_file ]['hash'] ) != 0 ) || strcmp( $current_attr['h'], $logged_minus_deleted[ $current_file ]['h'] ) != 0 ) ) {
+						if (
+							(
+								(
+									isset( $current_attr['mod_date'] ) &&
+									0 != strcmp( $current_attr['mod_date'], $logged_minus_deleted[ $current_file ]['mod_date'] )
+								) ||
+								0 != strcmp( $current_attr['d'], $logged_minus_deleted[ $current_file ]['d'] )
+							) ||
+							(
+								(
+									isset( $current_attr['hash'] ) &&
+									0 != strcmp( $current_attr['hash'], $logged_minus_deleted[ $current_file ]['hash'] ) ) ||
+								0 != strcmp( $current_attr['h'], $logged_minus_deleted[ $current_file ]['h'] )
+							)
+						) {
 
 							$remote_check = apply_filters( 'itsec_process_changed_file', true, $current_file, $current_attr['h'] ); //hook to run actions on a changed file at time of discovery
 
-							if ( $remote_check === true ) { //don't list the file if it matches the WordPress.org hash
+							if ( true === $remote_check ) { //don't list the file if it matches the WordPress.org hash
 
 								$files_changed[ $current_file ]['h'] = isset( $current_attr['hash'] ) ? $current_attr['hash'] : $current_attr['h'];
 								$files_changed[ $current_file ]['d'] = isset( $current_attr['mod_date'] ) ? $current_attr['mod_date'] : $current_attr['d'];
@@ -163,14 +275,14 @@ class ITSEC_File_Change {
 				$files_deleted_count = sizeof( $files_removed );
 				$files_changed_count = sizeof( $files_changed );
 
-				if ( $files_added_count > 0 ) {
+				if ( 0 < $files_added_count ) {
 
 					$files_added       = apply_filters( 'itsec_process_added_files', $files_added ); //hook to run actions on all files added
 					$files_added_count = sizeof( $files_added );
 
 				}
 
-				if ( $files_deleted_count > 0 ) {
+				if ( 0 < $files_deleted_count ) {
 					do_action( 'itsec_process_removed_files', $files_removed ); //hook to run actions on all files removed
 				}
 
@@ -208,7 +320,17 @@ class ITSEC_File_Change {
 					$full_change_list
 				);
 
-				if ( $send_email === true && $scheduled_call !== false && isset( $this->settings['email'] ) && $this->settings['email'] === true && ( $files_added_count > 0 || $files_changed_count > 0 || $files_deleted_count > 0 ) ) {
+				if (
+					true === $send_email &&
+					false !== $scheduled_call &&
+					isset( $this->settings['email'] ) &&
+					true === $this->settings['email'] &&
+					(
+						0 < $files_added_count ||
+						0 < $files_changed_count ||
+						0 < $files_deleted_count
+					)
+				) {
 
 					$email_details = array(
 						$files_added_count,
@@ -220,23 +342,40 @@ class ITSEC_File_Change {
 					$this->send_notification_email( $email_details );
 				}
 
-				if ( function_exists( 'get_current_screen' ) && ( ! isset( get_current_screen()->id ) || strpos( get_current_screen()->id, 'security_page_toplevel_page_itsec_logs' ) === false ) && isset( $this->settings['notify_admin'] ) && $this->settings['notify_admin'] === true ) {
+				if (
+					function_exists( 'get_current_screen' ) &&
+					(
+						! isset( get_current_screen()->id ) ||
+						false === strpos( get_current_screen()->id, 'security_page_toplevel_page_itsec_logs' )
+					) &&
+					isset( $this->settings['notify_admin'] ) &&
+					true === $this->settings['notify_admin']
+				) {
 					add_site_option( 'itsec_file_change_warning', true );
 				}
 
 				$itsec_files->release_file_lock( 'file_change' );
 
-				if ( $files_added_count > 0 || $files_changed_count > 0 || $files_deleted_count > 0 ) {
+				if ( 0 < $files_added_count || 0 < $files_changed_count || 0 < $files_deleted_count ) {
 
 					$this->running = false;
 
-					return true;
+					//There were changes found
+					if ( true === $data ) {
+
+						return $full_change_list;
+
+					} else {
+
+						return true;
+
+					}
 
 				} else {
 
 					$this->running = false;
 
-					return false;
+					return false; //No changes were found
 
 				}
 
@@ -244,7 +383,7 @@ class ITSEC_File_Change {
 
 			$this->running = false;
 
-			return - 1;
+			return - 1; //An error occured
 
 		}
 
@@ -253,12 +392,15 @@ class ITSEC_File_Change {
 	/**
 	 * Get Report Details
 	 *
+	 * Creates the HTML markup for the email that is to be built
+	 *
+	 * @since 4.0.0
+	 *
 	 * @param array $email_details array of details to build email
 	 *
 	 * @return string report details
-	 *
-	 **/
-	function get_email_report( $email_details ) {
+	 */
+	public function get_email_report( $email_details ) {
 
 		global $itsec_globals;
 
@@ -272,95 +414,9 @@ class ITSEC_File_Change {
 		$report .= '<strong>' . __( 'Files Modified:', 'it-l10n-better-wp-security' ) . '</strong> ' . $email_details[2] . "<br />" . PHP_EOL;
 		$report .= '<strong>' . __( 'Memory Used:', 'it-l10n-better-wp-security' ) . '</strong> ' . $email_details[3]['memory'] . " MB<br />" . PHP_EOL;
 
-		$report .= '<h4>' . __( 'Files Added', 'it-l10n-better-wp-security' ) . '</h4>';
-		$report .= '<table border="1" style="width: 100%; text-align: center;">' . PHP_EOL;
-		$report .= '<tr>' . PHP_EOL;
-		$report .= '<th>' . __( 'File', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '<th>' . __( 'Modified', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '<th>' . __( 'File Hash', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '</tr>' . PHP_EOL;
-
-		if ( isset( $added ) && is_array( $added ) && sizeof( $added ) > 0 ) {
-
-			foreach ( $added as $item => $attr ) {
-
-				$report .= '<tr>' . PHP_EOL;
-				$report .= '<td>' . $item . '</td>' . PHP_EOL;
-				$report .= '<td>' . date( 'l F jS, Y \a\t g:i a e', ( isset( $attr['mod_date'] ) ? $attr['mod_date'] : $attr['d'] ) ) . '</td>' . PHP_EOL;
-				$report .= '<td>' . ( isset( $attr['hash'] ) ? $attr['hash'] : $attr['h'] ) . '</td>' . PHP_EOL;
-				$report .= '</tr>' . PHP_EOL;
-
-			}
-
-		} else {
-
-			$report .= '<tr>' . PHP_EOL;
-			$report .= '<td colspan="3">' . __( 'No files were added.', 'it-l10n-better-wp-security' ) . '</td>' . PHP_EOL;
-			$report .= '</tr>' . PHP_EOL;
-
-		}
-
-		$report .= '</table>' . PHP_EOL;
-
-		$report .= '<h4>' . __( 'Files Deleted', 'it-l10n-better-wp-security' ) . '</h4>';
-		$report .= '<table border="1" style="width: 100%; text-align: center;">' . PHP_EOL;
-		$report .= '<tr>' . PHP_EOL;
-		$report .= '<th>' . __( 'File', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '<th>' . __( 'Modified', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '<th>' . __( 'File Hash', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '</tr>' . PHP_EOL;
-
-		if ( isset( $removed ) && is_array( $removed ) && sizeof( $removed ) > 0 ) {
-
-			foreach ( $removed as $item => $attr ) {
-
-				$report .= '<tr>' . PHP_EOL;
-				$report .= '<td>' . $item . '</td>' . PHP_EOL;
-				$report .= '<td>' . date( 'l F jS, Y \a\t g:i a e', ( isset( $attr['mod_date'] ) ? $attr['mod_date'] : $attr['d'] ) ) . '</td>' . PHP_EOL;
-				$report .= '<td>' . ( isset( $attr['hash'] ) ? $attr['hash'] : $attr['h'] ) . '</td>' . PHP_EOL;
-				$report .= '</tr>' . PHP_EOL;
-
-			}
-
-		} else {
-
-			$report .= '<tr>' . PHP_EOL;
-			$report .= '<td colspan="3">' . __( 'No files were removed.', 'it-l10n-better-wp-security' ) . '</td>' . PHP_EOL;
-			$report .= '</tr>' . PHP_EOL;
-
-		}
-
-		$report .= '</table>' . PHP_EOL;
-
-		$report .= '<h4>' . __( 'Files Modified', 'it-l10n-better-wp-security' ) . '</h4>';
-		$report .= '<table border="1" style="width: 100%; text-align: center;">' . PHP_EOL;
-		$report .= '<tr>' . PHP_EOL;
-		$report .= '<th>' . __( 'File', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '<th>' . __( 'Modified', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '<th>' . __( 'File Hash', 'it-l10n-better-wp-security' ) . '</th>' . PHP_EOL;
-		$report .= '</tr>' . PHP_EOL;
-
-		if ( isset( $changed ) && is_array( $changed ) && sizeof( $changed ) > 0 ) {
-
-			foreach ( $changed as $item => $attr ) {
-
-				$report .= '<tr>' . PHP_EOL;
-				$report .= '<td>' . $item . '</td>' . PHP_EOL;
-				$report .= '<td>' . date( 'l F jS, Y \a\t g:i a e', ( isset( $attr['mod_date'] ) ? $attr['mod_date'] : $attr['d'] ) ) . '</td>' . PHP_EOL;
-				$report .= '<td>' . ( isset( $attr['hash'] ) ? $attr['hash'] : $attr['h'] ) . '</td>' . PHP_EOL;
-				$report .= '</tr>' . PHP_EOL;
-
-			}
-
-		} else {
-
-			$report .= '<tr>' . PHP_EOL;
-			$report .= '<td colspan="3">' . __( 'No files were changed.', 'it-l10n-better-wp-security' ) . '</td>' . PHP_EOL;
-			$report .= '</tr>' . PHP_EOL;
-
-		}
-
-		$report .= '</table>' . PHP_EOL;
+		$report .= $this->build_table_section( __( 'Added', 'it-l10n-better-wp-security' ), $added );
+		$report .= $this->build_table_section( __( 'Deleted', 'it-l10n-better-wp-security' ), $removed );
+		$report .= $this->build_table_section( __( 'Modified', 'it-l10n-better-wp-security' ), $changed );
 
 		return $report;
 
@@ -371,11 +427,14 @@ class ITSEC_File_Change {
 	 *
 	 * Checks if given file should be included in file check based on exclude/include options
 	 *
+	 * @since  4.0.0
+	 *
+	 * @access private
+	 *
 	 * @param string $file path of file to check from site root
 	 *
 	 * @return bool true if file should be checked false if not
-	 *
-	 **/
+	 */
 	private function is_checkable_file( $file ) {
 
 		//get file list from last check
@@ -417,9 +476,9 @@ class ITSEC_File_Change {
 
 		}
 
-		if ( $this->settings['method'] === true ) {
+		if ( true === $this->settings['method'] ) {
 
-			if ( $flag == true ) { //if exclude reverse
+			if ( true === $flag ) { //if exclude reverse
 				return false;
 			} else {
 				return true;
@@ -434,13 +493,17 @@ class ITSEC_File_Change {
 	}
 
 	/**
-	 * Register 404 and file change detection for logger
+	 * Register file change detection for logger
+	 *
+	 * Registers the file change detection module with the core logger functionality.
+	 *
+	 * @since 4.0.0
 	 *
 	 * @param  array $logger_modules array of logger modules
 	 *
-	 * @return array                   array of logger modules
+	 * @return array array of logger modules
 	 */
-	public function register_logger( $logger_modules ) {
+	public function itsec_logger_modules( $logger_modules ) {
 
 		$logger_modules['file_change'] = array(
 			'type'     => 'file_change',
@@ -452,9 +515,38 @@ class ITSEC_File_Change {
 	}
 
 	/**
+	 * Register file change detection for Sync
+	 *
+	 * Reigsters iThemes Sync verbs for the file change detection module.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param  array $sync_modules array of sync modules
+	 *
+	 * @return array array of sync modules
+	 */
+	public function itsec_sync_modules( $sync_modules ) {
+
+		$sync_modules['file-change'] = array(
+			'verbs' => array(
+				'itsec-perform-file-scan' => 'Ithemes_Sync_Verb_ITSEC_Perform_File_Scan',
+			),
+			'path'  => dirname( __FILE__ ),
+		);
+
+		return $sync_modules;
+
+	}
+
+	/**
 	 * Scans all files in a given path
 	 *
-	 * @since 4.0
+	 * Scans all items in a given path recursively building an array of items including
+	 * hashes, filenames and modification dates
+	 *
+	 * @since  4.0.0
+	 *
+	 * @access private
 	 *
 	 * @param string $path           [optional] path to scan, defaults to WordPress root
 	 * @param bool   $scheduled_call is this a scheduled call
@@ -488,40 +580,42 @@ class ITSEC_File_Change {
 
 		}
 
-		$time_offset = get_option( 'gmt_offset' ) * 60 * 60;
-
 		$data = array();
 
 		$clean_path = sanitize_text_field( $path );
 
-		if ( $directory_handle = opendir( ITSEC_Lib::get_home_path() . $clean_path ) ) { //get the directory
+		if ( $directory_handle = @opendir( ITSEC_Lib::get_home_path() . $clean_path ) ) { //get the directory
 
-			while ( ( $item = readdir( $directory_handle ) ) !== false ) { // loop through dirs
+			while ( false !== ( $item = @readdir( $directory_handle ) ) ) { // loop through dirs
 
-				if ( $item != '.' && $item != '..' ) { //don't scan parent/etc
+				if ( '.' != $item && '..' != $item ) { //don't scan parents
 
 					$relname = $path . $item;
 
 					$absname = ITSEC_Lib::get_home_path() . $relname;
 
-					if ( is_dir( $absname ) && filetype( $absname ) == 'dir' ) {
+					if ( is_dir( $absname ) && 'dir' == filetype( $absname ) ) {
+
 						$is_dir     = true;
 						$check_name = trailingslashit( $relname );
+
 					} else {
+
 						$is_dir     = false;
 						$check_name = $relname;
+
 					}
 
-					if ( $this->is_checkable_file( $check_name ) === true ) { //make sure the user wants this file scanned
+					if ( true === $this->is_checkable_file( $check_name ) ) { //make sure the user wants this file scanned
 
-						if ( $is_dir === true ) { //if directory scan it
+						if ( true === $is_dir ) { //if directory scan it
 
 							$data = array_merge( $data, $this->scan_files( $relname . '/', $scheduled_call, false ) );
 
 						} else { //is file so add to array
 
 							$data[ $relname ]      = array();
-							$data[ $relname ]['d'] = @filemtime( $absname ) + $time_offset;
+							$data[ $relname ]['d'] = @filemtime( $absname );
 							$data[ $relname ]['h'] = @md5_file( $absname );
 
 						}
@@ -543,6 +637,13 @@ class ITSEC_File_Change {
 	/**
 	 * Builds and sends notification email
 	 *
+	 * Sends the notication email too all applicable administrative users notifying them
+	 * that file changes have been detected
+	 *
+	 * @since  4.0.0
+	 *
+	 * @access private
+	 *
 	 * @param array $email_details array of details for the email messge
 	 *
 	 * @return void
@@ -551,7 +652,7 @@ class ITSEC_File_Change {
 
 		global $itsec_globals, $itsec_notify;
 
-		if ( ! isset( $itsec_globals['settings']['digest_email'] ) || $itsec_globals['settings']['digest_email'] === false ) {
+		if ( ! isset( $itsec_globals['settings']['digest_email'] ) || false === $itsec_globals['settings']['digest_email'] ) {
 
 			$headers = 'From: ' . get_bloginfo( 'name' ) . ' <' . get_option( 'admin_email' ) . '>' . "\r\n";
 			$subject = '[' . get_option( 'siteurl' ) . '] ' . __( 'WordPress File Change Warning', 'it-l10n-better-wp-security' ) . ' ' . date( 'l, F jS, Y \a\\t g:i a e', $itsec_globals['current_time'] );
@@ -571,7 +672,7 @@ class ITSEC_File_Change {
 
 			$changed = $email_details[0] + $email_details[1] + $email_details[2];
 
-			if ( $changed > 0 ) {
+			if ( 0 < $changed ) {
 
 				$message = sprintf(
 					'<strong>%s:</strong> %s %s.',
@@ -590,6 +691,11 @@ class ITSEC_File_Change {
 
 	/**
 	 * Set HTML content type for email
+	 *
+	 * This filter allows for the content type of the file change notification emails to be set to
+	 * HTML in order to send the tables and related data included in file change reporting.
+	 *
+	 * @since 4.0.0
 	 *
 	 * @return string html content type
 	 */
