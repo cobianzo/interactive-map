@@ -1,7 +1,52 @@
 <?php
 
-	include_once("functions-custom-pt.php");
-	include_once("functions-acf.php");
+	include_once("functions-custom-pt.php");  	# todo lo relacionado con custom post types
+	include_once("functions-acf.php");				# todo lo relacionado con advanced custom fields
+	
+	
+	
+	/* ALVARO : mis cosas */
+	
+	/* register scripts */
+	add_action( 'wp_enqueue_scripts', 'load_js_css');
+	function load_js_css(){
+		$version = '1.0';
+
+	  wp_deregister_script('jquery');
+	  wp_register_script('jquery', get_template_directory_uri() . '/js/jquery-1.11.2.min.js', array(),'1.11.2', true);
+	  wp_enqueue_script('jquery');
+		
+      wp_register_script('modernizr', get_template_directory_uri() . '/js/modernizr.custom.62828.js', array(), $version, true);
+      wp_enqueue_script('modernizr');
+      wp_enqueue_script('jquery');
+      wp_register_script('hammer', get_template_directory_uri() . '/js/hammer.min.js', array('jquery'), $version, true);
+      wp_enqueue_script('hammer');
+      wp_register_script('easing', get_template_directory_uri() . '/js/jquery.easing.js', array('jquery'), $version, true);
+      wp_enqueue_script('easing');
+      wp_register_script('mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel.js', array('jquery'), $version, true);
+      wp_enqueue_script('mousewheel');
+      wp_register_script('smoothscroll', get_template_directory_uri() . '/js/smoothscroll.js', array('jquery'), $version, true);
+      wp_enqueue_script('smoothscroll');
+      wp_register_script('mapplic', get_template_directory_uri() . '/mapplic/mapplic.js', array('jquery'), $version, true);
+      wp_enqueue_script('mapplic');
+	  
+	 
+
+	 wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/bootstrap/bootstrap.css', 	array(), $version );	 	 
+	 wp_enqueue_style( 'style', get_stylesheet_uri(),																array( 'bootstrap' ), $version );	 
+     wp_enqueue_style( 'mapplic', get_template_directory_uri() . '/mapplic/mapplic.css', 			array('style'), $version );
+	  
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*  REGISTRAR SIDEBARS ---- Una para el widget de idioma en el header, otro para el footer */
 	
 	
 	// enables wigitized sidebars
@@ -34,6 +79,8 @@
 
 	
 	// custom menu support
+	/*  REGISTRAR MENU ---- Sólo uno en el header  */
+	
 	add_theme_support( 'menus' );
 	if ( function_exists( 'register_nav_menus' ) ) {
 	  	register_nav_menus(
@@ -65,14 +112,16 @@
 	// learn more: http://codex.wordpress.org/Post_Formats
 	// add_theme_support( 'post-formats', array( 'aside', 'gallery','link','image','quote','status','video','audio','chat' ) );
 
-	// removes detailed login error information for security
-	add_filter('login_errors',create_function('$a', "return null;"));
+	
+	
+	// removes detailed login error information for security - esto ya lo puede hacer el plugin, pero 
+	// add_filter('login_errors',create_function('$a', "return null;"));
 	
 	// removes the WordPress version from your header for security
-	function wb_remove_version() {
-		return '<!--built on the Whiteboard Framework-->';
-	}
 	add_filter('the_generator', 'wb_remove_version');
+	function wb_remove_version() {
+		return '<!-- Verás Editorial built by Cobianzo Ltd. UK-->';
+	}
 	
 	
 	// Removes Trackbacks from the comment cout
@@ -139,6 +188,23 @@
 	// 	add_theme_page( __( 'Theme Options', 'tat_theme' ), __( 'Theme Options', 'tat_theme' ), 'edit_theme_options', 'theme_options', 'theme_options_do_page' );
 	// }
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// TO_DO: Niidea de qué es esto. Mirarlo
+	
 	// begin LifeGuard Assistant
 	// learn more about the LifeGuard Assistant: http://wplifeguard.com/lifeguard-plugin/
 	// learn more about the affiliate program: http://wplifeguard.com/affiliates/
@@ -182,4 +248,239 @@
 		';
 	}
 	// end LifeGuard Assistant
-?>
+
+	
+	
+	
+	
+	
+	
+	
+	function show_title_tag(){ 
+		if ( is_category() ) {
+			echo 'Category Archive for &quot;'; single_cat_title(); echo '&quot; | '; bloginfo( 'name' );
+		} elseif ( is_tag() ) {
+			echo 'Tag Archive for &quot;'; single_tag_title(); echo '&quot; | '; bloginfo( 'name' );
+		} elseif ( is_archive() ) {
+			wp_title(''); echo ' Archive | '; bloginfo( 'name' );
+		} elseif ( is_search() ) {
+			echo 'Search for &quot;'.wp_specialchars($s).'&quot; | '; bloginfo( 'name' );
+		} elseif ( is_home() ) {
+			bloginfo( 'name' ); echo ' | '; bloginfo( 'description' );
+		}  elseif ( is_404() ) {
+			echo 'Error 404 Not Found | '; bloginfo( 'name' );
+		} elseif ( is_single() ) {
+			wp_title('');
+		} else {
+			echo wp_title(''); echo ' | '; bloginfo( 'name' );
+		} 
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	FOR BETTER UNDERSTANDING:
+		location and monumento is the same (location is the name in Mapplic, monumento de name of the post type in WP
+		level and mapa is the same	
+	*/
+	/* funciones del mapa que podrían venir aparte */
+	
+	# get_monumentos_by_mapa($id_map)						--> array of posts monumentos
+	# array_location_configuration($id_monumento)		--> converts post object monumento in array (ready for converting to json)
+	# array_level_configuration($id_map = null)					--> converts post object mapa in array (ready for converting to json)
+	//  get_json_map_src ('nombre del mapa');
+	//  save_json:map ('nombre del mapa');
+	// 	get_maps_url()
+	//	get_maps_directory()
+	
+	
+	// returns the array ready for convertion into json.
+	function array_mapplic_configuration($maps_array = null){
+		
+		
+		$query_args = array( "post_type"  =>	"mapa", "posts_per_page"	=> 	-1 ); 
+		if (is_array($maps_array) && (!empty($maps_array))) $query_args = array_merge($query_args, array('post__in'  =>  $maps_array));
+		query_posts( $query_args);
+		
+		$map_width			=	$map_height	=	null;
+		$array_categories	=	$array_levels	= array();
+		while ( have_posts() ) : the_post(); 
+			global $post;
+			$array_categories[]	= array(
+				"id" 		=> "category-".get_the_ID(),
+				"title"  	=>  get_the_title(),
+				"color"	=>  "#63aa9c",
+				"show" 	=>  "true"
+			);
+			$array_levels[]	=	array_level_configuration(get_the_ID());		
+			if (!$map_width) {
+				$map_img_id						=	get_post_meta(get_the_ID(), "mapa_hi", true);
+				$map_img_large				= 	wp_get_attachment_image_src( $map_img_id, "large" ); 
+				$map_width						=	$map_img_large[1];
+				$map_height						=	$map_img_large[2];
+				
+			}
+		endwhile; 
+		
+		wp_reset_query();			
+		
+		
+		
+		// initialize array
+		$mapplic	= array(
+					"mapwidth"		=>	$map_width,
+					"mapheight"		=>	$map_height,
+					"categories"		=>	$array_categories,
+					"levels"				=>	$array_levels		
+		);
+		
+		return $mapplic;
+		
+	}	
+	
+	
+	
+	
+	# MAPAS (tb llamados level en el contexto Mapplic) 
+	# --------------------------------------------------------------------------------------------------------
+	
+	/*
+		@ array_level_configuration
+		# 	returns array		
+		# 	el array que devuelve se convertirá a json y se grabará en el disco para que lo recoja
+		#	param $id_map:  id del post tipo map que devuelve. Si no se espefica, devuelve el primer mapa
+	*/
+	function array_level_configuration($id_map = null){
+		
+		if (!$id_map) :
+				$map_post	= 	get_posts("post_type=mapa&posts_per_page=1");
+				if (empty($map_post))	{ echo "No existen Mapas aun definidos";  return false;  }
+				$map_post	=	array_pop($map_post);
+				$id_map		=	$map_post->ID;
+		else:
+				$map_post	=	get_post($id_map);
+		endif;
+		
+		//echo "TO_DELETE mapa : ".$id_map."--- ".$map_post->post_title."<br>";
+		
+		$locations				=	get_monumentos_by_mapa($id_map);
+		$array_locations	= array();
+		foreach ($locations as $i => $location) {
+			echo $location->post_title." ---" .get_post_meta($location->ID, 'mapa_padre', true)."<br>";
+			$array_locations[]	= array_location_configuration($location);			
+		}
+		
+		// print_r($array_locations);
+		
+		$img_id						=	get_post_meta($id_map, "mapa_hi", true);
+		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
+		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "large" ); 
+		
+		$array_mapa			= array(
+				"id"			=>	"map-".$id_map,
+				"name"		=>	$map_post->post_name,
+				"title"		=>	get_the_title($id_map),
+				"map"		=>	$img_hi_src[0],
+				"minimap"	=>	$img_thumb_src[0],
+				"locations"=>	$array_locations,
+		
+		);
+		//echo "TO_DELETE:::----";  //print_r($array_mapa);
+		
+		return $array_mapa;
+	}	
+	
+	
+	
+	
+	
+	# MONUMENTOS (tb llamados location en el contexto Mapplic) 
+	# --------------------------------------------------------------------------------------------------------
+	// devuelve todos los posts de los monumentos del mapa especificado
+	function get_monumentos_by_mapa($id_map){
+		if ( !$id_map) return false;
+		return get_posts(array(
+											"post_type"		=> 	"monumento",
+											"meta_query"	=>	array( array(	'key'     			=> 	"mapa_padre",  'value' 		  	=> 	$id_map,	'compare'		=> '=',	'type'				=> "NUMERIC"  ))
+		));		
+	}
+	
+	// nos da el array listo para convertirse en json con los datos de la location (monumento) (para ello pasamos el id o el post object del mismo monumento)
+	function array_location_configuration($id_monumento){
+		  
+		$post_monumento  	= (is_object($id_monumento))?  $id_monumento : get_post($id_monumento);
+		$id_monumento			=	$post_monumento ->ID;
+		$img_id						=	get_post_meta($id_monumento, "icono", true);
+		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
+		
+		$array_monumento 	= array(
+			"id"					=>	$id_monumento,
+			"titile"				=>	get_the_title($id_monumento),
+			"about"				=>	get_the_excerpt($id_monumento),
+			"description"		=>	get_post_meta($id_monumento, "descripcion", true),
+			"iink"				=>	null,
+			"category"			=>	"category-".get_post_meta($id_monumento, "mapa_padre", true),
+			"thumbnail"		=>	$img_thumb_src[0],
+			"x"					=>	get_post_meta($id_monumento, "pos_x", true),
+			"y" 					=>	get_post_meta($id_monumento, "pos_y", true),
+			"zoom"				=>	"2"		
+		);		
+		return $array_monumento;
+	}
+	
+	# END MONUMENTOS (tb llamados location en el contexto Mapplic) 
+	# --------------------------------------------------------------------------------------------------------
+
+
+
+
+	# MANEJO DE FICHERO JSON 
+	# --------------------------------------------------------------------------------------------------------
+	
+	//para set to "path" to get path route. Returns C:\routewhatever\www/wp-content/uploads  
+	function get_maps_dir($url_or_path = "url" ){  
+		$uploads_routes	= wp_upload_dir();
+		return ( ( ($url_or_path == "url")?	$uploads_routes["baseurl"] : $uploads_routes["basedir"] ));	
+	}
+	
+	function save_mapplic_file($name = "mapplic", $array_mapas_id = null) {
+		
+		$array 	= array_mapplic_configuration($array_mapas_id);
+		
+		// stripslashes(json_encode($array))
+		$fp = fopen(get_maps_dir("path")."/".$name.".json", 'w');
+		fwrite($fp, json_encode($array));
+		fclose($fp);		
+		
+	}
+	
+	/*  end functiones del mapa*/
+	
+	
+	
+	
+	
+	# HELPERS
+	
+	
+	
+	function print_array($array){
+		
+		foreach ($array as $i => $value)
+		{
+			echo "<br><b>$i</b> => ";
+			if (is_array($value) or is_object($value)) {
+				echo "<ul style=''>";
+				print_array($value);
+				echo "</ul>";
+			}
+			else echo $value;			
+		}		
+	}
+	

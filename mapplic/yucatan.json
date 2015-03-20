@@ -12,7 +12,7 @@
 			"id": "chichen-site",
 			"title": "Chichén-Itza",
 			"color": "#63aa9c",
-			"show": "true"
+			"show": "false"
 		},
 		{
 			"id": "tulum-site",
@@ -22,11 +22,14 @@
 		}
 	],
 	"levels": [
+		{"id":"17","name":"fds","title":"Cdsahich\u00e9n Itz\u00e1","map":"http:\/\/localhost\/interactive-map\/www\/wp-content\/uploads\/chichen-itza-map.jpg","minimap":"http:\/\/localhost\/interactive-map\/www\/wp-content\/uploads\/chichen-itza-map-150x150.jpg",
+				"locations":[{"id":20,"titile":"Pir\u00e1mide de Kukulk\u00e1n","about":"","description":"En el centro del complejo","iink":"fds","category":"fds","thumbnail":"http:\/\/localhost\/interactive-map\/www\/wp-content\/uploads\/icon-chichen.png","x":"51.65","y":"34.577","zoom":"2"}]},
+				
 		{
 			"id": "yucatan",
 			"name": "0",
 			"title": "Mapa Yucatán",
-			"map": "images/yucatan/yucatan-map.jpg",
+			"map": "http:\/\/localhost\/interactive-map\/www\/wp-content\/uploads\/yucatan-map.jpg",
 			"minimap": "images/yucatan/yucatan-map-small.jpg",
 			"locations": [
 				{
@@ -35,7 +38,7 @@
 					"about": "Patrimonio de la Humanidad por la UNESCO",
 					"description": "<p>La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente del área Maya, a finales del periodo Clásico e inicios del Postclásico. </p><p> A la llegada de los espanoles se constituía como el centro de culto y de peregrinación más reverenciado de la península de Yucatán. En la actualidad es un Centro Sagrado para los mayas. </p><p><b> ¡Bienvenido! <b></p>",
 					"link": "javascript:$('.mapplic-levels-select').val('chichen-itza-map').change();",
-					"category": "yucatan-general-map",
+					
 					"thumbnail": "images/thumbs/icon-chichen.png",
 					"x": "0.4746",
 					"y": "0.2883",
