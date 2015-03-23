@@ -577,6 +577,7 @@
 			}
 
 			this.goFull = function() {
+				/* ALV: note:  $(this.element) es el jquery del contenedor del mapa */
 				if (this.element.requestFullscreen) this.element.requestFullscreen();
 				else if(this.element.mozRequestFullScreen) this.element.mozRequestFullScreen();
 				else if(this.element.webkitRequestFullscreen) this.element.webkitRequestFullscreen();

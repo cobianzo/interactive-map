@@ -286,7 +286,7 @@
 	
 	/*
 	FOR BETTER UNDERSTANDING:
-		location and monumento is the same (location is the name in Mapplic, monumento de name of the post type in WP
+		location, hotspot and monumento is the same (location is the name in Mapplic, monumento de name of the post type in WP
 		level and mapa is the same	
 	*/
 	/* funciones del mapa que podrían venir aparte */
@@ -300,25 +300,43 @@
 	//	get_maps_directory()
 	
 	
-	// returns the array ready for convertion into json.
-	function array_mapplic_configuration($maps_array = null){
+	// returns the array ready for convertion into json (that conertion will be saved into a file)
+	function array_mapplic_configuration($lang="es", $maps_array = null){
 		
+				
+		/* defining the args to select the right mapas: the "mapa"  custom types with no parent. Their children are the hotspots (also called locations or monumentos)  */
 		
-		$query_args = array( "post_type"  =>	"mapa", "posts_per_page"	=> 	-1 ); 
+		$query_args = array( "post_type"  =>	"mapa", "posts_per_page"	=> 	-1 , "post_parent" => 0, "orderby" => "menu_order", "order" => "ASC"); 
+		
+		if ($lang)  /* TO_DO: apply this only if polylang plugin is active */
+		   $query_args['tax_query']  = array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,),	)	;
+				
 		if (is_array($maps_array) && (!empty($maps_array))) $query_args = array_merge($query_args, array('post__in'  =>  $maps_array));
 		query_posts( $query_args);
+		
+		/* the loop is ready to be launched now */
+		
 		
 		$map_width			=	$map_height	=	null;
 		$array_categories	=	$array_levels	= array();
 		while ( have_posts() ) : the_post(); 
+			# The loop for every "mapa"
 			global $post;
-			$array_categories[]	= array(
-				"id" 		=> "category-".get_the_ID(),
-				"title"  	=>  get_the_title(),
-				"color"	=>  "#63aa9c",
-				"show" 	=>  "true"
-			);
-			$array_levels[]	=	array_level_configuration(get_the_ID());		
+			if   ((function_exists("pll_get_post_language")) && ( ($post_lang = pll_get_post_language(get_the_ID())) != $lang ) ) continue;	// use only posts on this language
+
+			
+			# we get the category name of the mapa to assign the "categories" field to the mapplic json file
+			$category_name		= get_post_meta(get_the_ID(), "category_name", true);
+			if (strlen(trim($category_name)))
+				$array_categories[]	= array(
+					"id"  		=>  get_the_ID(),
+					"title" 	=> get_post_meta(get_the_ID(), "category_name", true),
+					"color"	=>  "#63aa9c",
+					"show" 	=>  "true"
+				);
+				
+			# we include the map in the array. The following function will include the locations of the map too
+			if ($aa = array_level_configuration(get_the_ID()))	$array_levels[]	=	$aa; 
 			if (!$map_width) {
 				$map_img_id						=	get_post_meta(get_the_ID(), "mapa_hi", true);
 				$map_img_large				= 	wp_get_attachment_image_src( $map_img_id, "large" ); 
@@ -356,8 +374,9 @@
 		# 	el array que devuelve se convertirá a json y se grabará en el disco para que lo recoja
 		#	param $id_map:  id del post tipo map que devuelve. Si no se espefica, devuelve el primer mapa
 	*/
-	function array_level_configuration($id_map = null){
+	function array_level_configuration($id_map = null){ 
 		
+		# 1. Simply validate paramaeter and set the vars ready:  $map_post and $id_map
 		if (!$id_map) :
 				$map_post	= 	get_posts("post_type=mapa&posts_per_page=1");
 				if (empty($map_post))	{ echo "No existen Mapas aun definidos";  return false;  }
@@ -367,21 +386,22 @@
 				$map_post	=	get_post($id_map);
 		endif;
 		
-		//echo "TO_DELETE mapa : ".$id_map."--- ".$map_post->post_title."<br>";
-		
+		# 2. We get all the locations for this map and prepare the array (which will be translated into json.		
 		$locations				=	get_monumentos_by_mapa($id_map);
 		$array_locations	= array();
 		foreach ($locations as $i => $location) {
-			echo $location->post_title." ---" .get_post_meta($location->ID, 'mapa_padre', true)."<br>";
+			//echo $location->post_title." -TO_DELETE--" .get_post_meta($location->ID, 'mapa_padre', true)."<br>";
 			$array_locations[]	= array_location_configuration($location);			
 		}
 		
-		// print_r($array_locations);
-		
+		# 3. We finish the completion of the array by adding the rest of params of it (image, name....)
+			# 3.1 - First the image at high resolution and thumbnail.
 		$img_id						=	get_post_meta($id_map, "mapa_hi", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "large" ); 
 		
+			# 3.2 - Then the rest of params
+		if (!strlen($map_post->post_name)) return false;
 		$array_mapa			= array(
 				"id"			=>	"map-".$id_map,
 				"name"		=>	$map_post->post_name,
@@ -393,6 +413,7 @@
 		);
 		//echo "TO_DELETE:::----";  //print_r($array_mapa);
 		
+		if (!$img_id) return false;	// don't parse levels with no map as it will break the json file
 		return $array_mapa;
 	}	
 	
@@ -406,8 +427,8 @@
 	function get_monumentos_by_mapa($id_map){
 		if ( !$id_map) return false;
 		return get_posts(array(
-											"post_type"		=> 	"monumento",
-											"meta_query"	=>	array( array(	'key'     			=> 	"mapa_padre",  'value' 		  	=> 	$id_map,	'compare'		=> '=',	'type'				=> "NUMERIC"  ))
+											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map
+											/*"meta_query"	=>	array( array(	'key'     			=> 	"mapa_padre",  'value' 		  	=> 	$id_map,	'compare'		=> '=',	'type'				=> "NUMERIC"  ))*/
 		));		
 	}
 	
@@ -418,17 +439,17 @@
 		$id_monumento			=	$post_monumento ->ID;
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
-		
+		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
 		$array_monumento 	= array(
 			"id"					=>	$id_monumento,
-			"titile"				=>	get_the_title($id_monumento),
-			"about"				=>	get_the_excerpt($id_monumento),
+			"title"				=>	get_the_title($id_monumento),
+			"about"				=>	$post_monumento->post_excerpt,
 			"description"		=>	get_post_meta($id_monumento, "descripcion", true),
 			"iink"				=>	null,
-			"category"			=>	"category-".get_post_meta($id_monumento, "mapa_padre", true),
+			"category"			=>	($cat = get_post_meta($mapa_padre_id, "category_name", true))? $mapa_padre_id : null,
 			"thumbnail"		=>	$img_thumb_src[0],
-			"x"					=>	get_post_meta($id_monumento, "pos_x", true),
-			"y" 					=>	get_post_meta($id_monumento, "pos_y", true),
+			"x"					=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
+			"y" 					=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
 			"zoom"				=>	"2"		
 		);		
 		return $array_monumento;
@@ -449,16 +470,50 @@
 		return ( ( ($url_or_path == "url")?	$uploads_routes["baseurl"] : $uploads_routes["basedir"] ));	
 	}
 	
-	function save_mapplic_file($name = "mapplic", $array_mapas_id = null) {
-		
-		$array 	= array_mapplic_configuration($array_mapas_id);
-		
+	# saves an array in json format into the specific filename, under the /uploads folder
+	function save_json_file($filename = null, $array_to_convert = null) {
+		if (!$filename || (!is_array($array_to_convert)) ) return;
+
 		// stripslashes(json_encode($array))
-		$fp = fopen(get_maps_dir("path")."/".$name.".json", 'w');
-		fwrite($fp, json_encode($array));
+		$fp = fopen(get_maps_dir("path")."/".$filename , 'w');
+		fwrite($fp, json_encode($array_to_convert));
 		fclose($fp);		
+
 		
 	}
+	
+	# saves the file with all the maps configuration separated in levels (each map is one level)
+	function save_mapplic_file($name = "mapplic", $lang = "es", $array_mapas_id = null) {
+		
+		$array 	= array_mapplic_configuration($lang, $array_mapas_id);
+		save_json_file($name.".json", $array);
+		
+	}
+	
+
+	
+	#	when saving a post type mapa or monumento, we save the file mapplic_{lang}.json with the settings for all maps 
+	# Also, we save a file {name-of-map}_{lang}.json for that specific map 
+	add_action( 'save_post', 'save_mapplic_on_save', 10, 3 );
+	function save_mapplic_on_save( $post_id, $post, $update ){
+						
+		if (!in_array($post->post_type, array("mapa"))) return;		
+		$language				=	function_exists("pll_get_post_language")? pll_get_post_language($post_id) : "es";
+		
+		#  1. save the filename for all maps
+		$mapplic_filename	=	"mapplic_".$language;		
+		save_mapplic_file($mapplic_filename, $language);
+		
+		
+		#if we are saving a hotspot the we get the parent 
+		$mapa_post	= $post;
+		while ($pp = $mapa_post->post_parent) 	$mapa_post = get_post($$pp);				
+		#  2. and we save the single file just for the map (only for this language)
+		$mapa_filename	=	$mapa_post->post_name."_".$language;
+		save_mapplic_file($mapa_filename, $language, array($mapa_post->ID));
+		
+	}
+	
 	
 	/*  end functiones del mapa*/
 	
@@ -466,10 +521,25 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	# HELPERS
-	
-	
-	
+		
 	function print_array($array){
 		
 		foreach ($array as $i => $value)

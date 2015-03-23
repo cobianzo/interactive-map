@@ -21,9 +21,12 @@
 <?php wp_footer(); /* this is used by many Wordpress features and plugins to work proporly */ ?>
 
 			<script type="text/javascript">
+			<?php
+			global $mapplic_json_file;			
+			?>			
 			$(document).ready(function() {
 				$('#mapplic').mapplic({
-					source: "<?php echo get_maps_dir("url" )."/mapplic.json";  ?>", //  'http://localhost/interactive-map/www/mapplic/yucatan.json?v=10',
+					source: "<?php echo $mapplic_json_file;  ?>", //  'http://localhost/interactive-map/www/mapplic/yucatan.json?v=10',
 					height: 500,
 					animate: true,
 					mapfill: true,

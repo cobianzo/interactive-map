@@ -47,6 +47,7 @@
 		
 		<div class="container">
 		
+			<?php if (function_exists("pll_the_languages")) pll_the_languages(array());; ?>
 		</div><!--.container-->
 	</header></div><!--#header-->
 	
