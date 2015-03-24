@@ -8,7 +8,7 @@
 						<div class="window-mockup">
 							<div class="window-bar"></div>
 						</div>	
-						<div id="mapplic">
+							<div id="mapplic">
 							<!-- this container will be replaced by div.mapplic-element -->
 							
 							<?php
@@ -28,11 +28,19 @@
 					
 				</section>
 				<?php 
+					if (!is_single()):
+						$mapas	= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC",
+										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
+						$post		= $mapas[0];
+//						setup_postdata($post);
+					endif;
+
 				/*	THIS CONTINUES IN FOOTER.php.   ----->	There you'll find the call of the <script> that loads the map.
 					IN FUNCTIONS.php you'll find the registration of the .js files that we need to make it work	*/
 				global $mapplic_json_file, $post;
 				$language				=	function_exists("pll_current_language")? pll_current_language() : "_es" ;
-				$mapplic_json_file	=	(is_single())?   get_maps_dir("url" )."/".$post->post_name."_".$language.".json"  : $mapplic_json_file	=	get_maps_dir("url" )."/mapplic_".$language.".json";				
+				$mapplic_json_file	=	get_maps_dir("url" )."/".$post->post_name."_".$language.".json" ;
+				//$mapplic_json_file	=	(is_single())?   get_maps_dir("url" )."/".$post->post_name."_".$language.".json"  : $mapplic_json_file	=	get_maps_dir("url" )."/mapplic_".$language.".json";				
 										
 				?>
 				
