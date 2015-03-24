@@ -12,7 +12,6 @@
 <?php get_template_part( "part", "mapa"); ?> 
 
 
-
 <?php //  get_sidebar(); ?>
 
 

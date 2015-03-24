@@ -40,7 +40,7 @@ if(function_exists("register_field_group"))
 				'preview_size' => 'medium',
 				'library' => 'all',
 			),
-			array (
+			array (		/* TO_DO: reemplazar esto por el título del mapa */
 				'key' => 'field_550ca729fb423',
 				'label' => 'Nombre a mostrar en Lista',
 				'name' => 'category_name',
@@ -159,7 +159,7 @@ if(function_exists("register_field_group"))
 				'label' => 'selection',
 				'name' => 'selection',
 				'type' => 'select',
-				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cial',
+				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"',
 				'choices' => $maps_for_select,
 				'default_value' => null,
 				'allow_null' => 1,
@@ -180,6 +180,18 @@ if(function_exists("register_field_group"))
 				'save_format' => 'id',
 				'preview_size' => 'medium',
 				'library' => 'all',
+			),
+			array (
+				'key' => 'field_551179c29e909',
+				'label' => 'Contenido',
+				'name' => 'contenido',
+				'type' => 'textarea',
+				'instructions' => 'Escribe aquí la descripción completa del emplazamiento.',
+				'default_value' => '',
+				'placeholder' => 'Ej: "La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente..."',
+				'maxlength' => '',
+				'rows' => '',
+				'formatting' => 'br',
 			),
 		),
 		'location' => array (			

@@ -29,6 +29,8 @@
       wp_enqueue_script('smoothscroll');
       wp_register_script('mapplic', get_template_directory_uri() . '/mapplic/mapplic.js', array('jquery'), $version, true);
       wp_enqueue_script('mapplic');
+      wp_register_script('bootstrap', get_template_directory_uri() . '/bootstrap/javascripts/bootstrap.min.js', array('jquery'), $version, true);
+      wp_enqueue_script('bootstrap');
 	  
 	 
 
@@ -315,8 +317,7 @@
 		query_posts( $query_args);
 		
 		/* the loop is ready to be launched now */
-		
-		
+				
 		$map_width			=	$map_height	=	null;
 		$array_categories	=	$array_levels	= array();
 		while ( have_posts() ) : the_post(); 
