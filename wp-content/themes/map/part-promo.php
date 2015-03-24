@@ -1,3 +1,5 @@
+								<h3><?php echo ($title = get_post_meta(get_the_ID(), "sobreescribe_titulo", true))?  $title :  get_the_title()  ;?></h3>																
+								
 								<div class='col-xs-12 col-sm-6'>
 									<?php
 									$promo_img_id						=	get_post_meta(get_the_ID(), "imagen", true);
@@ -9,7 +11,6 @@
 									<!--</a>-->
 								</div>
 								<div class='col-xs-12 col-sm-6 '  >
-									<h4><?php echo ($title = get_post_meta(get_the_ID(), "sobreescribe_titulo", true))?  $title :  get_the_title()  ;?></h4>
 									<span class='text-justify'>
 										<?php 
 										the_content(); ?>

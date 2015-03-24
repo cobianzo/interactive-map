@@ -105,7 +105,7 @@ if(function_exists("register_field_group"))
 				'label' => 'Descripción de una linea',
 				'name' => 'descripcion',
 				'type' => 'text',
-				'instructions' => 'Breve descripción de pocas palabras',
+				'instructions' => 'Breve descripción de pocas palabras. Aparecerá en la viñeta sobre el sitio en el mapa, cuando se seleccione desde la lista de monumentos',
 				'default_value' => '',
 				'placeholder' => '',
 				'prepend' => '',
@@ -155,9 +155,9 @@ if(function_exists("register_field_group"))
 				'library' => 'all',
 			),			
 			array (
-				'key' => 'field_55109d9e479f3',
-				'label' => 'selection',
-				'name' => 'selection',
+				'key' => 'field_55109dabababa',
+				'label' => 'Al clicar abrir otro mapa',
+				'name' => 'mapa_redirection',
 				'type' => 'select',
 				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"',
 				'choices' => $maps_for_select,
@@ -254,7 +254,125 @@ if(function_exists("register_field_group"))
 		'menu_order' => 0,
 	));
 	
+
+
+	$message	= $post_message = "";
+	if ($post->post_parent == 0 ) {
+		$message = "Esto es un mapa. Si lo que querías era editar un hotspot, tendrás que seleccionar el mapa padre al que pertenece en la caja de arriba, donde pone <b>Superior</b>. <br>";
+		if ( (is_object($post)) && ($post->post_type == "mapa")) :
+			$children = get_posts(array("post_parent"=> $post->ID, "post_type" => "mapa", "orderby" => "menu_order" , "order" => "ASC"));
+			if (is_array($children) && count($children))
+			foreach ($children as $i=> $hotspot) {
+				if (!strlen($post_message))  $post_message = "<ul>";
+				$post_message .= "<li>Hotspot $i : <a href='".get_edit_post_link($hotspot->ID)."'> $hotspot->post_title</a></li>";				
+			}
+			else $post_message .= "<ul><li>Este mapa aún no tiene hotspots asociados</li>";
+			$message.= $post_message."</ul>";
+		endif; 
+	}
 	
+	
+	register_field_group(array (
+		'id' => 'acf_hotspot_en_mapa',
+		'title' => 'hotspots del mapa',
+		'fields' => array (			
+			array (
+				'key' => 'field_550b0e5bbbbbb',
+				'label' => 'Hotspots',
+				'name' => '',
+				'type' => 'message',
+				'message' => $message,
+			),
+		),
+		'location' => array (			
+			array (
+				array ('param' => 'page_parent','operator' => '==','order_no' => 0,'group_no' => 0,),
+				array ('param' => 'post_type','operator' => '==','value' => 'mapa','order_no' => 1,'group_no' => 0,),
+			),			
+		),
+		'options' => array (
+			'position' => 'side',
+			'layout' => 'default',
+			'hide_on_screen' => array (),
+		),
+		'menu_order' => 0,
+	));
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	if(function_exists("register_field_group"))
+{
+	register_field_group(array (
+		'id' => 'acf_campos-de-promo',
+		'title' => 'Campos de promo',
+		'fields' => array (
+			array (
+				'key' => 'field_5511973154ffc',
+				'label' => 'Sobreescribe Título',
+				'name' => 'sobreescribe_titulo',
+				'type' => 'text',
+				'instructions' => 'El título de arriba debe ser identificativo, que permita reconocer este bloque sólo con ese nombre. Si quieres que en pantalla el título sea diferente, escríbelo aquí.',
+				'default_value' => '',
+				'placeholder' => 'Ej: "También en ebook"',
+				'prepend' => '',
+				'append' => '',
+				'formatting' => 'html',
+				'maxlength' => '',
+			),
+			array (
+				'key' => 'field_5511954134997',
+				'label' => 'Imagen',
+				'name' => 'imagen',
+				'type' => 'image',
+				'instructions' => 'Imagen a la izquierda del promo',
+				'save_format' => 'id',
+				'preview_size' => 'medium',
+				'library' => 'all',
+			),
+		),
+		'location' => array (
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'promo',
+					'order_no' => 0,
+					'group_no' => 0,
+				),
+			),
+		),
+		'options' => array (
+			'position' => 'acf_after_title',
+			'layout' => 'default',
+			'hide_on_screen' => array (
+				0 => 'permalink',
+				1 => 'excerpt',
+				2 => 'custom_fields',
+				3 => 'discussion',
+				4 => 'comments',
+				5 => 'slug',
+				6 => 'author',
+				7 => 'format',
+				8 => 'tags',
+				9 => 'send-trackbacks',
+			),
+		),
+		'menu_order' => 0,
+	));
+}
+
 		
 	
 }

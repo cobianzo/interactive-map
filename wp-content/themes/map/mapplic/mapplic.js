@@ -790,9 +790,9 @@
 			// Levels
 			if (nrlevels > 1) {
 				self.levels = $('<div></div>').addClass('mapplic-levels');
-				var up = $('<a href="#"></a>').addClass('mapplic-levels-up').appendTo(self.levels);
+				var up = $("<hr>");  // ALV: borro los botones arriba y abajo -->   $('<a href="#"></a>').addClass('mapplic-levels-up').appendTo(self.levels);
 				self.levelselect.appendTo(self.levels);
-				var down = $('<a href="#"></a>').addClass('mapplic-levels-down').appendTo(self.levels);
+				var down = $("<hr>");  // ALV: borro los botones arriba y abajo -->  $('<a href="#"></a>').addClass('mapplic-levels-down').appendTo(self.levels);
 				self.container.append(self.levels);
 			
 				self.levelselect.change(function() {
