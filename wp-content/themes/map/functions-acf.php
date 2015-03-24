@@ -9,12 +9,18 @@ if(function_exists("register_field_group"))
 	if ((array_key_exists("post", $_REQUEST)) && ( $rr = $_REQUEST["post"])) 
 		$post = get_post($rr);
 	
-	$is_mapa_with_parent = null;
-	if ( (is_object($post)) && ($post->post_type == "mapa")) :
-		$is_mapa_with_parent = wp_get_post_parent_id( $post->ID );
+	
+	$maps_for_select			=	array();
+	$post_lang					=   function_exists("pll_get_post_language")?    pll_get_post_language($post->ID) : "es";	// use only posts on this language
+	$maps_without_parent	= 	get_posts(array("post_type" => "mapa", "posts_per_page" => -1, "post_parent" => 0,
+																	"tax_query" => array(array(	"taxonomy" => "language" , "field" => "slug", "terms" => $post_lang))));
+	foreach ($maps_without_parent as $i => $mapp)	$maps_for_select[$mapp->ID] = get_the_title($mapp->ID);
+	//$is_mapa_with_parent = null;
+	//if ( (is_object($post)) && ($post->post_type == "mapa")) :
+		//$is_mapa_with_parent = wp_get_post_parent_id( $post->ID );
 		//$children = get_pages('child_of='.$post->ID."&sort_column=menu_order&sort_order=ASC");
 		//if (count($children)) $is_mapa_with_children = true;
-	endif; 
+	//endif; 
 	
 	
 	
@@ -73,6 +79,9 @@ if(function_exists("register_field_group"))
 		),
 		'menu_order' => 0,
 	));
+
+	
+	
 
 	register_field_group(array (
 		'id' => 'acf_campos-del-monumento',
@@ -144,6 +153,17 @@ if(function_exists("register_field_group"))
 				'save_format' => 'id',
 				'preview_size' => 'thumbnail',
 				'library' => 'all',
+			),			
+			array (
+				'key' => 'field_55109d9e479f3',
+				'label' => 'selection',
+				'name' => 'selection',
+				'type' => 'select',
+				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cial',
+				'choices' => $maps_for_select,
+				'default_value' => null,
+				'allow_null' => 1,
+				'multiple' => 0,
 			),
 			array (
 				'key' => 'field_550ca7aaaaa',

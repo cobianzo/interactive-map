@@ -78,7 +78,7 @@
 				this.title = $('<h4></h4>').addClass('mapplic-tooltip-title').appendTo(this.el);
 				this.content = $('<div></div>').addClass('mapplic-tooltip-content').appendTo(this.el);
 				this.desc = $('<div></div>').addClass('mapplic-tooltip-description').appendTo(this.content);
-				this.link = $('<a>More</a>').addClass('mapplic-tooltip-link').attr('href', '#').hide().appendTo(this.el);
+				this.link = $('<a>More</a>').addClass('mapplic-tooltip-link').attr('href', '#').hide().appendTo(this.el); // TO_DO: write More in every language
 				$('<div></div>').addClass('mapplic-tooltip-triangle').prependTo(this.el);
 
 				// Append
@@ -721,7 +721,11 @@
 								var pin = $('<a></a>').attr('href', target).addClass('mapplic-pin').css({'top': top + '%', 'left': left + '%'}).appendTo(layer);
 								pin.on('click touchend', function(e) {
 									e.preventDefault();
-									showLocation(value.id, 600);
+									/* ALV: esto se dispara cuando se clica sobre el hotspot (no cuando se clica en el nombre en la lista). añado la apertura directa del link si lo tiene */
+									/* este if es mio */ if (value.link.length) 
+										window.location.href = value.link;
+									else
+										showLocation(value.id, 600);
 								});
 								if (value.fill) pin.css('background-color', value.fill);
 								pin.attr('data-location', value.id);

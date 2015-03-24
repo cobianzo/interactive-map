@@ -450,6 +450,7 @@
 			"thumbnail"		=>	$img_thumb_src[0],
 			"x"					=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
 			"y" 					=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
+			"link"				=>	($cc 	= get_post_meta($id_monumento, "link_mapa", true))? get_the_permalink($cc) : null,
 			"zoom"				=>	"2"		
 		);		
 		return $array_monumento;
@@ -507,11 +508,10 @@
 		
 		#if we are saving a hotspot the we get the parent 
 		$mapa_post	= $post;
-		while ($pp = $mapa_post->post_parent) 	$mapa_post = get_post($$pp);				
+		while ($mapa_post->post_parent) 	$mapa_post = get_post($mapa_post->post_parent);				
 		#  2. and we save the single file just for the map (only for this language)
 		$mapa_filename	=	$mapa_post->post_name."_".$language;
 		save_mapplic_file($mapa_filename, $language, array($mapa_post->ID));
-		
 	}
 	
 	
