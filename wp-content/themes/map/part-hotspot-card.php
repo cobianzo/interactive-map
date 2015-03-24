@@ -1,6 +1,6 @@
 
 		<!-- Modal windoes di Bootstrap.  Card for <?php the_title(); ?> -->
-		<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+		<div class="modal fade" id="modal-<?php echo $post->post_name; ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?php echo $post->post_name; ?>" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -53,58 +53,48 @@
 							</div>
 						<?php	}	?>
 							
-						<?php if ($descripcion = get_post_meta(get_the_ID(), "descripcion", true)) : ?>
-							<section>
-								<?php echo $descripcion; ?>
+						<?php if ($contenido = get_post_meta(get_the_ID(), "contenido", true)) : ?>
+							<section class='row-fluid clearfix section-contenido'><p>
+								<?php echo str_replace("\n", "</p><p>", $contenido); ?>
+							</p></section>		
+						<?php endif; ?>
+							
+						<?php if ($video = get_post_meta(get_the_ID(), "video", true)) : ?>
+							<section class='row-fluid clearfix section-video'>
+							    <div class="flex-video text-center">
+								<?php echo $video; ?>
+								</div>
 							</section>		
 						<?php endif; ?>
-							<hr>
-							
-							<section class='row'>
-								<div class='col-xs-12 col-sm-6'>
-									<a href='http://www.chichenitza.inah.gob.mx/'><img src='images/yucatan/chichen-pic-360.jpg' class='img-responsive'></a>
-								</div>
-								<div class='col-xs-12 col-sm-6'>
-									<h3>Chichén Itzá a 360 grados</h3>
-									<p>
-										Visita Chichén Itzá como si estuvieras allí. 
-									</p>
-									<a class='btn btn-primary' href='http://www.chichenitza.inah.gob.mx/' target='_new'>Visita el recorrido virtual del INAH</a>
-								</div>
-							</section>
-							
-							<hr>
-							
-							<section class='row-fluid text-center'>
-								<h3>Video</h3>
-								<iframe width="420" height="300" src="https://www.youtube.com/embed/kEISjLgSQzs" frameborder="10" allowfullscreen></iframe>									
-							</section>
-							
-							<hr>
-							
-							<section class='row-flujid clearfix'>
-								<h3>eBooks relacionados</h3>
-								<div class='col-xs-12 col-sm-6'>
-									<a href='http://www.amazon.com/Chichen-Yucat%C3%A1n-M%C3%A9xico-Victor-Castillo/dp/9685160155' class='text-center'  target='_new'>
-										<img src='images/yucatan/chichen-ebook.jpg' class='img-responsive'>
-									</a>
-								</div>
-								<div class='col-xs-12 col-sm-6 '  >
-									<h4>Guía del visitante de Chichén Itzá</h4>
-									<i>Víctor Vera Castillo</i><br>
-									<p class='text-justify'>
-									Este kit de viaje consiste de una guía de viaje, un mapa tamaño póster, y un suplemento conocido como la Agenda del Viajero. La guía contiene fotos, ilustraciones, atracciones turísticas, información cultural, la fauna, y la población de la región. El mapa provee servicios y actividades en la región y también distancias y un glosario geográfico. 
-									</p>
-									<a class='btn btn-primary' href='http://www.amazon.com/Chichen-Yucat%C3%A1n-M%C3%A9xico-Victor-Castillo/dp/9685160155' target='_new'>
-										Compra el ebook en Amazon
-									</a>
-								</div>
-							</section>
+
+
+
+
+						<?php 
+						$promos	=	get_post_meta(get_the_ID(), "promos", true);
+						if (is_array($promos) && (count($promos))) : ?>
+							<section class='row-fluid clearfix section-promos'>
+							    <?php 
+								foreach ($promos as $i => $promo_id) :
+									global $post;
+									$post	= get_post($promo_id);										
+									setup_postdata($post);
+									get_template_part( "part", "promo"); 
+								endforeach;
+								wp_reset_postdata();
+								?>
+
+							</section>		
+						<?php endif; ?>
+						
+						
+						
+
 							
 															
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>								
+						<button type="button" class="btn btn-default" data-dismiss="modal"><?php  _e("Cerrar"); ?></button>								
 					</div>
 				</div>
 			</div>

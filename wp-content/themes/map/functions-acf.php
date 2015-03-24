@@ -193,6 +193,40 @@ if(function_exists("register_field_group"))
 				'rows' => '',
 				'formatting' => 'br',
 			),
+			array (
+				'key' => 'field_55118d7411357',
+				'label' => 'Video',
+				'name' => 'video',
+				'type' => 'textarea',
+				'instructions' => 'Incluye un video embebido de youtube, vimeo, etc. Es preferible el uso de iframe',
+				'default_value' => '',
+				'placeholder' => 'Ej:    &lt;iframe src="https://player.vimeo.com/video/56812804" ...',
+				'maxlength' => '',
+				'rows' => '3',
+				'formatting' => 'none',
+			),
+			array (
+				'key' => 'field_55119a053e484',
+				'label' => 'Promos',
+				'name' => 'promos',
+				'type' => 'relationship',
+				'instructions' => 'Selecciona los bloques de imagen y texto que deseas incluir',
+				'return_format' => 'object',
+				'post_type' => array (
+					0 => 'promo',
+				),
+				'taxonomy' => array (
+					0 => 'all',
+				),
+				'filters' => array (
+					0 => 'search',
+				),
+				'result_elements' => array (
+					0 => 'featured_image',
+					1 => 'post_title',
+				),
+				'max' => 3,
+			),
 		),
 		'location' => array (			
 			array (
@@ -219,4 +253,19 @@ if(function_exists("register_field_group"))
 		),
 		'menu_order' => 0,
 	));
+	
+	
+		
+	
 }
+
+
+
+
+
+
+
+
+
+
+

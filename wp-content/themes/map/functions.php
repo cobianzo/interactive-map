@@ -441,6 +441,9 @@
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
+		$link							=  ($cc 	= get_post_meta($id_monumento, "link_mapa", true))?	get_the_permalink($cc)  :  "javascript:   abreLocationCard('$post_monumento->post_name')";
+		
+		 
 		$array_monumento 	= array(
 			"id"					=>	$id_monumento,
 			"title"				=>	get_the_title($id_monumento),
@@ -451,7 +454,7 @@
 			"thumbnail"		=>	$img_thumb_src[0],
 			"x"					=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
 			"y" 					=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
-			"link"				=>	($cc 	= get_post_meta($id_monumento, "link_mapa", true))? get_the_permalink($cc) : null,
+			"link"				=>	$link,
 			"zoom"				=>	"2"		
 		);		
 		return $array_monumento;

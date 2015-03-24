@@ -49,6 +49,27 @@
 					$('.editor-window').slideUp(200);
 				});
 			});
+			
+			
+			
+			
+			
+			function abreLocationCard(locationCardName){
+				
+				$("#modal-"+locationCardName).modal({show: 'false'});				
+				
+			}
+			
+			// al cerrar el modal devolvemos la visibilidad del mapa en fullScreen
+			jQuery(".modal").on('hidden.bs.modal', function () {
+				// no es necesario... el ppopup se ve bien				
+			});
+			
+			
+			
+			
+			
+			
 		</script>
 
 

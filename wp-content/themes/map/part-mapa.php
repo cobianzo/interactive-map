@@ -7,16 +7,12 @@
 					<div class="map-container">
 						<div class="window-mockup">
 							<div class="window-bar"></div>
-						</div>
+						</div>	
 						<div id="mapplic">
 							<!-- this container will be replaced by div.mapplic-element -->
 							
 							<?php
-							query_posts(array(
-								"post_type" 			=> "mapa",
-								"posts_per_page"	=> -1,
-								"post_parent"		=> get_the_ID(),
-							));
+							query_posts(array(	"post_type" 			=> "mapa",	"posts_per_page"	=> -1,	"post_parent"		=> get_the_ID(),));
 							while (have_posts()) :  the_post();
 								get_template_part( "part", "hotspot-card"); 
 							endwhile;
@@ -41,4 +37,4 @@
 				?>
 				
 				<hr><hr>
-				<a href="javascript:   $('#basicModal').modal({show: 'false'}); ">Abre modal </a>
+				<a href="javascript:   $('#modal-piramide-de-kukulkan').modal({show: 'false'}); ">Abre modal </a>
