@@ -15,16 +15,14 @@ if(function_exists("register_field_group"))
 	$maps_without_parent	= 	get_posts(array("post_type" => "mapa", "posts_per_page" => -1, "post_parent" => 0,
 																	"tax_query" => array(array(	"taxonomy" => "language" , "field" => "slug", "terms" => $post_lang))));
 	foreach ($maps_without_parent as $i => $mapp)	$maps_for_select[$mapp->ID] = get_the_title($mapp->ID);
-	//$is_mapa_with_parent = null;
-	//if ( (is_object($post)) && ($post->post_type == "mapa")) :
-		//$is_mapa_with_parent = wp_get_post_parent_id( $post->ID );
-		//$children = get_pages('child_of='.$post->ID."&sort_column=menu_order&sort_order=ASC");
-		//if (count($children)) $is_mapa_with_children = true;
-	//endif; 
 	
 	
+	# calcular las categorías que acepta 
+	# 1. recogemos la categoría que tiene el mapa padre
+	# 2. tomamos todas las categorías hijas
 	
 	
+	/* estos campos se aplican sólo a los mapas: "mapa" que no tienen padre*/
 	register_field_group(array (
 		'id' => 'acf_campos-del-mapa',
 		'title' => 'Campos del Mapa',
@@ -82,7 +80,7 @@ if(function_exists("register_field_group"))
 
 	
 	
-
+	/* estos campos se aplican sólo a los hotspots: "mapa" que sí tienen padre*/
 	register_field_group(array (
 		'id' => 'acf_campos-del-monumento',
 		'title' => 'Campos del Monumento',
@@ -248,7 +246,7 @@ if(function_exists("register_field_group"))
 		'options' => array (
 			'position' => 'acf_after_title',
 			'layout' => 'default',
-			'hide_on_screen' => array (
+			'hide_on_screen' => array ( 'comments'
 			),
 		),
 		'menu_order' => 0,
@@ -264,7 +262,8 @@ if(function_exists("register_field_group"))
 			if (is_array($children) && count($children))
 			foreach ($children as $i=> $hotspot) {
 				if (!strlen($post_message))  $post_message = "<ul>";
-				$post_message .= "<li>Hotspot $i : <a href='".get_edit_post_link($hotspot->ID)."'> $hotspot->post_title</a></li>";				
+				
+				$post_message .= "<li><b>$i : </b>Hotspot   <a href='".get_admin_url()."post.php?post=".($hotspot->ID)."&action=edit'> $hotspot->post_title</a></li>";				
 			}
 			else $post_message .= "<ul><li>Este mapa aún no tiene hotspots asociados</li>";
 			$message.= $post_message."</ul>";

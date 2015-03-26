@@ -17,8 +17,8 @@ function veras_custom_post_types() {
 	$args = array(
 		'label'               => __( 'mapa', 'veras' ),		'description'         => __( 'Mapa Description', 'veras' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title',  'page-attributes' ,'thumbnail' , 'excerpt' ) ,  /* thumbnail, */
-		/*'taxonomies'          => array( 'category', 'post_tag' ),*/
+		'supports'            => array( 'title',  'page-attributes' ,'thumbnail' , 'excerpt', 'comments' ) ,  /* thumbnail, */
+		'taxonomies'          => array( 'category'), 
 		'hierarchical'        => true,
 		'public'              => true,
 		'show_ui'             => true,		'show_in_menu'        => true,		'show_in_nav_menus'   => true,		'show_in_admin_bar'   => true,

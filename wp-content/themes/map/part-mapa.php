@@ -12,11 +12,14 @@
 							<!-- this container will be replaced by div.mapplic-element -->
 							
 							<?php
+							global $post;	$saved_post	= $post;
 							query_posts(array(	"post_type" 			=> "mapa",	"posts_per_page"	=> -1,	"post_parent"		=> get_the_ID(),));
 							while (have_posts()) :  the_post();
 								get_template_part( "part", "hotspot-card"); 
 							endwhile;
 							wp_reset_query();
+							setup_postdata($saved_post);
+							$post	= 	$saved_post;
 							?>
 							
 							
@@ -28,13 +31,7 @@
 					
 				</section>
 				<?php 
-					if (!is_single()):
-						$mapas	= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC",
-										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
-						$post		= $mapas[0];
-//						setup_postdata($post);
-					endif;
-
+				
 				/*	THIS CONTINUES IN FOOTER.php.   ----->	There you'll find the call of the <script> that loads the map.
 					IN FUNCTIONS.php you'll find the registration of the .js files that we need to make it work	*/
 				global $mapplic_json_file, $post;
