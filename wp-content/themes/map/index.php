@@ -4,11 +4,12 @@ get_header(); ?>
 
 <?php
 	global $post;		# si estamos en homepage (o sea, este file, consideramos q estamos en el post de yucatán.
-	$mapas				= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC",
+	$mapas				= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC", 
 										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
 	$yucatan_post		= $post	=	$mapas[0];
 	setup_postdata($post);
-	;
+	
+	
 ?>
 
 <?php 

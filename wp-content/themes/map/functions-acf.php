@@ -24,57 +24,30 @@ if(function_exists("register_field_group"))
 	
 	/* estos campos se aplican sólo a los mapas: "mapa" que no tienen padre*/
 	register_field_group(array (
-		'id' => 'acf_campos-del-mapa',
-		'title' => 'Campos del Mapa',
+		'id' => 'acf_campos-del-mapa',		'title' => 'Campos del Mapa',
 		'fields' => array (
 			array (
-				'key' => 'field_550b0edb33e4e',
-				'label' => 'Imagen del mapa HI',
-				'name' => 'mapa_hi',
+				'key' => 'field_550b0edb33e4e',				'label' => 'Imagen del mapa HI',				'name' => 'mapa_hi',
 				'type' => 'image',
 				'instructions' => 'Selecciona una imagen para el mapa. Se recomienda una resolución alta, de unos 3000x3000',
 				'required' => 1,
-				'save_format' => 'id',
-				'preview_size' => 'medium',
-				'library' => 'all',
+				'save_format' => 'id',				'preview_size' => 'medium',				'library' => 'all',
 			),
 			array (		/* TO_DO: reemplazar esto por el título del mapa */
-				'key' => 'field_550ca729fb423',
-				'label' => 'Nombre a mostrar en Lista',
-				'name' => 'category_name',
+				'key' => 'field_550ca729fb423',				'label' => 'Nombre a mostrar en Lista',				'name' => 'category_name',
 				'type' => 'text',
 				'instructions' => 'En la parte izquierda del mapa aparece una lista con los monumentos de este mapa. Por ejemplo, si el mapa corresponde a la península de Yucatán puedes poner "Emplazamientos arqueológicos", si el mapa es de Tulúm puedes escribir sencillamente "Tulúm". Deja vacío para que no se cree una categoría en la lista.',
-				'default_value' => '',
-				'placeholder' => 'ej. Monumentos de Tulúm',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'html',
-				'maxlength' => '',
+				'default_value' => '',				'placeholder' => 'ej. Monumentos de Tulúm',				'prepend' => '',				'append' => '',
+				'formatting' => 'html',				'maxlength' => '',
 			),
 		),
 		'location' => array (
 			array (
-				array (
-					'param' => 'page_parent',
-					'operator' => '==',
-					'order_no' => 0,
-					'group_no' => 0,
-				),
-				array (
-					'param' => 'post_type',
-					'operator' => '==',
-					'value' => 'mapa',
-					'order_no' => 1,
-					'group_no' => 0,
-				),
+				array (		'param' => 'page_parent',	'operator' => '==',	'order_no' => 0, 	'group_no' => 0,	),
+				array (		'param' => 'post_type',			'operator' => '==',	'value' => 'mapa',	'order_no' => 1,	'group_no' => 0,		),
 			),
 		),
-		'options' => array (
-			'position' => 'normal',
-			'layout' => 'default',
-			'hide_on_screen' => array (
-			),
-		),
+		'options' => array (			'position' => 'normal',		'layout' => 'default',		'hide_on_screen' => array (	),		),
 		'menu_order' => 0,
 	));
 
@@ -99,17 +72,18 @@ if(function_exists("register_field_group"))
 				'message' => 'Para saber con exactitud las coordenadas, visita el mapa cuando estés conectado como administrador. Verás las coordenadas del ratón al pasar sobre el mapa.',
 			),
 			array (
-				'key' => 'field_550b0d5cccccc',
-				'label' => 'Descripción de una linea',
-				'name' => 'descripcion',
+				'name' => 'about',       'key' => 'field_550b0d5ccabababa',				'label' => 'Acerca del monumento',				
 				'type' => 'text',
-				'instructions' => 'Breve descripción de pocas palabras. Aparecerá en la viñeta sobre el sitio en el mapa, cuando se seleccione desde la lista de monumentos',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'html',
-				'maxlength' => '',
+				'instructions' => 'Breve descripción de pocas palabras. Aparecerá en la lista izquierda, ',
+				'default_value' => '',				'placeholder' => '',				'prepend' => '',				'append' => '',	'maxlength' => '',
+				'formatting' => 'html',				
+			),
+			array (
+				'name' => 'descripcion',       'key' => 'field_550b0d5cccccc',				'label' => 'Descripción de una linea',				
+				'type' => 'text',
+				'instructions' => 'Breve descripción de pocas palabras que aparecerá en la viñeta sobre el sitio en el mapa, cuando se seleccione desde la lista de monumentos',
+				'default_value' => '',				'placeholder' => '',				'prepend' => '',				'append' => '',	'maxlength' => '',
+				'formatting' => 'html',				
 			),
 			array (
 				'key' => 'field_550b0c1dddddd',
@@ -297,6 +271,31 @@ if(function_exists("register_field_group"))
 		'menu_order' => 0,
 	));
 
+
+	// mensage en hotspots y en mapas
+	global $polylang;
+	$curlang 							=  isset($polylang)? $polylang->curlang->slug : ""; 
+	if (strlen($curlang) && ($curlang != $post_lang) ) {
+			$titulo				= "Aviso importante";
+			$message		= 	 '<h1>Atención:	La configuración actual no permitirá que los cambios efectuados se reflejen en la web.</h1><h2> Si quieres realizar cambios en este mapa o hotspot, tendrás que cambiar la opción de la barra superior de idiomas a <b>"Mostrar todos los idiomas"</b>. </h2><br> Clica aquí para resolverlo <a href="javascript: window.location = $(\'#wp-admin-bar-all a:first\').attr(\'href\');">Resuelve</a>';
+	}
+	else	{
+			$titulo				= "Instrucciones";
+			$message		= "Instrucciones.";
+	}
+	
+	register_field_group(array (
+		'id' => 'acf_mapa-warning',		'title' => $titulo,
+		'fields' => array (
+			array (
+				'type' => 'message',		'key' => 'field_55156fba4107b',		'label' => $titulo,		'name' => '',				
+				'message' =>	$message,
+			),
+		),
+		'location' => array (array (		array (		'param' => 'post_type',		'operator' => '==',		'value' => 'mapa',		'order_no' => 0,		'group_no' => 0,		),		),),
+		'options' => array (	'position' => 'acf_after_title',	'layout' => 'default',	'hide_on_screen' => array (		),		),
+		'menu_order' => 0,
+	));
 
 
 

@@ -303,6 +303,7 @@
 	
 	
 	// returns the array ready for convertion into json (that conertion will be saved into a file)
+	// @ $maps_array:  list of maps to include into levels. In not maps_array, all of them included
 	function array_mapplic_configuration($lang="es", $maps_array = null){
 		
 				
@@ -310,11 +311,14 @@
 		
 		$query_args = array( "post_type"  =>	"mapa", "posts_per_page"	=> 	-1 , "post_parent" => 0, "orderby" => "menu_order", "order" => "ASC"); 
 		
-		if ($lang)  /* TO_DO: apply this only if polylang plugin is active */
+		if ($lang)  /* TO_DO: apply this only if polylang plugin is active 
+							TO_DO: bug: if the user language is set to something, the tax_query will not work and query_posts filters posts in that language, ignoring our $lang filter.
+		*/
 		   $query_args['tax_query']  = array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,),	)	;
 				
 		if (is_array($maps_array) && (!empty($maps_array))) $query_args = array_merge($query_args, array('post__in'  =>  $maps_array));
 		query_posts( $query_args);
+		
 		
 		/* the loop is ready to be launched now */
 				
@@ -327,7 +331,18 @@
 
 			
 			# we get the category name of the mapa to assign the "categories" field to the mapplic json file
-			$category_name		= get_post_meta(get_the_ID(), "category_name", true);
+			// 1. get the categories of the map. And select their children.
+			$post_categories				= wp_get_post_categories(get_the_ID(),array( 'fields' => 'ids'));
+			foreach ($post_categories as $cat) {
+					foreach (get_categories(  array( 'parent' => $cat)) as $subcat ){
+							$array_categories[]	= array(
+								"id"  		=>  $subcat->cat_ID,
+								"title" 		=>  $subcat->cat_name,
+								"color"	=>  "#63aa9c",
+								"show" 	=>  "true"	);
+					}
+			}
+			/*$category_name		= get_post_meta(get_the_ID(), "category_name", true);
 			if (strlen(trim($category_name)))
 				$array_categories[]	= array(
 					"id"  		=>  get_the_ID(),
@@ -335,7 +350,7 @@
 					"color"	=>  "#63aa9c",
 					"show" 	=>  "true"
 				);
-				
+				*/
 			# we include the map in the array. The following function will include the locations of the map too
 			if ($aa = array_level_configuration(get_the_ID()))	$array_levels[]	=	$aa; 
 			if (!$map_width) {
@@ -368,7 +383,13 @@
 	
 	# MAPAS (tb llamados level en el contexto Mapplic) 
 	# --------------------------------------------------------------------------------------------------------
-	
+	function get_all_mapas($lang=null){  // esta función prácticamente no tiene utilidad
+		$query_args	= array("post_type"=>"mapa","posts_per_page"=>-1,"post_parent"=>0,"orderby"=>"menu_order","order"=>"ASC");
+		if ($lang)  /* TO_DO: apply this only if polylang plugin is active */
+		   $query_args['tax_query']  = array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,),	)	;
+		
+		return get_posts($query_args);		
+	}
 	/*
 		@ array_level_configuration
 		# 	returns array		
@@ -379,7 +400,7 @@
 		
 		# 1. Simply validate paramaeter and set the vars ready:  $map_post and $id_map
 		if (!$id_map) :
-				$map_post	= 	get_posts("post_type=mapa&posts_per_page=1");
+				$map_post	= 	get_all_mapas();
 				if (empty($map_post))	{ echo "No existen Mapas aun definidos";  return false;  }
 				$map_post	=	array_pop($map_post);
 				$id_map		=	$map_post->ID;
@@ -441,16 +462,19 @@
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
-		$link							=  ($cc 	= get_post_meta($id_monumento, "mapa_redirection", true))?	get_the_permalink($cc)  :  "javascript:   abreLocationCard('$post_monumento->post_name')";
+		$link							=  ($cc 	= get_post_meta($id_monumento, "mapa_redirection", true))?	get_the_permalink($cc)  :  "javascript:   abreLocationCard('$post_monument
+o->post_name')";
+		$post_categories				= wp_get_post_categories($id_monumento,array( ));
+		$category							= (is_array($post_categories) && count($post_categories))?  $post_categories[0] : null;
 		
 		 
 		$array_monumento 	= array(
 			"id"					=>	$id_monumento,
 			"title"				=>	get_the_title($id_monumento),
-			"about"				=>	$post_monumento->post_excerpt,
-			"description"		=>	get_post_meta($id_monumento, "descripcion", true),
+			"about"				=>	get_post_meta($id_monumento, "about", true),
+			"description"		=>	get_post_meta($id_monumento, "descripcion", true), //$post_monumento->post_excerpt,
 			"iink"				=>	null,
-			"category"			=>	($cat = get_post_meta($mapa_padre_id, "category_name", true))? $mapa_padre_id : null,
+			"category"			=>	$category, //($cat = get_post_meta($mapa_padre_id, "category_name", true))? $mapa_padre_id : null,
 			"thumbnail"		=>	$img_thumb_src[0],
 			"x"					=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
 			"y" 					=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
@@ -489,13 +513,35 @@
 	
 	# saves the file with all the maps configuration separated in levels (each map is one level)
 	function save_mapplic_file($name = "mapplic", $lang = "es", $array_mapas_id = null) {
+		global $polylang;
+		$curlang =  isset($polylang)? $polylang->curlang : $lang ;
+		if (is_object($curlang)) $curlang 	= $curlang->slug;
+
+		/*
+		TESTING
+		$mapass				= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC", 
+										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
+	foreach ($mapass as $mapa) echo "<br>.".$mapa->post_title;
+	die() */;
+										
+		if (strlen($curlang) && (!strpos(" ".$curlang, $lang))) {
+			echo "los idiomas no cuadran: ".$curlang." - ".$lang;
+			die();
+			return;			
+		}
 		
 		$array 	= array_mapplic_configuration($lang, $array_mapas_id);
 		save_json_file($name.".json", $array);
 		
 	}
 	
-
+	// with this functino we create all json files for all maps (in a language)
+	function save_all_files_for_language($lang = "es"){
+		$mapas_posts	= get_all_mapas($lang);
+		foreach($mapas_posts as $mapa) {
+			save_mapplic_file($mapa->post_name."_".$lang, $lang, array($mapa->ID));			
+		}		
+	}
 	
 	#	when saving a post type mapa or monumento, we save the file mapplic_{lang}.json with the settings for all maps 
 	# Also, we save a file {name-of-map}_{lang}.json for that specific map 
@@ -505,12 +551,11 @@
 		if (!in_array($post->post_type, array("mapa"))) return;		
 		$language				=	function_exists("pll_get_post_language")? pll_get_post_language($post_id) : "es";
 		
-		#  1. save the filename for all maps
-		$mapplic_filename	=	"mapplic_".$language;		
-		save_mapplic_file($mapplic_filename, $language);
+		#  1. save the filename for all maps (we are not using this file anymore)
+		save_mapplic_file("mapplic_".$language, $language);
 		
 		
-		#if we are saving a hotspot the we get the parent 
+		# if we are saving a hotspot -> we get the parent 
 		$mapa_post	= $post;
 		while ($mapa_post->post_parent) 	$mapa_post = get_post($mapa_post->post_parent);				
 		#  2. and we save the single file just for the map (only for this language)

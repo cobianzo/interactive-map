@@ -4,6 +4,10 @@
  
 <?php 
 while (have_posts()): the_post();
+
+	
+
+
 	get_template_part( "part", "mapa"); ?> 
 <?php endwhile; ?>
 
