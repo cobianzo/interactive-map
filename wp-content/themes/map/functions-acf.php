@@ -26,6 +26,14 @@ if(function_exists("register_field_group"))
 	register_field_group(array (
 		'id' => 'acf_campos-del-mapa',		'title' => 'Campos del Mapa',
 		'fields' => array (
+			array (		/* TO_DO: reemplazar esto por el título del mapa */
+				'key' => 'field_550ca729fb423',				'label' => 'Título a mostrar en la web',				'name' => 'category_name',
+				'type' => 'text',
+				'instructions' => 'El título de arriba es identificativo a nivel de administración, pero no se vé en la web. Escribe aquí el título que se muestra en el frontend..',
+				'default_value' => '',				'placeholder' => 'ej. Zona Arqueológica de Tulúm',				'prepend' => '',				'append' => '',
+				'formatting' => 'html',				'maxlength' => '',
+			),
+			array (
 			array (
 				'key' => 'field_550b0edb33e4e',				'label' => 'Imagen del mapa HI',				'name' => 'mapa_hi',
 				'type' => 'image',
@@ -33,14 +41,6 @@ if(function_exists("register_field_group"))
 				'required' => 1,
 				'save_format' => 'id',				'preview_size' => 'medium',				'library' => 'all',
 			),
-			array (		/* TO_DO: reemplazar esto por el título del mapa */
-				'key' => 'field_550ca729fb423',				'label' => 'Nombre a mostrar en Lista',				'name' => 'category_name',
-				'type' => 'text',
-				'instructions' => 'En la parte izquierda del mapa aparece una lista con los monumentos de este mapa. Por ejemplo, si el mapa corresponde a la península de Yucatán puedes poner "Emplazamientos arqueológicos", si el mapa es de Tulúm puedes escribir sencillamente "Tulúm". Deja vacío para que no se cree una categoría en la lista.',
-				'default_value' => '',				'placeholder' => 'ej. Monumentos de Tulúm',				'prepend' => '',				'append' => '',
-				'formatting' => 'html',				'maxlength' => '',
-			),
-			array (
 				'name' => 'promos',		'key' => 'field_55119a05aaabbaaa',	'label' => 'Promos y Videos',
 				'type' => 'relationship',
 				'instructions' => 'Selecciona los bloques de imagen y texto que deseas incluir. Los que sean videos serán incluídos en la sección vídeos.',

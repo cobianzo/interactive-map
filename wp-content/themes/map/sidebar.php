@@ -53,6 +53,9 @@
 				
 			<?php	endif;  # atachments exists ?>		
 					
+					
+					
+					
 			<div class='row'> <!-- row video + before/now-->
 			
 				<div class='col-sm-12 col-md-6' id='col-video'> <!-- col  video -->
@@ -99,7 +102,8 @@
 								setup_postdata($post);	
 								
 								get_template_part( "part", "promo"); 
-							}
+							}	setup_postdata($current_post);		$post	= $current_post;
+
 					endif; ?>
 				</div>
 				
@@ -109,6 +113,7 @@
 		</div> <!-- / col imagegallery , video and before/now-->
 		
 
+		<!-- verdadero sidebar: comentarios y primera promo -->
 		<aside class='col-sm-12 col-md-4'>
 			<div class='row' id='comments-container'>
 				<?php 	get_template_part( "part", "comments"); ?> 
@@ -120,7 +125,7 @@
 						setup_postdata($post);	
 						
 						get_template_part( "part", "promo"); 
-					}
+					} setup_postdata($current_post);		$post	= $current_post;
 				?> 
 			</div>
 		</aside>
@@ -129,9 +134,23 @@
 	</div>  <!-- row after section -->
 
 
-	
+	<?php if ($current_promo > count($promos)) :?>
 	<div class='row-fluid' id='bottom-row'>
-		Extra content here row on bottom
+			<?php for ($i = $current_promo; $i < count($promos); $i++) { ?>
+				<div class='col-xs-12 col-sm-6 col-md-3'>
+				<?php 
+						$post	= get_post($promos[$i]);
+						setup_postdata($post);	
+						
+						get_template_part( "part", "promo"); 
+				?>
+				</div>			
+			<?php } ?>			
 	</div>
+	<?php endif; 
+	setup_postdata($current_post);		
+	$post	= $current_post;
+	?>
+
 	
 </section><!--sidebar-->
