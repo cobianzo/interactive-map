@@ -278,7 +278,30 @@
 		} 
 	}
 
-	
+	/* writes html for the template modal window of bootstrap
+		params:
+			id, html_header, html_body, html_footer
+	*/
+	function print_bt_modal($params = array())
+	{
+		?>
+		<div class="modal fade" id="<?php echo $params['id'];?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo $params['id'];?>" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<?php echo $params['html_header']; ?>
+					</div>
+					<div class="modal-body">
+						<?php echo $params['html_body']; ?>					
+					</div>
+					<div class="modal-footer">
+						<?php echo $params['html_footer']; ?>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<?php
+	}
 	
 	
 	
