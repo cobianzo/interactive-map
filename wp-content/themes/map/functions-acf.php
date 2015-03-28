@@ -85,10 +85,7 @@ if(function_exists("register_field_group"))
 				'name' => '',
 				'type' => 'tab',
 			),
-			array (
-				'key' => 'field_550b0e5bbbbbb',
-				'label' => 'Instrucciones',
-				'name' => '',
+			array (		'name' => '',   'key' => 'field_550b0e5bbbbbb',   'label' => 'Instrucciones',
 				'type' => 'message',
 				'message' => 'Para saber con exactitud las coordenadas, visita el mapa cuando estés conectado como administrador. Verás las coordenadas del ratón al pasar sobre el mapa.',
 			),

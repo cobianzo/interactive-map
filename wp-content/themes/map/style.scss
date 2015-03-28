@@ -52,6 +52,8 @@ textarea#comment {
 .icon.responsive { background-image: url(../images/icon-responsive.png); }
 .icon.mobile { background-image: url(../images/icon-mobile.png); }
 
+
+/* responsive iframe flexible video */
 .flex-video {
 	position: relative;
 	padding-bottom: 56.25%; /* 16:9 */
@@ -69,7 +71,12 @@ textarea#comment {
 	
 	}
 }
+/* end flexible video */
 
+
+.align-center 	{	 text-align: center;}
+.align-left 		{	text-align: left;	}
+.align-right 		{	text-align: right;  }
 
 
 /*   MAP  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
@@ -89,6 +96,9 @@ textarea#comment {
 /*     ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
  
+ 
+ 
+ /*------------- IMAGE GALLLERY -------------------*/
 .navbar-bottom {
 	min-height: 300px;
 	margin-top: 100px;
@@ -115,7 +125,7 @@ a.thumbnail {
   }
   &:hover .glyphicon { 	color:	$brand-primary;	}
 }
-
+/*------------- end IMAGE GALLLERY -------------------*/
 
 
 
@@ -223,6 +233,8 @@ a.thumbnail {
 		display: none;
 	}
 }
+
+
 
 
 
@@ -429,26 +441,14 @@ nav.oldernewer {
 	
 }
 
-.none { /* this class is used to hid the skip to content link at the beginning of the document for accessibility */
-	display: none;
-}
-.clear {
-	clear: both;
-}
-.left {
-	float: left;
-}
-.right {
-	float: right;
-}
-.aligncenter {
-	text-align: center;
-}
-.alignleft {
-	text-align: left;
-}
-.alignright {
-	text-align: right;
-}
 
 /* Always remember to compress your live stylesheet and keep an uncompressed backup */
+
+
+
+/* HEADER -------------------------------------------*/
+
+#header-navbar {
+	height:					89px;			/* RESP:  make smaller for mobile */
+	background:			$bg-light  url("images/bg-header.jpg") repeat-x center top;
+}
