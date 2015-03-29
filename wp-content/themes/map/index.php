@@ -1,12 +1,13 @@
 <?php 
 	// el index.php y single.php es idéntico.
-get_header(); ?>
+get_header(); 
 
-<?php
+
+ 	if (function_exists("pll_current_language") && (!isset($lang_slug))) 	
+		$lang_slug = pll_current_language("slug"); 
+
 	global $post;		# si estamos en homepage (o sea, este file, consideramos q estamos en el post de yucatán.
-	$mapas				= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC", 
-										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
-	$yucatan_post		= $post	=	$mapas[0];
+	$yucatan_post		= $post	=	get_yucatan_mapa($lang_slug);
 	setup_postdata($post);
 	
 	

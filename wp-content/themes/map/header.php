@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+
+<?php	if (function_exists("pll_current_language")) 	
+{
+	$lang 			= pll_current_language("name"); 
+	$lang_slug	= pll_current_language("slug");
+}
+?>
+
 <html <?php language_attributes(); ?>>
 <head>
 	<title><?php show_title_tag(); ?> </title>
@@ -40,61 +48,78 @@
 	
 </head>
 
+
 <body <?php body_class(); ?>>
 <div id="body"><!-- this encompasses the entire Web site -->
 	
 	
 	
-	<div id="header"><header>
 	    <!-- Fixed navbar -->
 		<nav id="header-navbar"  class="navbar navbar-default navbar-fixed-top">
-		  <div class="container">
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="navbar-brand" href="<?php home_url(); ?>">
-				<img src="<?php echo( get_header_image() ); ?>" alt="<?php echo( get_bloginfo( 'title' ) ); ?>" />
-			  </a>
+		  <div class="container"><div class=row-fluid>
+		  
+			<div class="navbar-header col-xs-1">
+			
+			  <a id='logo' href="<?php home_url(); ?>">
+					<img src="<?php echo( get_header_image() ); ?>" alt="<?php echo( get_bloginfo( 'title' ) ); ?>" />
+			  </a>	  
+			  
 			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-			  <ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#about">About</a></li>
-				<li><a href="#contact">Contact</a></li>
-				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-				  <ul class="dropdown-menu" role="menu">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else here</a></li>
-					<li class="divider"></li>
-					<li class="dropdown-header">Nav header</li>
-					<li><a href="#">Separated link</a></li>
-					<li><a href="#">One more separated link</a></li>
-				  </ul>
-				</li>
-			  </ul>
-			  <ul class="nav navbar-nav navbar-right">
-				<li><a href="../navbar/">Default</a></li>
-				<li><a href="../navbar-static-top/">Static top</a></li>
-				<li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
-			  </ul>
-			</div><!--/.nav-collapse -->
-		  </div>
+			
+			<!-- menu navigation-->
+			<div class='col-xs-9'>
+				<div id="titulo" class='row-fluid'>
+					
+					<h1 class='h3'><?php bloginfo("blog_title"); ?></h1>
+				
+				</div>
+		
+		
+				<?php  // BREADCRUMBS
+					$yucatan_post	= get_yucatan_mapa($lang_slug);
+				?>
+				<div id="navbar"  class='row-fluid'>
+					<div class="hidden-xs">
+					  <ul class="nav navbar-nav">
+						<li class="active"><a href="<?php the_permalink($yucatan_post->ID); ?>"><b><?php echo get_post_meta($yucatan_post->ID, 'category_name', true);?></b></a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#contact">Contact</a></li>
+						  </ul>
+						</li>
+					  </ul>
+					  <ul class="nav navbar-nav navbar-right">
+						<li><a href="../navbar/">Default</a></li>
+						<li><a href="../navbar-static-top/">Static top</a></li>
+						<li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+					  </ul>
+					</div><!--/.nav-collapse -->
+				
+				</div> <!-- #navbar row-->
+			
+			</div> <!-- col-9-->
+			<div class='col-xs-2'>
+		
+				<!--  Mobile botón expandible  que abre el dropdown de idiomas -->
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#language-dropdown-ul" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only"><?php _e("Toggle navigation"); ?></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>
+				  </button> 
+				  
+				  	<div id="language-dropdown" class="dropdown pull-right "> 
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
+						  <ul id='language-dropdown-ul' class="dropdown-menu" role="menu">
+								<li class="dropdown-header"><?php _e("Otros idiomas"); ?></li>						  
+					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1));; ?>
+						   </ul>
+					</div>
+					
+
+			</div>
+				
+		  </div></div>
 		</nav>
 	
 	
-	</header><div>
-		
-		<div class="container">
-		
-			<?php if (function_exists("pll_the_languages")) pll_the_languages(array());; ?>
-		</div><!--.container-->
-	</header></div><!--#header-->
+	
 	
 	
 	

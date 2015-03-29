@@ -510,7 +510,15 @@ o->post_name')";
 	# END MONUMENTOS (tb llamados location en el contexto Mapplic) 
 	# --------------------------------------------------------------------------------------------------------
 
-
+	function get_yucatan_mapa($lang = "es"){
+			$mapas				= get_posts (array( "post_type"	=> "mapa" , "posts_per_page" => 1,  "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC", 
+										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
+			return $mapas[0];		
+	}
+	
+	
+	
+	
 
 
 	# MANEJO DE FICHERO JSON 

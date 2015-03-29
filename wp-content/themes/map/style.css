@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/* "bootstrap-sass-3.3.4 */
 /*
 Theme Name: Map basado en Whiteboard
 Theme URI: http://whiteboardframework.com/
@@ -7,15 +6,49 @@ Author: Alvaro B. Cobian
 Author URI: http://cobianzo.com/
 Plantilla liimpia para desarrollar esta applicaci├│n customizada para Ver├ís
  */
+/* "bootstrap-sass-3.3.4 */
+@font-face {
+  font-family: 'caviar_dreamsregular';
+  src: url("fonts/CaviarDreams-webfont.eot");
+  src: url("fonts/CaviarDreams-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/CaviarDreams-webfont.woff") format("woff"), url("fonts/CaviarDreams-webfont.ttf") format("truetype"), url("fonts/CaviarDreams-webfont.svg#caviar_dreamsregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'caviar_dreamsitalic';
+  src: url("fonts/CaviarDreams_Italic-webfont.eot");
+  src: url("fonts/CaviarDreams_Italic-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/CaviarDreams_Italic-webfont.woff") format("woff"), url("fonts/CaviarDreams_Italic-webfont.ttf") format("truetype"), url("fonts/CaviarDreams_Italic-webfont.svg#caviar_dreamsitalic") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'caviar_dreamsbold';
+  src: url("fonts/Caviar_Dreams_Bold-webfont.eot");
+  src: url("fonts/Caviar_Dreams_Bold-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/Caviar_Dreams_Bold-webfont.woff") format("woff"), url("fonts/Caviar_Dreams_Bold-webfont.ttf") format("truetype"), url("fonts/Caviar_Dreams_Bold-webfont.svg#caviar_dreamsbold") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'alexbrush_regular';
+  src: url("fonts/CaviarDreams_Italic-webfont.eot");
+  src: url("fonts/CaviarDreams_Italic-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/CaviarDreams_Italic-webfont.woff") format("woff"), url("fonts/CaviarDreams_Italic-webfont.ttf") format("truetype"), url("fonts/CaviarDreams_Italic-webfont.svg#caviar_dreamsitalic") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 /*   MAIN  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
 ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 body {
-  background-color: #fff;
+  background-color: #fbf8e4;
   color: #888;
-  font-family: Arial;
-  /* TO_DO: usar mis fuentes */
-  font-size: 14px;
+  font-family: "caviar_dreamsregular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
   margin: 0; }
+
+b {
+  font-family: 'caviar_dreamsbold';
+  font-weight: bold; }
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+  font-weight: bold; }
+
+h1 {
+  margin-top: 15px !important; }
 
 .modal {
   font-size: 14px; }
@@ -73,6 +106,12 @@ textarea#comment {
 .align-right {
   text-align: right; }
 
+no-margin {
+  margin: 0 !important; }
+
+.no-margin-top {
+  margin-top: 0 !important; }
+
 /*   MAP  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 #map-section {
@@ -105,7 +144,7 @@ a.thumbnail {
     color: white;
     font-size: 3em; }
   a.thumbnail:hover .glyphicon {
-    color: #337ab7; }
+    color: #bb0000; }
 
 /*------------- end IMAGE GALLLERY -------------------*/
 /*   BEFORE - NOW PLUGIN  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
@@ -177,30 +216,48 @@ a.thumbnail {
 
   .window-mockup {
     display: none; } }
-/*   STRUCTURAL  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
- ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
-section {
-  /*	padding: 60px 0; */ }
-
-section .inner {
-  padding-left: 20px;
-  padding-right: 20px; }
-
-section.purple {
-  background-color: #b7a6bd;
-  color: #fff;
-  padding: 60px 0; }
-
-section.blue {
-  background-color: #7DD5C9;
-  color: #fff;
-  padding: 20px 0; }
-
-/* Always remember to compress your live stylesheet and keep an uncompressed backup */
 /* HEADER -------------------------------------------*/
 #header-navbar {
-  height: 89px;
-  /* RESP:  make smaller for mobile */
-  background: #fbf8e4 url("images/bg-header.jpg") repeat-x center top; }
+  height: 40px;
+  background-image: url("images/figura-header.png"), url("images/bg-header.jpg");
+  background-repeat: no-repeat, repeat-x;
+  background-color: #fbf8e4;
+  background-position: right top, center -39px;
+  border: 0;
+  -webkit-box-shadow: #000 2px 2px 10px;
+  box-shadow: #000 2px 2px 10px; }
+  #header-navbar #navbar {
+    margin-top: -4px; }
+  #header-navbar .navbar-toggle {
+    height: 35px;
+    margin-top: 3px; }
+  #header-navbar .navbar-collapse.in {
+    background: #fbf8e4; }
+  #header-navbar .navbar-nav > li > a {
+    padding-top: 0;
+    padding-bottom: 0; }
+
+#language-dropdown {
+  margin-top: 52px; }
+
+@media all and (max-width: 991px) {
+  #titulo h1 {
+    margin: 0px 10px !important;
+    font-size: 20px; }
+
+  .navbar-header {
+    padding: 0; }
+    .navbar-header #logo {
+      margin-left: 0; }
+      .navbar-header #logo img {
+        height: 47px;
+        margin-top: -4px; } }
+@media all and (min-width: 768px) {
+  #header-navbar {
+    height: 88px;
+    background-position-y: top; }
+    #header-navbar #logo img {
+      height: 70px;
+      margin-top: 5px; } }
 
 /*# sourceMappingURL=style.css.map */
