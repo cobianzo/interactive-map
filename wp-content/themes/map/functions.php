@@ -277,6 +277,25 @@
 			echo wp_title(''); echo ' | '; bloginfo( 'name' );
 		} 
 	}
+	
+	// devuelve ID
+	/*function get_frontpage_in_current_language()
+	{
+			$frontpage_id = get_option('page_on_front');
+			$lang_slug	= pll_current_language("slug");
+			$front_page_translated = pll_get_post($frontpage_id, $lang_slug);
+			return $front_page_translated;		
+	}
+	// para que el título de la página esté traducido: se recoge el titulo de la frontpage.
+	add_filter( 'bloginfo', 'blogname', 10, 2 );
+	function blogname($text_to_filter, $option) {
+		if (($option == "name") &&(function_exists("pll_current_language"))) {
+			return get_the_title(get_frontpage_in_current_language());			
+		}
+		return $text_to_filter;
+	}*/
+
+	
 
 	/* writes html for the template modal window of bootstrap
 		params:
@@ -361,7 +380,7 @@
 							$array_categories[]	= array(
 								"id"  		=>  $subcat->cat_ID,
 								"title" 		=>  $subcat->cat_name,
-								"color"	=>  "#63aa9c",
+								"color"	=>  "#bb0000",
 								"show" 	=>  "true"	);
 					}
 			}

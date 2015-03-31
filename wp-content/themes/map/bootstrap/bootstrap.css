@@ -1208,13 +1208,13 @@ h6, .h6 {
     font-size: 75%; }
 
 h1, .h1 {
-  font-size: 41px; }
+  font-size: 28px; }
 
 h2, .h2 {
-  font-size: 34px; }
+  font-size: 20px; }
 
 h3, .h3 {
-  font-size: 28px; }
+  font-size: 18px; }
 
 h4, .h4 {
   font-size: 20px; }
@@ -4448,7 +4448,7 @@ a.thumbnail.active {
 a.list-group-item {
   color: #555; }
   a.list-group-item .list-group-item-heading {
-    color: #333; }
+    color: #bb0000; }
   a.list-group-item:hover, a.list-group-item:focus {
     text-decoration: none;
     color: #555;

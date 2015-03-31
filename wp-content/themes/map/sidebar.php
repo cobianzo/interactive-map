@@ -35,16 +35,16 @@
 				<h2><?php printf( __('Galería multimedia para %s', 'veras'), get_the_title() ); ?></h2> 	
 		
 				<?php 	$carousel_imgs =  wpba_get_attachments( );  ?>
-				<div id='image-gallery-row' class="row"> <!-- gallery,-->
+				<div id='image-gallery-row' class="row-fluid"> <!-- gallery,-->
 		
 					<?php	foreach ($carousel_imgs as $i => $img) : 
 									$img_url_thumb	=	wp_get_attachment_image_src( $img->ID, "thumbnail" );
 									$img_url_large		=	wp_get_attachment_image_src( $img->ID, "large" );				?>
 									
-					  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+					  <div class="col-lg-3 col-md-4 col-xs-6 thumb"><span class='crop-image'>
 							<a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="<?php echo esc_attr(get_the_title($img->ID)); ?>" data-caption="<?php echo esc_attr(get_the_title($img->ID)); ?>" data-image="<?php echo $img_url_large[0]; ?>" data-target="#image-gallery">
 								<img class="img-responsive" src="<?php echo $img_url_thumb[0]; ?>" alt="Alt- <?php echo esc_attr(get_the_title($img->ID)); ?>">
-							</a>
+							</a></span>
 						</div>	
 						
 					<?php endforeach;					?>					
@@ -114,11 +114,11 @@
 		
 
 		<!-- verdadero sidebar: comentarios y primera promo -->
-		<aside class='col-sm-12 col-md-4'>
-			<div class='row' id='comments-container'>
+		<aside id='aside' class='col-sm-12 col-md-4'>
+			<div class='row-fluid' id='comments-container'>
 				<?php 	get_template_part( "part", "comments"); ?> 
 			</div>
-			<div class='row' id='promo-aside'>
+			<div class='row-fluid' id='promo-aside'>
 				<?php 	
 					if (count($promos) > $current_promo) {
 						$post	= get_post($promos[$current_promo++]);

@@ -30,6 +30,8 @@
 					
 					
 				</section>
+				<hr class='greca no-margin' >
+				<hr class='sombra no-margin' >
 				<?php 
 				
 				/*	THIS CONTINUES IN FOOTER.php.   ----->	There you'll find the call of the <script> that loads the map.
@@ -41,5 +43,3 @@
 										
 				?>
 				
-				<hr><hr>
-				<a href="javascript:   $('#modal-piramide-de-kukulkan').modal({show: 'false'}); ">Abre modal </a>

@@ -1,34 +1,38 @@
-		<h3><?php 	comments_number('No comments', 'One comment', '% comments'); ?></h3>
-			
-			<a class="btn btn-primary" href="javascript:   $('#modal-comments').modal({show: 'false'}); ">
+		<div class=row>
+			<h3 class='col-xs-7'><?php 	comments_number('No comments', 'One comment', '% comments'); ?></h3>
+			<a class="col-xs-4 btn btn-primary btn-xs margin-top" href="javascript:   $('#modal-comments').modal({show: 'false'}); ">
 				<?php _e("Añadir comentario"); ?>
 			</a>
+		</div>
 
 			
 			<?php
 			$comments	=	get_comments(array("post_id" => get_the_ID()));
-			
+			if (count ($comments )) echo "<ul id='comments-list'>";
 			foreach($comments as $comment) : ?>
 	    	<?php $comment_type = get_comment_type(); ?> <!-- checks for comment type -->
 	    	<?php if($comment_type == 'comment') { ?> <!-- outputs only comments -->
-		        <li id="comment-<?php comment_ID(); ?>" class="comment <?php if($i&1) { echo 'odd';} else {echo 'even';} ?> <?php $user_info = get_userdata(1); if ($user_info->ID == $comment->user_id) echo 'authorComment'; ?> <?php if ($comment->user_id > 0) echo 'user-comment'; ?>">
+		        <li id="comment-<?php comment_ID(); ?>" class="row comment <?php if($i&1) { echo 'odd';} else {echo 'even';} ?> <?php $user_info = get_userdata(1); if ($user_info->ID == $comment->user_id) echo 'authorComment'; ?> <?php if ($comment->user_id > 0) echo 'user-comment'; ?>">
+					<i class="glyphicon glyphicon-comment col-xs-1"></i>
+					<div class=col-xs-11>
 		            <?php if ($comment->comment_approved == '0') : ?> <!-- if comment is awaiting approval -->
 		                <p class="waiting-for-approval">
 		                	<em><?php _e('Your comment is awaiting approval.'); ?></em>
 		                </p>
 		            <?php endif; ?>
-		            <div class="comment-text">
-			            <?php comment_text(); ?>
-		            </div><!--.commentText-->
-		            <div class="comment-meta">
-		            	<?php edit_comment_link('Edit Comment', '', ''); ?>
-		            	<?php comment_type(); ?> by <?php comment_author_link(); ?> on <?php comment_date(); ?> at <?php comment_time(); ?>
-		            	<p class="gravatar"><?php if(function_exists('get_avatar')) { echo get_avatar($comment, '36'); } ?></p>
-		            </div><!--.commentMeta-->
+						<div class="comment-text">
+							<?php comment_text(); ?>
+						</div><!--.commentText-->
+						<div class="comment-meta small"><i>
+							<?php edit_comment_link('Edit Comment', '', ''); ?>
+							<?php comment_type(); ?> by <?php comment_author_link(); ?> on <?php comment_date(); ?> at <?php comment_time(); ?>
+				         </i></div><!--.commentMeta-->
+					</div>
 		        </li>
 			<?php } else { $trackback = true; } ?>
-	    <?php endforeach; ?>
-	    </ol>
+	    <?php endforeach; 
+		if (count ($comments )) echo "</ul>";
+	    ?>
 
 		<div class="modal fade" id="modal-comments" tabindex="-1" role="dialog" aria-labelledby="modal-comments" aria-hidden="true">
 			<div class="modal-dialog">
@@ -74,7 +78,7 @@
 			
 			
 			
-			<?php if ( have_comments() ) : ?>
+			<?php if ( 0 &&  have_comments() ) : ?>
 			<h2 class="comments-title">
 			<?php
 			echo "POST: $post->ID, $post->post_title";

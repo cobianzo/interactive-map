@@ -84,9 +84,11 @@ b {
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
 	font-weight:			bold;
+	color:						$brand-primary;
 }
 h1 {
 	margin-top:			15px !important;
+	color:						$gray!important;	
 }
 
 
@@ -101,20 +103,6 @@ textarea#comment {
 
 /*   GENERIC THINGS  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
- 
-/* Icons */
-.icon {
-	background-repeat: no-repeat;
-	background-position: center 10px;
-	padding-top: 60px;
-}
-
-.icon.landmark { background-image: url(../images/icon-landmark.png); }
-.icon.layer { background-image: url(../images/icon-layer.png); }
-.icon.link { background-image: url(../images/icon-link.png); }
-.icon.browser { background-image: url(../images/icon-browser.png); }
-.icon.responsive { background-image: url(../images/icon-responsive.png); }
-.icon.mobile { background-image: url(../images/icon-mobile.png); }
 
 
 /* responsive iframe flexible video */
@@ -150,6 +138,22 @@ no-margin {
 .no-margin-top {
 	margin-top:	0 !important;
 }
+.margin-top {
+	margin-top:		20px;
+}
+
+.greca {
+	  height: 9px;
+	  border: 0;
+	  padding: 0;
+	  margin: 0;
+	  background: transparent url("images/bg-header.jpg") repeat-x left bottom;
+}
+.sombra {
+	  height: 				65px;
+	  border: 			0;	  padding: 0;	  margin: 0;
+	  background: white url("images/bg-sombra.jpg") no-repeat center bottom;
+}
 
 
 /*   MAP  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
@@ -157,7 +161,7 @@ no-margin {
  
 
 #map-section{
-	padding:			51px 0;
+	padding:			89px 0 0 0;
 }
 	.map-container {
 	}
@@ -179,15 +183,20 @@ no-margin {
 	padding-top: 35px;
 	color:#FFFFFF;
 }
-
-
 #image-gallery-row {
-	 max-height: 			180px;
-	overflow-y: 				scroll;
+	margin-top:			30px;
 }
 
 a.thumbnail {
+	overflow:				hidden;
+	height:				100px;	
 	text-align:			center;
+	border:				0;
+	margin-bottom:	0;
+	img	{
+		width:					100%;
+		margin-top:		-39px;		// RESPONSIVE:  el crop se ve bien solo en desktop: verificar el resto.
+	}
 	.glyphicon {
 		  position: 		absolute;
 		  left: 				0;
@@ -198,11 +207,42 @@ a.thumbnail {
   }
   &:hover .glyphicon { 	color:	$brand-primary;	}
 }
+		//  RESPONSIVE IMG GALLERY
+	@media all and (min-width: $screen-md-min) {
+		
+		#image-gallery-row {
+			height: 					220px;
+			overflow-y: 				auto;
+		}
+
+	}
 /*------------- end IMAGE GALLLERY -------------------*/
 
 
 
+/*------------- COMMENTS  -------------------*/
+#comments-list {
+	list-style:				none;
+	margin-top:		15px;
+	padding:				0;
+	
+	.glyphicon { margin-top:	3px;}
+}
 
+	
+	@media all and (min-width: $screen-md-min) {
+	
+		#aside{
+			margin-top:					2px;
+			background-color:			$gray-lighter;
+		}
+
+		#comments-container {
+			height:			278px;
+		}
+	
+	}
+/*------------- end COMMENTS  -------------------*/
 
 
 
@@ -339,7 +379,15 @@ a.thumbnail {
 		padding-top:			0;
 		padding-bottom:	0;
 	}
-	
+
+
+		#breadcrums {
+			.glyphicon  {
+				margin-top:	3px;
+				margin-left:		-7px;
+			}
+			font-size:			0.8em;
+		}
 }
 
 #language-dropdown {
@@ -359,6 +407,7 @@ a.thumbnail {
 		#titulo h1 {									  // title small for mobile
 			margin:				0px 10px !important;
 			font-size:			floor($font-size-h1 / 2);
+			line-height:			0.9em;
 		}
 	
 		.navbar-header  { 
@@ -370,6 +419,16 @@ a.thumbnail {
 					margin-top:		-4px;
 				}
 			}		
+		}
+		
+		#language-dropdown  {
+			.dropdown-toggle {
+				visibility:				hidden;
+			}
+			#language-dropdown-ul {
+				top:						0;
+				margin-top:		-55px;
+			}
 		}
 	
 	}

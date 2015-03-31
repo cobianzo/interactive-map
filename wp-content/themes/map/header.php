@@ -70,7 +70,7 @@
 			<div class='col-xs-9'>
 				<div id="titulo" class='row-fluid'>
 					
-					<h1 class='h3'><?php bloginfo("blog_title"); ?></h1>
+					<h1 class=''><?php bloginfo("blog_title"); ?></h1>
 				
 				</div>
 		
@@ -80,17 +80,20 @@
 				?>
 				<div id="navbar"  class='row-fluid'>
 					<div class="hidden-xs">
-					  <ul class="nav navbar-nav">
-						<li class="active"><a href="<?php the_permalink($yucatan_post->ID); ?>"><b><?php echo get_post_meta($yucatan_post->ID, 'category_name', true);?></b></a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#contact">Contact</a></li>
-						  </ul>
+					  <ul id='breadcrums' class="nav navbar-nav">
+						<li <?php if (is_home() || is_front_page()) { ?> class="active" <?php } ?>>
+							<a href="<?php echo get_home_url(); //the_permalink($yucatan_post->ID); ?>"><b><?php echo get_post_meta($yucatan_post->ID, 'category_name', true);?></b></a>
+						</li>
+						<?php if ((!is_front_page()) && (!is_home())  && $post->post_type == "mapa" ) : ?>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right pull-left"></span>
+							<a  class='active' href="<?php  the_permalink() ?>"><?php echo get_post_meta(get_the_ID(), 'category_name', true); ?></a></li>
+						<?php endif;?>
+					  </ul>
 						</li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
-						<li><a href="../navbar/">Default</a></li>
-						<li><a href="../navbar-static-top/">Static top</a></li>
-						<li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+						<?php wp_list_pages( array('title_li' => null) ); ?> 
 					  </ul>
 					</div><!--/.nav-collapse -->
 				

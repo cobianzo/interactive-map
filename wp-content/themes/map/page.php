@@ -1,3 +1,16 @@
+
+
+<?php 
+	if (is_front_page())
+	get_template_part( "index");  
+
+	die();
+?>
+
+
+
+
+
 <?php get_header(); ?>
 
 <div id="content">
