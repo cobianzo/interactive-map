@@ -7,8 +7,9 @@
 
 			
 			<?php
-			$comments	=	get_comments(array("post_id" => get_the_ID()));
-			if (count ($comments )) echo "<ul id='comments-list'>";
+			$comments	=	get_comments(array("post_id" => get_the_ID())); ?>
+			<ul id='comments-list'> <?php 
+			if (!count ($comments )) echo "<li><blockquote>".__("Nadie ha comentado este mapa aún. Sé el primero en hacerlo")."</blockquote></li>";
 			foreach($comments as $comment) : ?>
 	    	<?php $comment_type = get_comment_type(); ?> <!-- checks for comment type -->
 	    	<?php if($comment_type == 'comment') { ?> <!-- outputs only comments -->
@@ -30,18 +31,17 @@
 					</div>
 		        </li>
 			<?php } else { $trackback = true; } ?>
-	    <?php endforeach; 
-		if (count ($comments )) echo "</ul>";
-	    ?>
+	    <?php endforeach;  ?> 
+			</ul> 
 
 		<div class="modal fade" id="modal-comments" tabindex="-1" role="dialog" aria-labelledby="modal-comments" aria-hidden="true">
-			<div class="modal-dialog">
+			<div class="modal-dialog"> 
 				<div class="modal-content">
 					<div class="modal-header">
 						<h1><?php _e("Añade un comentario"); ?></h1>
 					</div>
 					<div class="modal-body">
-						<?php 
+						<?php  // TO_DO: editar campos y formato 	
 						$commenter = wp_get_current_commenter();
 						$req = get_option( 'require_name_email' );
 						$aria_req = ( $req ? " aria-required='true'" : '' );

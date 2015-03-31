@@ -56,7 +56,7 @@
 	
 	    <!-- Fixed navbar -->
 		<nav id="header-navbar"  class="navbar navbar-default navbar-fixed-top">
-		  <div class="container"><div class=row-fluid>
+		  <div class=row-fluid>
 		  
 			<div class="navbar-header col-xs-1">
 			
@@ -118,7 +118,7 @@
 
 			</div>
 				
-		  </div></div>
+		  </div>
 		</nav>
 	
 	

@@ -351,12 +351,12 @@
 				
 		/* defining the args to select the right mapas: the "mapa"  custom types with no parent. Their children are the hotspots (also called locations or monumentos)  */
 		
-		$query_args = array( "post_type"  =>	"mapa", "posts_per_page"	=> 	-1 , "post_parent" => 0, "orderby" => "menu_order", "order" => "ASC"); 
+		$query_args = array( "post_type"  =>	"mapa", "posts_per_page"	=> 	-1 , "post_parent" => 0, "orderby" => "menu_order", "order" => "ASC", "lang" => $lang); 
 		
 		if ($lang)  /* TO_DO: apply this only if polylang plugin is active 
 							TO_DO: bug: if the user language is set to something, the tax_query will not work and query_posts filters posts in that language, ignoring our $lang filter.
 		*/
-		   $query_args['tax_query']  = array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,),	)	;
+		   // $query_args['tax_query']  = array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,),	)	;
 				
 		if (is_array($maps_array) && (!empty($maps_array))) $query_args = array_merge($query_args, array('post__in'  =>  $maps_array));
 		query_posts( $query_args);
@@ -428,7 +428,7 @@
 	function get_all_mapas($lang=null){  // esta función prácticamente no tiene utilidad
 		$query_args	= array("post_type"=>"mapa","posts_per_page"=>-1,"post_parent"=>0,"orderby"=>"menu_order","order"=>"ASC");
 		if ($lang)  /* TO_DO: apply this only if polylang plugin is active */
-		   $query_args['tax_query']  = array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,),	)	;
+		   $query_args['lang']  = $lang;
 		
 		return get_posts($query_args);		
 	}
@@ -490,8 +490,10 @@
 	// devuelve todos los posts de los monumentos del mapa especificado
 	function get_monumentos_by_mapa($id_map){
 		if ( !$id_map) return false;
+		global $polylang;
+		if (isset($polylang))	$lang = pll_get_post_language($id_map);
 		return get_posts(array(
-											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map
+											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map, "lang" => $lang
 											/*"meta_query"	=>	array( array(	'key'     			=> 	"mapa_padre",  'value' 		  	=> 	$id_map,	'compare'		=> '=',	'type'				=> "NUMERIC"  ))*/
 		));		
 	}
@@ -530,8 +532,8 @@ o->post_name')";
 	# --------------------------------------------------------------------------------------------------------
 
 	function get_yucatan_mapa($lang = "es"){
-			$mapas				= get_posts (array( "post_type"	=> "mapa" , "posts_per_page" => 1,  "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC", 
-										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
+			$mapas				= get_posts (array( "post_type"	=> "mapa" , "posts_per_page" => 1,  "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC",  "lang" => $lang, ));
+										// 'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
 			return $mapas[0];		
 	}
 	
@@ -550,9 +552,10 @@ o->post_name')";
 	}
 	
 	# saves an array in json format into the specific filename, under the /uploads folder
-	function save_json_file($filename = null, $array_to_convert = null) {
+	function save_json_file($filename = null, $array_to_convert = null, $echo = false) {
 		if (!$filename || (!is_array($array_to_convert)) ) return;
 
+		if ($echo) echo " <br><i>saving : </i> <a href='".get_maps_dir("url")."/".$filename."'>$filename</a>";
 		// stripslashes(json_encode($array))
 		$fp = fopen(get_maps_dir("path")."/".$filename , 'w');
 		fwrite($fp, json_encode($array_to_convert));
@@ -562,26 +565,13 @@ o->post_name')";
 	}
 	
 	# saves the file with all the maps configuration separated in levels (each map is one level)
-	function save_mapplic_file($name = "mapplic", $lang = "es", $array_mapas_id = null) {
+	function save_mapplic_file($name = "mapplic", $lang = "es", $array_mapas_id = null, $echo = false) {
 		global $polylang;
-		$curlang =  isset($polylang)? $polylang->curlang : $lang ;
-		if (is_object($curlang)) $curlang 	= $curlang->slug;
-
-		/*
-		TESTING
-		$mapass				= get_posts (array( "post_type"	=> "mapa" , "post_parent" => 0, "orderby" => "menu_order" , "order" => "ASC", 
-										'tax_query' => array(	array(  'taxonomy' => 'language',	'field'    => 'slug', 'terms'    => $lang,)	)	));
-	foreach ($mapass as $mapa) echo "<br>.".$mapa->post_title;
-	die() */;
-										
-		if (strlen($curlang) && (!strpos(" ".$curlang, $lang))) {
-			echo "los idiomas no cuadran: ".$curlang." - ".$lang;
-			die();
-			return;			
-		}
+		$curlang =  isset($polylang)? $polylang->curlang->slug : $lang ;
 		
 		$array 	= array_mapplic_configuration($lang, $array_mapas_id);
-		save_json_file($name.".json", $array);
+		
+		save_json_file($name.".json", $array, $echo);
 		
 	}
 	
@@ -612,6 +602,37 @@ o->post_name')";
 		$mapa_filename	=	$mapa_post->post_name."_".$language;
 		save_mapplic_file($mapa_filename, $language, array($mapa_post->ID));
 	}
+	
+	
+	/* backend admin page */
+	
+	add_action('admin_menu', 'create_all_mapas_json_menu');
+	 
+	function create_all_mapas_json_menu(){
+			add_menu_page( 'Pagina de creación de json para Mapplic', 'JSON creator', 'manage_options', 'create-all-json', 'create_all_json_page' );
+	}
+	 
+	function create_all_json_page(){
+			global $polylang;
+			if (!isset($polylang))			{
+				echo "<h1>Polylang no instalado!</h1>"; return;  
+			}
+			# 1. seleccioamos cada idioma instalado
+			$all_langs 	 = $polylang->get_languages_list();
+			foreach ($all_langs as $lang) {
+				# 2. Para cada idioma, seleccionamos los mapas (sin padre)
+				echo "<h3>$lang->name</h3>";
+				$mapas_lang	=	get_all_mapas($lang->slug);
+				foreach ($mapas_lang as $mapa) :
+				# 3. Para cada mapa, salvamos su json
+					save_mapplic_file($mapa->post_name."_".$lang->slug, $lang->slug, array($mapa->ID), $echo = true);			
+				endforeach;
+				
+			}
+			//get_all_mapas($lang);
+	}
+	
+	
 	
 	
 	/*  end functiones del mapa*/

@@ -156,6 +156,105 @@ no-margin {
 }
 
 
+
+/* HEADER -------------------------------------------*/
+
+
+// header en todos: mobile, table y desktop
+#header-navbar {
+	height:							88px;			
+	background-image:		url("images/figura-header.png"), url("images/bg-header.jpg");
+	background-repeat:		no-repeat , repeat-x ;
+	background-color:			$bg-light; 		
+	background-position:	 right top, center top;
+	border:							0;
+   @include box-shadow($gray-base 2px 2px 10px);
+
+	#logo {
+		img {
+			height:			70px;
+			margin-top:	5px;
+		}
+	}
+ 
+   
+	#navbar { margin-top: 		-4px;		}
+	
+	.navbar-toggle  {	
+			height:			35px;
+			margin-top:	3px;
+	}
+	
+	.navbar-collapse.in {
+			background:	$bg-light;
+	}
+	
+	.navbar-nav > li > a {
+		padding-top:			0;
+		padding-bottom:	0;
+	}
+
+
+		#breadcrums {
+			.glyphicon  {
+				margin-top:	3px;
+				margin-left:		-7px;
+			}
+			font-size:			0.8em;
+		}
+}
+
+#language-dropdown {
+	margin:		52px 60% 0 0;
+}
+
+
+
+
+	// header only MOBIILE and TABLET PORTRAIT
+	@media all and (max-width: $screen-xs-max) { 
+		#header-navbar {
+				height:							40px;			
+				background-position:	 right top, center -39px;
+
+				#titulo h1 {									  // title small for mobile
+					margin:				0px 10px !important;
+					font-size:			floor($font-size-h1 / 2);
+					line-height:			0.9em;
+				}
+			
+				.navbar-header  { 
+					padding:						0;
+					#logo{
+						margin-left:				0;
+						img {
+							height:				47px;			// logo small for 	mobile
+							margin-top:		-4px;
+						}
+					}		
+				}
+				
+				#language-dropdown  {
+					.dropdown-toggle {
+						visibility:				hidden;
+					}
+					#language-dropdown-ul {
+						top:						0;
+						margin-top:		-55px;
+					}
+				}
+				
+				
+				
+				
+		}
+	
+	
+	}
+
+
+
+
 /*   MAP  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
  
@@ -169,7 +268,10 @@ no-margin {
 	.mapplic-list-thumbnail {
 		max-width:			45px;
 	}
-	
+
+	@media all and (max-width: $screen-xs-max) { 
+		#map-section{		padding-top:	39px; }
+	}	
 /*     ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
  
@@ -188,15 +290,20 @@ no-margin {
 }
 
 a.thumbnail {
-	overflow:				hidden;
-	height:				100px;	
 	text-align:			center;
 	border:				0;
 	margin-bottom:	0;
-	img	{
-		width:					100%;
-		margin-top:		-39px;		// RESPONSIVE:  el crop se ve bien solo en desktop: verificar el resto.
+	
+	&.landscape {
+		overflow:				hidden;
+		height:				100px;	
+		
+		img {
+			width:					100%;
+			margin-top:		-39px;		// RESPONSIVE:  el crop se ve bien solo en desktop: verificar el resto.
+		}
 	}
+	
 	.glyphicon {
 		  position: 		absolute;
 		  left: 				0;
@@ -211,7 +318,7 @@ a.thumbnail {
 	@media all and (min-width: $screen-md-min) {
 		
 		#image-gallery-row {
-			height: 					220px;
+			height: 					230px;
 			overflow-y: 				auto;
 		}
 
@@ -226,19 +333,29 @@ a.thumbnail {
 	margin-top:		15px;
 	padding:				0;
 	
+	li {
+		margin-bottom:		20px; 
+	}
 	.glyphicon { margin-top:	3px;}
 }
 
 	
-	@media all and (min-width: $screen-md-min) {
+	// PARA MAS DE TABLET
+	@media all and (min-width: $screen-sm-min) {
 	
 		#aside{
 			margin-top:					2px;
 			background-color:			$gray-lighter;
+
+			.greca { display:none;}
 		}
 
 		#comments-container {
-			height:			278px;
+			#comments-list {
+				height:		225px;
+				overflow-x:	hidden;
+				overflow-y:	auto;
+			}
 		}
 	
 	}
@@ -300,6 +417,7 @@ a.thumbnail {
     color:white;
     font-weight:bold;
     font-size:36px;
+
     text-align:center;
     line-height:64px;
  
@@ -348,109 +466,5 @@ a.thumbnail {
 }
 
 
-
-
-
-/* HEADER -------------------------------------------*/
-
-
-// header en mobile, table y desktop
-#header-navbar {
-	height:							40px;			
-	background-image:		url("images/figura-header.png"), url("images/bg-header.jpg");
-	background-repeat:		no-repeat , repeat-x ;
-	background-color:			$bg-light; 		
-	background-position:	 right top, center -39px;
-	border:							0;
-   @include box-shadow($gray-base 2px 2px 10px);
-
-	#navbar { margin-top: 		-4px;		}
-	
-	.navbar-toggle  {	
-			height:			35px;
-			margin-top:	3px;
-	}
-	
-	.navbar-collapse.in {
-			background:	$bg-light;
-	}
-	
-	.navbar-nav > li > a {
-		padding-top:			0;
-		padding-bottom:	0;
-	}
-
-
-		#breadcrums {
-			.glyphicon  {
-				margin-top:	3px;
-				margin-left:		-7px;
-			}
-			font-size:			0.8em;
-		}
-}
-
-#language-dropdown {
-	margin-top:		52px;
-	
-}
-
-	// only MOBILE
-	@media all and (max-width: $screen-xs-min) {  
-
-
-	}	
-
-	// header only MOBIILE and TABLET PORTRAIT
-	@media all and (max-width: $screen-sm-max) { 
-
-		#titulo h1 {									  // title small for mobile
-			margin:				0px 10px !important;
-			font-size:			floor($font-size-h1 / 2);
-			line-height:			0.9em;
-		}
-	
-		.navbar-header  { 
-			padding:						0;
-			#logo{
-				margin-left:				0;
-				img {
-					height:				47px;			// logo small for 	mobile
-					margin-top:		-4px;
-				}
-			}		
-		}
-		
-		#language-dropdown  {
-			.dropdown-toggle {
-				visibility:				hidden;
-			}
-			#language-dropdown-ul {
-				top:						0;
-				margin-top:		-55px;
-			}
-		}
-	
-	}
-
-	// header en tablet y desktop
-	@media all and (min-width: $screen-sm-min) { 
-		#header-navbar {
-			height:							88px;			
-			background-position-y: top;
-			
-			 > .container {
-			}
-			
-			#logo {
-				img {
-					height:			70px;
-					margin-top:	5px;
-				}
-			}
-			
-			
-		}
-	}
 
 
