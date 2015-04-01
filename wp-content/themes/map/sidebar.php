@@ -1,16 +1,8 @@
 <?php 
 				# initializing array for promos and array for videos
-					$promos_y_videos	= get_post_meta(get_the_ID(), "promos", true);
-					$videos						=	$promos	=	array();	
-					if (is_array($promos_y_videos)) foreach ($promos_y_videos as $pr_id) {
-						$video_embed	= get_post_meta($pr_id, "video_embed", true);
-						if (strlen(trim($video_embed)))		$videos[]										=	$pr_id;
-						else 													$promos[]										=	$pr_id;
-					}
-					
+					global $promo_array;
+					$promos				= get_field("bloque_promos");					
 					$current_promo	=	0;			// we'll increment this as we display promos of this mapa
-					global $post;
-					$current_post	= $post;
 ?>
 
 <?php
@@ -30,20 +22,32 @@
 	<div class='row-fluid'> <!-- includes gallery, video, before/now, and collumn comments with promo  (everything but the bottom row) -->
 	
 		<div class='col-sm-12 col-md-8'>  <!-- img gallery, video and before/now-->
-			<?php if (wpba_attachments_exist( ) ) : ?>
-				
-				<h2><?php printf( __('Galería multimedia para %s', 'veras'), get_the_title() ); ?></h2> 	
+			<?php 
+				$hay_galeria	= (($carousel_imgs = get_field("galeria"))&&count($carousel_imgs));
+				#$hay_galeria	=	wpba_attachments_exist( );
+			?>
 		
-				<?php 	$carousel_imgs =  wpba_get_attachments( );  ?>
+		
+		
+			<?php if ($hay_galeria ) : ?>
+				
+				<h2><?php printf( __('Galería multimedia para %s', 'veras'), get_post_meta(get_the_ID(), 'category_name', true) ); ?></h2> 	
+		
+				<?php 	# $carousel_imgs =  wpba_get_attachments( );  
+								
+				?>
 				<div id='image-gallery-row' class="row-fluid clearfix"> <!-- gallery,-->
 		
 					<?php	foreach ($carousel_imgs as $i => $img) : 
-									$img_url_thumb	=	wp_get_attachment_image_src( $img->ID, "thumbnail" );
-									$img_url_large		=	wp_get_attachment_image_src( $img->ID, "large" );				?>
-									
+									$img_id						= $img['imagen'];
+									#$img_id					= $img->ID;
+									$img_url_thumb	=	wp_get_attachment_image_src( $img_id, "thumbnail" );
+									$img_url_large		=	wp_get_attachment_image_src( $img_id, "large" );				
+									$title						= 	get_the_title($img_id);
+									$desc						=	get_the_content($img_id); ?>
 					  <div class="col-xs-6 col-sm-4 col-md-3  col-lg-2 thumb">
-							<a class="thumbnail thumbnail-landscape" href="#" data-image-id="" data-toggle="modal" data-title="<?php echo esc_attr(get_the_title($img->ID)); ?>" data-caption="<?php echo esc_attr(get_the_title($img->ID)); ?>" data-image="<?php echo $img_url_large[0]; ?>" data-target="#image-gallery">
-								<img class="img-responsive" src="<?php echo $img_url_thumb[0]; ?>" alt="Alt- <?php echo esc_attr(get_the_title($img->ID)); ?>">
+							<a class="thumbnail thumbnail-landscape" href="#" data-image-id="" data-toggle="modal" data-title="<?php echo esc_attr($title); ?>" data-caption="<?php echo esc_attr($title); ?>" data-image="<?php echo $img_url_large[0]; ?>" data-target="#image-gallery">
+								<img class="img-responsive" src="<?php echo $img_url_thumb[0]; ?>" alt="Alt- <?php echo esc_attr($title); ?>">
 							</a>
 						</div>	
 						
@@ -60,33 +64,31 @@
 			
 				<div class='col-sm-12 col-md-6' id='col-video'> <!-- col  video -->
 				<?php
-				if (count($videos)) : 		?>
+				$videos		= get_field("galeria_videos");
+				if (is_array($videos) && count($videos)) : 		?>
 				
 					<h3 class="h2"><?php printf( __('Videos', 'veras') ); ?></h3>
 					<?php 
 					
-					foreach ($videos as $video_id) : ?>
-					<div class='row-fluid clearfix'> <?php
-						$post	= get_post($video_id);
-						setup_postdata($post);	
-						
-						get_template_part( "part", "promo");  ?>
-						
-					</div> <?php
+					#foreach ($videos as $video_id) : 
+					
+					foreach ($videos as $i => $video_block) :  ?>
+					<div class='row-fluid clearfix'> 
+					<?php
+						global $video_array;		$video_array = $video_block;
+						get_template_part( "part", "video");  						
+					?>
+					</div>
+					<?php
 					endforeach;
 
 				else : 
-					if (count($promos) > $current_promo) {
-						$post	= get_post($promos[$current_promo++]);
-						setup_postdata($post);	
-						
+					if (is_array($promos) && (count($promos) > $current_promo)) {
+						$promo_array	= $promos[$current_promo++];						
 						get_template_part( "part", "promo"); 
 					}
 				endif;
 				
-				setup_postdata($current_post);
-				$post				= $current_post;
-
 				?>
 				</div> <!-- col videos-->
 				<div class='col-sm-12 col-md-6'> <!-- col  before/now-->	<?php
@@ -97,13 +99,10 @@
 						<?php get_template_part( "part", "before-now");  ?>
 
 					<?php else :
-							if (count($promos) > $current_promo) {
-								$post	= get_post($promos[$current_promo++]);
-								setup_postdata($post);	
-								
+					if (is_array($promos) && (count($promos) > $current_promo)) {
+								$promo_array	= $promos[$current_promo++];
 								get_template_part( "part", "promo"); 
-							}	setup_postdata($current_post);		$post	= $current_post;
-
+							}	
 					endif; ?>
 				</div>
 				
@@ -124,12 +123,10 @@
 	
 			<div class='row-fluid' id='promo-aside'>
 				<?php 	
-					if (count($promos) > $current_promo) {
-						$post	= get_post($promos[$current_promo++]);
-						setup_postdata($post);	
-						
+					if (is_array($promos) && (count($promos) > $current_promo)) {
+						$promo_array	= $promos[$current_promo++];
 						get_template_part( "part", "promo"); 
-					} setup_postdata($current_post);		$post	= $current_post;
+					}
 				?> 
 			</div>
 		</aside>
@@ -137,15 +134,19 @@
 		
 	</div>  <!-- row after section -->
 
+	
+	
+	
+	
+	
+	
 
-	<?php if ($current_promo > count($promos)) :?>
+	<?php if (is_array($promos) && (count($promos) > $current_promo))  :?>
 	<div class='row-fluid' id='bottom-row'>
 			<?php for ($i = $current_promo; $i < count($promos); $i++) { ?>
 				<div class='col-xs-12 col-sm-6 col-md-3'>
 				<?php 
-						$post	= get_post($promos[$i]);
-						setup_postdata($post);	
-						
+						$promo_array	= $promos[$i];						
 						get_template_part( "part", "promo"); 
 				?>
 				</div>			

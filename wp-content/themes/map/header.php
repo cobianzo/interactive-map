@@ -1,4 +1,28 @@
-<!DOCTYPE html>
+<?php
+	/*
+	EY: aquí compruebo que el usuario acceda a la web pasando el pw adecuado como params en url	
+	*/
+	
+	if( !is_user_logged_in() ) :
+		# si no está loggeado, puede que esté usando el key y value correctos (se loggea), o no (aparece mensaje de error)
+		
+		if (check_url_login())
+		{
+			
+			$user = get_userdatabylogin('guest');    
+			// log in automatically
+			$user_id = $user->ID;
+			wp_set_current_user( $user_id, $user_login );
+			wp_set_auth_cookie( $user_id );
+			do_action( 'wp_login', $user_login );
+			
+		}else {
+			get_template_part( "page-not-loggedin");  						
+			die();
+		}	
+	endif;
+
+?><!DOCTYPE html>
 
 <?php	if (function_exists("pll_current_language")) 	
 {

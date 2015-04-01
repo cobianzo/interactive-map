@@ -58,7 +58,7 @@ function veras_custom_post_types() {
 	*/
 	
 	
-	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
+/*	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
 		'name'                => _x( 'Promos', 'Promo General Name', 'veras' ),		'singular_name'       => _x( 'Promo', 'Promo Singular Name', 'veras' ),
 		'menu_name'           => __( 'Bloque Img+Text', 'veras' ),										'parent_item_colon'   => __( 'Item padre:', 'veras' ),
 		'all_items'           => __( 'Todos los items', 'veras' ),							'view_item'           => __( 'Ver Item', 'veras' ),
@@ -69,8 +69,8 @@ function veras_custom_post_types() {
 	$args = array(
 		'label'               => __( 'promo', 'veras' ),		'description'         => __( 'Promo Description', 'veras' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title',  'editor', 'page-attributes' ,'thumbnail'  ) ,  /* thumbnail, */
-		/*'taxonomies'          => array( 'category', 'post_tag' ),*/
+		'supports'            => array( 'title',  'editor', 'page-attributes' ,'thumbnail'  ) ,  /* thumbnail, *
+		//'taxonomies'          => array( 'category', 'post_tag' ),
 		'hierarchical'        => false,
 		'public'              => true,
 		'show_ui'             => true,		'show_in_menu'        => true,		'show_in_nav_menus'   => true,		'show_in_admin_bar'   => true,
@@ -81,7 +81,7 @@ function veras_custom_post_types() {
 		'capability_type'     => 'post',
 	);
 	register_post_type( 'promo', $args );
-
+ */
 	// unregister_post_type( 'post' ) ;
 	
 	

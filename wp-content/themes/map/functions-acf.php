@@ -10,10 +10,10 @@ if(function_exists("register_field_group"))
 		$post = get_post($rr);
 	
 	
-	$maps_for_select			=	array();
+	$maps_for_select			=	array( );
 	$post_lang					=   function_exists("pll_get_post_language")?    pll_get_post_language($post->ID) : "es";	// use only posts on this language
-	$maps_without_parent	= 	get_posts(array("post_type" => "mapa", "posts_per_page" => -1, "post_parent" => 0,
-																	"tax_query" => array(array(	"taxonomy" => "language" , "field" => "slug", "terms" => $post_lang))));
+	$maps_without_parent	= 	get_posts(array("post_type" => "mapa", "posts_per_page" => -1, "post_parent" => 0, "lang" => $post_lang));
+																	//"tax_query" => array(array(	"taxonomy" => "language" , "field" => "slug", "terms" => $post_lang))));
 	foreach ($maps_without_parent as $i => $mapp)	$maps_for_select[$mapp->ID] = get_the_title($mapp->ID);
 	
 	
@@ -26,14 +26,18 @@ if(function_exists("register_field_group"))
 	register_field_group(array (
 		'id' => 'acf_campos-del-mapa',		'title' => 'Campos del Mapa',
 		'fields' => array (
+		
+			/* TAB -----------------*/
+			array ( 	'type' => 'tab', 'key' => 'field_550ca79f1111111',	'label' => 'Principal',	'name' => '',	),
+			/* -----------------------  */
+		
 			array (		/* TO_DO: reemplazar esto por el título del mapa */
 				'key' => 'field_550ca729fb423',				'label' => 'Título a mostrar en la web',				'name' => 'category_name',
 				'type' => 'text',
-				'instructions' => 'El título de arriba es identificativo a nivel de administración, pero no se vé en la web. Escribe aquí el título que se muestra en el frontend..',
+				'instructions' => 'El título de arriba es identificativo a nivel de administración, pero no se vé en la web. Escribe aquí el título que el usuario leerá (traducido al idioma de este mapa)..',
 				'default_value' => '',				'placeholder' => 'ej. Zona Arqueológica de Tulúm',				'prepend' => '',				'append' => '',
 				'formatting' => 'html',				'maxlength' => '',
 			),
-			array (
 			array (
 				'key' => 'field_550b0edb33e4e',				'label' => 'Imagen del mapa HI',				'name' => 'mapa_hi',
 				'type' => 'image',
@@ -41,26 +45,237 @@ if(function_exists("register_field_group"))
 				'required' => 1,
 				'save_format' => 'id',				'preview_size' => 'medium',				'library' => 'all',
 			),
-				'name' => 'promos',		'key' => 'field_55119a05aaabbaaa',	'label' => 'Promos y Videos',
-				'type' => 'relationship',
-				'instructions' => 'Selecciona los bloques de imagen y texto que deseas incluir. Los que sean videos serán incluídos en la sección vídeos.',
-				'return_format' => 'object',
-				'post_type' => array (	0 => 'promo',	),
-				'taxonomy' => array (	0 => 'all',			),
-				'filters' => array (	0 => 'search',			),
-				'result_elements' => array (	0 => 'featured_image',	1 => 'post_title',	),
-				'max' => 10,
+			
+			
+			
+			
+			/* TAB -----------------*/
+			array ( 	'type' => 'tab', 'key' => 'field_550ca79222222',	'label' => 'Galería imgs',	'name' => '',	),
+			/* -----------------------  */
+
+			array (
+				'key' => 'field_551ac9c287087',
+				'label' => 'Galería',
+				'name' => 'galeria',
+				'type' => 'repeater',
+				'instructions' => 'Selecciona las imágenes. Recuerda que al seleccionar la imagen puedes editar su título en diferentes idiomas ',
+				'sub_fields' => array (
+					array (
+						'key' => 'field_551aca0387088',
+						'label' => 'Imagen',
+						'name' => 'imagen',
+						'type' => 'image',
+						'instructions' => 'Selcciona imagen',
+						'column_width' => 20,
+						'save_format' => 'id',
+						'preview_size' => 'thumbnail',
+						'library' => 'all',
+					),
+				),
+				'row_min' => '',
+				'row_limit' => '',
+				'layout' => 'table',
+				'button_label' => 'Nueva imagen',
 			),
-			array (		'name' => 'image_before',	'key' => 'field_550b0dbefe',	'label' => 'Imagen antigua',
-				'type' => 'image',
-				'instructions' => 'Esta imagen, junto con la imagen del estado actual creará una sección interactiva donde el usuario podrá comparar el estado precedente del monumento con el actual. Selecciona aquí la imagen del monumento antiguo',
-				'save_format' => 'id',		'preview_size' => 'medium',	'library' => 'all',
-			),	
-			array (		'name' => 'image_now',	'key' => 'field_550b0dafa',	'label' => 'Imagen actual',
-				'type' => 'image',
-				'instructions' => 'Selecciona la imagen del monumento actual. Las proporciones y el ángulo de la imagen debe superponerse al de la foto antigua',
-				'save_format' => 'id',		'preview_size' => 'medium',	'library' => 'all',
-			),	
+			
+			
+			/* TAB -----------------*/
+			array ( 	'type' => 'tab', 'key' => 'field_550ca79233333',	'label' => 'Galería videos',	'name' => '',	),
+			/* -----------------------  */
+			
+			array (
+				'key' => 'field_551aca496ca5c',
+				'label' => 'Galería Videos',
+				'name' => 'galeria_videos',
+				'type' => 'repeater',
+				'instructions' => 'Selecciona los vídeos asociados. Deberás copiar el código html (iframe) en el campo correspondiente ',
+				'sub_fields' => array (
+					array (
+						'key' => 'field_551aca7e6ca5d',
+						'label' => 'Titulo',
+						'name' => 'titulo',
+						'type' => 'text',
+						'instructions' => 'Título del video',
+						'column_width' => 25,
+						'default_value' => '',
+						'placeholder' => 'Ej. Visita a Chichén Itzá',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'html',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_551acb026ca5e',
+						'label' => 'Descripción',
+						'name' => 'descripcion',
+						'type' => 'textarea',
+						'instructions' => 'Descripción del vídeo',
+						'column_width' => 25,
+						'default_value' => '',
+						'placeholder' => '',
+						'maxlength' => '',
+						'rows' => 2,
+						'formatting' => 'br',
+					),
+					array (
+						'key' => 'field_551acb396ca5f',
+						'label' => 'Imagen preview',
+						'name' => 'imagen_preview',
+						'type' => 'image',
+						'instructions' => 'Selcciona la imagen en miniatura para abrir el vídeo. Si es un video de youtube, no es necesario que crees la imagen (se hará automáticamente)',
+						'column_width' => 25,
+						'save_format' => 'id',
+						'preview_size' => 'thumbnail',
+						'library' => 'all',
+					),
+					array (
+						'key' => 'field_551acb5c6ca60',
+						'label' => 'Video embed',
+						'name' => 'video_embed',
+						'type' => 'textarea',
+						'instructions' => 'Escríbe el html para embeber el video. iframe recomendado. En youtube, selecciona compartir, y luego insertar, y copiar el código html',
+						'column_width' => 25,
+						'default_value' => '',
+						'placeholder' => '',
+						'maxlength' => '',
+						'rows' => 3,
+						'formatting' => 'none',
+					),
+				),
+				'row_min' => '',
+				'row_limit' => '',
+				'layout' => 'table',
+				'button_label' => 'Añade video',
+			),
+			
+			
+			array ( 	'type' => 'tab', 'key' => 'field_550ca79233332',	'label' => 'Antes / Ahora',	'name' => '',	),
+			/* -----------------------  */
+			
+			
+			array (
+				'key' => 'field_551b17f6e347b',
+				'label' => 'Antes / Ahora',
+				'name' => 'antes_ahora',
+				'type' => 'repeater',
+				'instructions' => 'Selecciona las dos imágenes de comparación. Una para antes y otra para ahora.',
+				'sub_fields' => array (
+					array (
+						'key' => 'field_551b1864e347c',
+						'label' => 'Imagen Antes',
+						'name' => 'img_antes',
+						'type' => 'image',
+						'instructions' => 'Imagen de antes',
+						'column_width' => 50,
+						'save_format' => 'id',
+						'preview_size' => 'medium',
+						'library' => 'all',
+					),
+					array (
+						'key' => 'field_551b1880e347d',
+						'label' => 'Imagen_ahora',
+						'name' => 'img_ahora',
+						'type' => 'image',
+						'instructions' => 'Imagen de ahora',
+						'column_width' => 50,
+						'save_format' => 'id',
+						'preview_size' => 'medium',
+						'library' => 'all',
+					),
+					array (
+						'key' => 'field_551b1fa3b6589',
+						'label' => 'Descripcion',
+						'name' => 'descripcion',
+						'type' => 'text',
+						'instructions' => 'Escribe una breve descripción de las imágenes',
+						'column_width' => '',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'html',
+						'maxlength' => '',
+					),
+				),
+				'row_min' => '',
+				'row_limit' => 1,
+				'layout' => 'row',
+				'button_label' => 'Añade las imágenes Antes/Ahora',
+			),
+			
+			/* TAB -----------------*/
+			array ( 	'type' => 'tab', 'key' => 'field_550ca79244444',	'label' => 'Bloques promo',	'name' => '',	),
+			/* -----------------------  */
+			/* TAB -----------------*/
+
+
+			array (
+				'key' => 'field_551ade6885429',
+				'label' => 'Bloques de imagen y texto',
+				'name' => 'bloque_promos',
+				'type' => 'repeater',
+				'instructions' => 'Selecciona los bloques de imagen y texto asociados',
+				'sub_fields' => array (
+				
+					array (
+						'key' => 'field_551ade688542c',
+						'label' => 'Imagen preview',
+						'name' => 'imagen_preview',
+						'type' => 'image',
+						'instructions' => 'Selecciona una imagen para la columna izquierda',
+						'column_width' => 25,
+						'save_format' => 'id',
+						'preview_size' => 'medium',
+						'library' => 'all',
+					),
+					array (
+						'key' => 'field_551ade688542a',
+						'label' => 'Titulo',
+						'name' => 'titulo',
+						'type' => 'text',
+						'instructions' => 'Título en la parte superior del bloque',
+						'column_width' => 25,
+						'default_value' => '',
+						'placeholder' => 'Ej. Nuestros ebooks',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'html',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_551ade688542b',
+						'label' => 'Descripción',
+						'name' => 'descripcion',
+						'type' => 'textarea',
+						'instructions' => 'Texto descriptivo a un lado de la imagen',
+						'column_width' => 25,
+						'default_value' => '',
+						'placeholder' => '',
+						'maxlength' => '',
+						'rows' => 2,
+						'formatting' => 'br',
+					),
+					array (
+						'key' => 'field_551adf418542e',
+						'label' => 'link',
+						'name' => 'link',
+						'type' => 'text',
+						'instructions' => 'Enlace al clicar en la imagen',
+						'column_width' => 25,
+						'default_value' => '',
+						'placeholder' => 'Ej	http://www.amazon.com/ebooksveras',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+				),
+				'row_min' => '',
+				'row_limit' => '',
+				'layout' => 'table',
+				'button_label' => 'Añade bloque',
+			),
+
 		),
 		'location' => array (
 			array (
@@ -68,7 +283,7 @@ if(function_exists("register_field_group"))
 				array (		'param' => 'post_type',			'operator' => '==',	'value' => 'mapa',	'order_no' => 1,	'group_no' => 0,		),
 			),
 		),
-		'options' => array (			'position' => 'normal',		'layout' => 'default',		'hide_on_screen' => array (	),		),
+		'options' => array (			'position' => 'normal',		'layout' => 'default',		'hide_on_screen' => array (	"excerpt"),		),
 		'menu_order' => 0,
 	));
 
@@ -79,12 +294,9 @@ if(function_exists("register_field_group"))
 		'id' => 'acf_campos-del-monumento',
 		'title' => 'Campos del Monumento',
 		'fields' => array (
-			array (
-				'key' => 'field_550ca79faaaaaa',
-				'label' => 'Hotspot en Mapa',
-				'name' => '',
-				'type' => 'tab',
-			),
+			/* TAB -----------------*/
+			array ( 	'type' => 'tab', 'key' => 'field_550ca79faaaaaa',	'label' => 'Hotspot en Mapa',	'name' => '',	),
+			/* -----------------------  */
 			array (		'name' => '',   'key' => 'field_550b0e5bbbbbb',   'label' => 'Instrucciones',
 				'type' => 'message',
 				'message' => 'Para saber con exactitud las coordenadas, visita el mapa cuando estés conectado como administrador. Verás las coordenadas del ratón al pasar sobre el mapa.',
@@ -280,7 +492,7 @@ if(function_exists("register_field_group"))
 
 
 	// mensage en hotspots y en mapas
-	global $polylang;
+	/*global $polylang;
 	$curlang 							=  isset($polylang)? $polylang->curlang->slug : ""; 
 	if (strlen($curlang) && ($curlang != $post_lang) ) {
 			$titulo				= "Aviso importante";
@@ -303,7 +515,7 @@ if(function_exists("register_field_group"))
 		'options' => array (	'position' => 'acf_after_title',	'layout' => 'default',	'hide_on_screen' => array (		),		),
 		'menu_order' => 0,
 	));
-
+*/
 
 
 

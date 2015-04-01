@@ -34,9 +34,9 @@
 	  
 	 
 
-	 wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/bootstrap/bootstrap.css', 	array(), $version );	 	 
-	 wp_enqueue_style( 'style', get_stylesheet_uri(),																array( 'bootstrap' ), $version );	 
-     wp_enqueue_style( 'mapplic', get_template_directory_uri() . '/mapplic/mapplic.css', 			array('style'), $version );
+	 wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/bootstrap/bootstrap.css', 	array(), 						$version );	 	 
+	 wp_enqueue_style( 'style', 			get_stylesheet_uri(),																	array( 'bootstrap' ),	$version );	 
+     wp_enqueue_style( 'mapplic', 	get_template_directory_uri() . '/mapplic/mapplic.css', 		array('style'), 				$version );
 	  
     }
 	
@@ -193,7 +193,14 @@
 	
 	
 	
+	/* LOGIN FUNCTIONS */
 	
+	function check_url_login(){
+			$query_key		= "veras";					# TO_DO: set this in backend or config
+			$query_value		= "mapa-de-yucatan";
+
+			return ($_GET[$query_key] === $query_value);		
+	}
 	
 	
 	
@@ -506,23 +513,24 @@
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
-		$link							=  ($cc 	= get_post_meta($id_monumento, "mapa_redirection", true))?	get_the_permalink($cc)  :  "javascript:   abreLocationCard('$post_monument
-o->post_name')";
+		$link							=  (($cc = get_post_meta($id_monumento, "mapa_redirection", true)) &&  is_integer($cc))?	get_the_permalink($cc)  :  null;
+		if ((!$link )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')";
+		
+		
 		$post_categories				= wp_get_post_categories($id_monumento,array( ));
 		$category							= (is_array($post_categories) && count($post_categories))?  $post_categories[0] : null;
 		
 		 
 		$array_monumento 	= array(
-			"id"					=>	$id_monumento,
-			"title"				=>	get_the_title($id_monumento),
+			"id"						=>	$id_monumento,
+			"title"					=>	get_the_title($id_monumento),
 			"about"				=>	get_post_meta($id_monumento, "about", true),
 			"description"		=>	get_post_meta($id_monumento, "descripcion", true), //$post_monumento->post_excerpt,
-			"iink"				=>	null,
 			"category"			=>	$category, //($cat = get_post_meta($mapa_padre_id, "category_name", true))? $mapa_padre_id : null,
 			"thumbnail"		=>	$img_thumb_src[0],
-			"x"					=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
-			"y" 					=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
-			"link"				=>	$link,
+			"x"						=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
+			"y" 						=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
+			"link"					=>	$link,
 			"zoom"				=>	"2"		
 		);		
 		return $array_monumento;
@@ -587,7 +595,12 @@ o->post_name')";
 	# Also, we save a file {name-of-map}_{lang}.json for that specific map 
 	add_action( 'save_post', 'save_mapplic_on_save', 10, 3 );
 	function save_mapplic_on_save( $post_id, $post, $update ){
-						
+			
+		/*$galeria	= get_field("galeria"); //get_post_meta($post_id, "galeria", true);
+		foreach($galeria as $row)
+			update_field("field_551aca0387088", $row, 137);
+		print_r($galeria); die();		
+		*/
 		if (!in_array($post->post_type, array("mapa"))) return;		
 		$language				=	function_exists("pll_get_post_language")? pll_get_post_language($post_id) : "es";
 		
@@ -614,6 +627,7 @@ o->post_name')";
 	 
 	function create_all_json_page(){
 			global $polylang;
+						
 			if (!isset($polylang))			{
 				echo "<h1>Polylang no instalado!</h1>"; return;  
 			}
@@ -640,7 +654,13 @@ o->post_name')";
 	
 	
 	
-	
+	add_action( 'save_post', 'sync_galeria_all_languages', 10, 3 );
+	function sync_galeria_all_languages( $post_id, $post, $update ){
+						
+		if (!in_array($post->post_type, array("mapa"))) return;		
+		
+		
+	}	
 	
 	
 	
@@ -674,3 +694,9 @@ o->post_name')";
 		}		
 	}
 	
+	
+	
+	add_filter( 'show_admin_bar', 'hide_admin_bar_from_front_end' );
+	function hide_admin_bar_from_front_end(){
+		return (is_blog_admin());
+	}
