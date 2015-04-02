@@ -82,6 +82,31 @@ function veras_custom_post_types() {
 	);
 	register_post_type( 'promo', $args );
  */
+ 
+ 	
+	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
+		'name'                => _x( 'Galerias', 'Galeria General Name', 'veras' ),		'singular_name'       => _x( 'Galeria', 'Galeria Singular Name', 'veras' ),
+		'menu_name'           => __( 'Galerías Imgs', 'veras' ),						'parent_item_colon'   => __( 'Item padre:', 'veras' ),
+		'all_items'           => __( 'Todos los items', 'veras' ),							'view_item'           => __( 'Ver Item', 'veras' ),
+		'add_new_item'        => __( 'Nuevo Item', 'veras' ),								'add_new'             => __( 'Añade nuevo', 'veras' ),
+		'edit_item'           => __( 'Edita Item', 'veras' ),									'update_item'         => __( 'Actualiza Item', 'veras' ),
+		'search_items'        => __( 'Busca Item', 'veras' ),								'not_found'           => __( 'No encontrado', 'veras' ),	);
+		
+	$args = array(
+		'label'               => __( 'galeria', 'veras' ),		'description'         => __( 'Galeria Description', 'veras' ),
+		'labels'              => $labels,
+		'supports'            => array( 'title',  'editor', 'page-attributes' ,'thumbnail'  ) ,  /* thumbnail, */
+		'taxonomies'          => array(  ),
+		'hierarchical'        => false,		'public'              => true,
+		'show_ui'             => true,			'show_in_menu'        => true,		'show_in_nav_menus'   => true,		'show_in_admin_bar'   => true,
+		'menu_position'       => 6,
+		'can_export'          => true,		'has_archive'         => false,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'post',
+	);
+	register_post_type( 'galeria', $args );
+
 	// unregister_post_type( 'post' ) ;
 	
 	

@@ -52,7 +52,22 @@ if(function_exists("register_field_group"))
 			/* TAB -----------------*/
 			array ( 	'type' => 'tab', 'key' => 'field_550ca79222222',	'label' => 'Galería imgs',	'name' => '',	),
 			/* -----------------------  */
-
+		array (
+				'key' => 'field_551c7191c0a81',
+				'label' => 'Galeria',
+				'name' => 'galeria_id',
+				'type' => 'post_object',
+				'instructions' => 'Selecciona la galería que mostrará las . Recuerda que la galería debe haber sido creada previamente.',
+				'post_type' => array (
+					0 => 'galeria',
+				),
+				'taxonomy' => array (
+					0 => 'all',
+				),
+				'allow_null' => 1,
+				'multiple' => 0,
+			),
+			
 			array (
 				'key' => 'field_551ac9c287087',
 				'label' => 'Galería',
@@ -518,9 +533,45 @@ if(function_exists("register_field_group"))
 */
 
 
+if(function_exists("register_field_group"))
+{
+	register_field_group(array (
+		'id' => 'acf_campos-galeroa',
+		'title' => 'Instrucciones de las galerías',
+		'fields' => array (
+			array (		'name' => '',   'key' => 'field_550aa0e5bbbbbb',   'label' => 'Cómo subir imágenes',
+				'type' => 'message',
+				'message' => 'Las galerías ayudan a ahorrar tiempo en la compilación de contenidos: Creando una galería una vez, se puede asignar a los mapas y hotspots seleccionando la galería deseada. <br><b>Recuerda</b> : las imágenes de la galería deben tener su título traducido a d¡cada idioma. Para ello selecciona la imagen, y en el cuadro de edición que se abrirá, verás la posibilidad de cambiar idioma.',
+			),
+
+		),
+		'location' => array (
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'galeria',
+					'order_no' => 0,
+					'group_no' => 0,
+				),
+			),
+		),
+		'options' => array (
+			'position' => 'acf_after_title',
+			'layout' => 'default',
+			'hide_on_screen' => array ( 	0 => 'permalink',				1 => 'excerpt',				2 => 'custom_fields',				3 => 'discussion',				4 => 'comments',				5 => 'slug',				6 => 'author',				7 =>'format',				8 => 'tags',				9 => 'send-trackbacks',		10 => 'the_content'	),
+		),
+		'menu_order' => 0,
+	));
+}
+
+		
+	
+}
 
 
 
+/*
 
 
 
@@ -529,7 +580,7 @@ if(function_exists("register_field_group"))
 	
 	
 	
-	if(function_exists("register_field_group"))
+if(function_exists("register_field_group"))
 {
 	register_field_group(array (
 		'id' => 'acf_campos-de-promo',
@@ -600,7 +651,7 @@ if(function_exists("register_field_group"))
 	
 }
 
-
+*/
 
 
 

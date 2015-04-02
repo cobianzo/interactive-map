@@ -101,6 +101,9 @@ class WP_Better_Attachments
 	protected function get_post_attachments( $args = array() ) {
 		extract( $args );
 
+		
+		
+
 		if ( !isset( $post ) )
 			global $post;
 

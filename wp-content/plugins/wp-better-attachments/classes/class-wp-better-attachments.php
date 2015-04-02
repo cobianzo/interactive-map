@@ -434,6 +434,9 @@ class WP_Better_Attachments
 	{
 		extract( $args );
 
+		
+	
+		
 		if ( isset( $post_id ) )
 			$post = get_post( $post_id );
 
@@ -455,9 +458,12 @@ class WP_Better_Attachments
 			'posts_per_page' => -1,
 			'post_parent'    => $post->ID,
 			'order'          => 'ASC',
-			'orderby'        => 'menu_order'
+			'orderby'        => 'menu_order',
+			'lang'				=> ''	// ALV:
 		);
 
+		
+		
 		// Should we exclude the thumb?
 		$post_settings_thumb = isset( $post_settings['thumbnail'] );
 		$global_settings_thumb = isset( $this->global_settings['thumbnail'] );

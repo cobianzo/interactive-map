@@ -43,7 +43,7 @@ if (!defined('REMOTE_REPOSITORY')) define('REMOTE_REPOSITORY', 'https://github.c
  *
  * @var string
  */
-if (!defined('BRANCH')) define('BRANCH', 'mapplic');
+if (!defined('BRANCH')) define('BRANCH', 'wordpress');
 
 /**
  * The location that the code is going to be deployed to.

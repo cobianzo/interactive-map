@@ -22,44 +22,10 @@
 	<div class='row-fluid'> <!-- includes gallery, video, before/now, and collumn comments with promo  (everything but the bottom row) -->
 	
 		<div class='col-sm-12 col-md-8'>  <!-- img gallery, video and before/now-->
-			<?php 
-				$hay_galeria	= (($carousel_imgs = get_field("galeria"))&&count($carousel_imgs));
-				#$hay_galeria	=	wpba_attachments_exist( );
-			?>
-		
-		
-		
-			<?php if ($hay_galeria ) : ?>
-				
-				<h2><?php printf( __('Galería multimedia para %s', 'veras'), get_post_meta(get_the_ID(), 'category_name', true) ); ?></h2> 	
-		
-				<?php 	# $carousel_imgs =  wpba_get_attachments( );  
-								
-				?>
-				<div id='image-gallery-row' class="row-fluid clearfix"> <!-- gallery,-->
-		
-					<?php	foreach ($carousel_imgs as $i => $img) : 
-									$img_id						= $img['imagen'];
-									#$img_id					= $img->ID;
-									$img_url_thumb	=	wp_get_attachment_image_src( $img_id, "thumbnail" );
-									$img_url_large		=	wp_get_attachment_image_src( $img_id, "large" );				
-									$title						= 	get_the_title($img_id);
-									$desc						=	get_the_content($img_id); ?>
-					  <div class="col-xs-6 col-sm-4 col-md-3  col-lg-2 thumb">
-							<a class="thumbnail thumbnail-landscape" href="#" data-image-id="" data-toggle="modal" data-title="<?php echo esc_attr($title); ?>" data-caption="<?php echo esc_attr($title); ?>" data-image="<?php echo $img_url_large[0]; ?>" data-target="#image-gallery">
-								<img class="img-responsive" src="<?php echo $img_url_thumb[0]; ?>" alt="Alt- <?php echo esc_attr($title); ?>">
-							</a>
-						</div>	
-						
-					<?php endforeach;					?>					
-					
-				</div> <!-- gallery-->
-				
-			<?php	endif;  # atachments exists ?>		
-					
-					
-					
-					
+			
+			<?php get_template_part( "part", "galeria");  	 ?>
+			
+			
 			<div class='row'> <!-- row video + before/now-->
 			
 				<div class='col-sm-12 col-md-6' id='col-video'> <!-- col  video -->
@@ -93,10 +59,8 @@
 				</div> <!-- col videos-->
 				<div class='col-sm-12 col-md-6'> <!-- col  before/now-->	<?php
 					 if ($img_before_id =	get_post_meta(get_the_ID(), "image_before", true)): ?>
-						<h3 class="h2"><?php printf( __('Antes / ahora', 'veras') ); ?></h3>
-						<i><?php printf( __('Mueve el cursor para comparar los estados del monumento', 'veras') ); ?></i>
-						
-						<?php get_template_part( "part", "before-now");  ?>
+
+							<?php get_template_part( "part", "before-now");  ?>
 
 					<?php else :
 					if (is_array($promos) && (count($promos) > $current_promo)) {
