@@ -105,7 +105,10 @@ no-margin {
   border: 0;
   padding: 0;
   margin: 0;
-  background: white url("images/bg-sombra.jpg") no-repeat center bottom; }
+  background: transparent url("images/bg-sombra.jpg") no-repeat center bottom; }
+
+.mapplic-list-thumbnail {
+  border-radius: 50% !important; }
 
 /* HEADER -------------------------------------------*/
 #header-navbar {

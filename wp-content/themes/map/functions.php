@@ -56,43 +56,27 @@
 
 	// Sidebar Widget
 	// Location: the sidebar
-	register_sidebar(array('name'=>'Sidebar',
+	/*register_sidebar(array('name'=>'Sidebar',
 		'before_widget' => '<div class="widget-area widget-sidebar"><ul>',
 		'after_widget' => '</ul></div>',
 		'before_title' => '<h3>',
 		'after_title' => '</h3>',
-	));
-	// Header Widget
-	// Location: right after the navigation
-	register_sidebar(array('name'=>'Header',
-		'before_widget' => '<div class="widget-area widget-header"><ul>',
-		'after_widget' => '</ul></div>',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>',
-	));
-	// Footer Widget
-	// Location: at the top of the footer, above the copyright
-	register_sidebar(array('name'=>'Footer',
-		'before_widget' => '<div class="widget-area widget-footer"><ul>',
-		'after_widget' => '</ul></div>',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>',
-	));
+	));*/
 
 	
 	// custom menu support
 	/*  REGISTRAR MENU ---- Sólo uno en el header  */
 	
-	add_theme_support( 'menus' );
+	/*add_theme_support( 'menus' );
 	if ( function_exists( 'register_nav_menus' ) ) {
 	  	register_nav_menus(
 	  		array(
 	  		  'header-menu' => 'Header Menu',	  		)
 	  	);
-	}
+	}*/
 
 	// custom background support
-	add_custom_background();
+	//add_custom_background();
 
 	// custom header image support
 	define('NO_HEADER_TEXT', true );
@@ -107,7 +91,7 @@
 	            height: <?php echo HEADER_IMAGE_HEIGHT; ?>px;
 	        }
 	    </style><?php
-	}
+	} 
 	add_custom_image_header( '', 'admin_header_style' );
 
 	// adds Post Format support
@@ -279,7 +263,8 @@
 		}  elseif ( is_404() ) {
 			echo 'Error 404 Not Found | '; bloginfo( 'name' );
 		} elseif ( is_single() ) {
-			wp_title('');
+			if  ($aa =  get_post_meta(get_the_ID(), 'category_name', true)) echo $aa;
+			else		wp_title('');
 		} else {
 			echo wp_title(''); echo ' | '; bloginfo( 'name' );
 		} 
@@ -304,7 +289,7 @@
 
 	
 
-	/* writes html for the template modal window of bootstrap
+	/* writes html for the template modal window of bootstrap. Usado para la galer'ia de imágenes y vídeos.
 		params:
 			id, html_header, html_body, html_footer
 	*/
@@ -312,7 +297,7 @@
 	{
 		?>
 		<div class="modal fade" id="<?php echo $params['id'];?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo $params['id'];?>" aria-hidden="true">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
 						<?php echo $params['html_header']; ?>
@@ -500,7 +485,7 @@
 		global $polylang;
 		if (isset($polylang))	$lang = pll_get_post_language($id_map);
 		return get_posts(array(
-											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map, "lang" => $lang
+											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map, "lang" => $lang, "posts_per_page" => -1,
 											/*"meta_query"	=>	array( array(	'key'     			=> 	"mapa_padre",  'value' 		  	=> 	$id_map,	'compare'		=> '=',	'type'				=> "NUMERIC"  ))*/
 		));		
 	}
@@ -513,7 +498,7 @@
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
-		$link							=  (($cc = get_post_meta($id_monumento, "mapa_redirection", true)) &&  is_integer($cc))?	get_the_permalink($cc)  :  null;
+		$link							=  (($cc = get_post_meta($id_monumento, "mapa_redirection", true)) )?	get_the_permalink($cc)  :  null;
 		if ((!$link )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')";
 		
 		

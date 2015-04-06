@@ -1,7 +1,7 @@
 <?php 
 				# initializing array for promos and array for videos
 					global $promo_array;
-					$promos				= get_field("bloque_promos");					
+					$promos				= get_field("promos_list");					
 					$current_promo	=	0;			// we'll increment this as we display promos of this mapa
 ?>
 

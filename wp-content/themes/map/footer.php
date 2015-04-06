@@ -33,7 +33,7 @@
 			?>			
 			$(document).ready(function() {
 				$('#mapplic').mapplic({
-					source: "<?php echo $mapplic_json_file;  ?>?v=1", //  'http://localhost/interactive-map/www/mapplic/yucatan.json?v=10',
+					source: "<?php echo $mapplic_json_file;  ?>?v=3", //  'http://localhost/interactive-map/www/mapplic/yucatan.json?v=10',
 					height: 500,
 					animate: true,
 					mapfill: true,

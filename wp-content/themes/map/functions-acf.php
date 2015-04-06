@@ -17,6 +17,10 @@ if(function_exists("register_field_group"))
 	foreach ($maps_without_parent as $i => $mapp)	$maps_for_select[$mapp->ID] = get_the_title($mapp->ID);
 	
 	
+	$promos_for_select = array();
+	$promos_posts		= get_posts(array("post_type" => "promo", "posts_per_page" => -1,	"lang" => $post_lang ));
+	foreach ($promos_posts as $promo_post)  $promos_for_select[$promo_post->ID] = $promo_post->post_title;
+	
 	# calcular las categorías que acepta 
 	# 1. recogemos la categoría que tiene el mapa padre
 	# 2. tomamos todas las categorías hijas
@@ -35,7 +39,7 @@ if(function_exists("register_field_group"))
 				'key' => 'field_550ca729fb423',				'label' => 'Título a mostrar en la web',				'name' => 'category_name',
 				'type' => 'text',
 				'instructions' => 'El título de arriba es identificativo a nivel de administración, pero no se vé en la web. Escribe aquí el título que el usuario leerá (traducido al idioma de este mapa)..',
-				'default_value' => '',				'placeholder' => 'ej. Zona Arqueológica de Tulúm',				'prepend' => '',				'append' => '',
+				'default_value' => '',				'placeholder' => 'ej. Mapa de Tulúm',				'prepend' => '',				'append' => '',
 				'formatting' => 'html',				'maxlength' => '',
 			),
 			array (
@@ -223,30 +227,40 @@ if(function_exists("register_field_group"))
 			/* -----------------------  */
 			/* TAB -----------------*/
 
-
+			
 			array (
-				'key' => 'field_551ade6885429',
-				'label' => 'Bloques de imagen y texto',
-				'name' => 'bloque_promos',
+				'key' => 'field_551f49f9f8cc0',
+				'label' => 'Promos List',
+				'name' => 'promos_list',
 				'type' => 'repeater',
-				'instructions' => 'Selecciona los bloques de imagen y texto asociados',
 				'sub_fields' => array (
-				
-					array (
-						'key' => 'field_551ade688542c',
-						'label' => 'Imagen preview',
-						'name' => 'imagen_preview',
-						'type' => 'image',
-						'instructions' => 'Selecciona una imagen para la columna izquierda',
-						'column_width' => 25,
-						'save_format' => 'id',
-						'preview_size' => 'medium',
-						'library' => 'all',
+					array ( 	'name' => 'predefinida_o_custom',  'key' => 'field_551f4a2df8cc1',	'label' => 'Predefinida o Custom',						
+						'type' => 'radio',
+						'instructions' => 'Si la promo que quieres añadir ya ha sido definida en la sección "Bloque Img+Text", selecciona "Predefinida". Si la quieres crear tú al vuelo selecciona "Customizada"',
+						'required' => 1,	'column_width' => 20,
+						'choices' => array (	0 => 'Predefinida',		1 => 'Customizada',	),
+						'other_choice' => 0,					'save_other_choice' => 0,						'default_value' => 0,						'layout' => 'vertical',
+					),
+					array ( 	'name' => 'predefinida', 'key' => 'field_551f4aa4f8cc2',	'label' => 'Predefinida',
+						'type' => 'select',
+						'instructions' => 'Selecciona el nombre de la promo',
+						'required' => 1,
+						'conditional_logic' => array ('status' => 1,	'rules' => array (	array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '0',),),'allorany' => 'all',),
+						'column_width' => 80,
+						'choices' => $promos_for_select,
+						'default_value' => null, 'allow_null' => 0, 'multiple' => 0,
+					),
+					
+					array ( 'name' => 'imagen_preview','key' => 'field_551ade688542c','label' => 'Imagen preview', 'type' => 'image',
+						'instructions' => 'Selecciona una imagen para la columna izquierda. Se aconseja doble de alto que de ancho',
+						'save_format' => 'id','preview_size' => 'medium',
+						'library' => 'all', 'column_width' => 25,
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),
 					),
 					array (
+						'name' => 'titulo',
 						'key' => 'field_551ade688542a',
 						'label' => 'Titulo',
-						'name' => 'titulo',
 						'type' => 'text',
 						'instructions' => 'Título en la parte superior del bloque',
 						'column_width' => 25,
@@ -256,6 +270,8 @@ if(function_exists("register_field_group"))
 						'append' => '',
 						'formatting' => 'html',
 						'maxlength' => '',
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),
+						
 					),
 					array (
 						'key' => 'field_551ade688542b',
@@ -268,28 +284,44 @@ if(function_exists("register_field_group"))
 						'placeholder' => '',
 						'maxlength' => '',
 						'rows' => 2,
-						'formatting' => 'br',
+						'formatting' => 'html',
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),
+						
 					),
-					array (
-						'key' => 'field_551adf418542e',
-						'label' => 'link',
-						'name' => 'link',
-						'type' => 'text',
+					array ('key' => 'field_551adf418542e','label' => 'link',
+						'name' => 'link',	'type' => 'text',
 						'instructions' => 'Enlace al clicar en la imagen',
-						'column_width' => 25,
-						'default_value' => '',
-						'placeholder' => 'Ej	http://www.amazon.com/ebooksveras',
-						'prepend' => '',
-						'append' => '',
-						'formatting' => 'none',
-						'maxlength' => '',
+						'column_width' => 15,'default_value' => '','placeholder' => 'Ej	http://www.amazon.com/ebooksveras','prepend' => '','append' => '',
+						'formatting' => 'none',				'maxlength' => '',
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),						
+					),
+					array ('key' => 'field_551adf4fffffff','label' => 'Texto del link',
+						'name' => 'link_text',	'type' => 'text',
+						'instructions' => 'Texto en el botón del link',
+						'column_width' => 10,'default_value' => '','placeholder' => 'Ej	Abre el enlace','prepend' => '','append' => '',
+						'formatting' => 'none',				'maxlength' => '',
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),						
 					),
 				),
 				'row_min' => '',
-				'row_limit' => '',
-				'layout' => 'table',
-				'button_label' => 'Añade bloque',
-			),
+				'row_limit' => 6,
+				'layout' => 'row',
+				'button_label' => 'Añade promo',
+			),			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
 
 		),
 		'location' => array (
@@ -410,28 +442,6 @@ if(function_exists("register_field_group"))
 				'maxlength' => '',
 				'rows' => '3',
 				'formatting' => 'none',
-			),
-			array (
-				'key' => 'field_55119a053e484',
-				'label' => 'Promos',
-				'name' => 'promos',
-				'type' => 'relationship',
-				'instructions' => 'Selecciona los bloques de imagen y texto que deseas incluir',
-				'return_format' => 'object',
-				'post_type' => array (
-					0 => 'promo',
-				),
-				'taxonomy' => array (
-					0 => 'all',
-				),
-				'filters' => array (
-					0 => 'search',
-				),
-				'result_elements' => array (
-					0 => 'featured_image',
-					1 => 'post_title',
-				),
-				'max' => 3,
 			),
 		),
 		'location' => array (			
@@ -570,13 +580,6 @@ if(function_exists("register_field_group"))
 }
 
 
-
-/*
-
-
-
-
-	
 	
 	
 	
@@ -600,17 +603,36 @@ if(function_exists("register_field_group"))
 				'maxlength' => '',
 			),
 			array (
+						'name' => 'descripcion',		'key' => 'field_551ade68854aa',						'label' => 'Descripción',	
+						'type' => 'textarea',						'instructions' => 'Texto descriptivo a un lado de la imagen',	'default_value' => '',	'placeholder' => '','maxlength' => '','rows' => 2,
+						'formatting' => 'html',
+					),
+			/*
+			array (
 				'name' => 'video_embed',				'key' => 'field_551179caaabbbb',			'label' => 'Video Enlazado',
 				'type' => 'textarea',
 				'instructions' => 'Si este bloque representa el enlace a un vídeo (youtube, vimeo, daily motion...) escribe aquí el código html embebido. <br> Se recomienda uso de iframe.',	'default_value' => '',
 				'placeholder' => 'Ej:    &lt;iframe src="https://player.vimeo.com/video/56812804" ...',  'maxlength' => '',		'rows' => '',	'formatting' => 'br',
-			),
+			),*/
+			array ('key' => 'field_551adf4185fff','label' => 'link',
+						'name' => 'link',	'type' => 'text',
+						'instructions' => 'Enlace al clicar en la imagen',
+						'default_value' => '','placeholder' => 'Ej	http://www.amazon.com/ebooksveras','prepend' => '','append' => '',
+						'formatting' => 'none',				'maxlength' => '',			
+					),
+			array ('key' => 'field_551adf4ffffaaa','label' => 'Texto del link',
+						'name' => 'link_text',	'type' => 'text',
+						'instructions' => 'Texto en el botón del link',
+						'default_value' => '','placeholder' => 'Ej	Abre el enlace','prepend' => '','append' => '',
+						'formatting' => 'none',				'maxlength' => '',
+										
+					),
 			array (
 				'key' => 'field_5511954134997',
 				'label' => 'Imagen',
 				'name' => 'imagen',
 				'type' => 'image',
-				'instructions' => 'Imagen a la izquierda del promo. si es un video será una preview del video.',
+				'instructions' => 'Imagen a la izquierda del promo. Se aconseja doble de alto que de ancho, aproximadamente.',
 				'save_format' => 'id',
 				'preview_size' => 'medium',
 				'library' => 'all',
@@ -641,6 +663,7 @@ if(function_exists("register_field_group"))
 				7 => 'format',
 				8 => 'tags',
 				9 => 'send-trackbacks',
+				10 => 'the_content'
 			),
 		),
 		'menu_order' => 0,
@@ -649,9 +672,8 @@ if(function_exists("register_field_group"))
 
 		
 	
-}
 
-*/
+
 
 
 
