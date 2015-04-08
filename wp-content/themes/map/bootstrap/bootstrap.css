@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -5029,7 +5028,7 @@ button.close {
     width: 300px; } }
 @media (min-width: 992px) {
   .modal-lg {
-    width: 750px; } }
+    width: 800px; } }
 .tooltip {
   position: absolute;
   z-index: 1070;
