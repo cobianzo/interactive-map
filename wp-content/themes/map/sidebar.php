@@ -57,8 +57,11 @@
 				
 				?>
 				</div> <!-- col videos-->
+				
 				<div class='col-sm-12 col-md-6'> <!-- col  before/now-->	<?php
-					 if ($img_before_id =	get_post_meta(get_the_ID(), "image_before", true)): ?>
+					global $antes_ahora;
+					 $antes_ahora		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa[0] : null;					 
+					 if ($antes_ahora && ($img_before_id =	$antes_ahora["img_antes"])): ?>
 
 							<?php get_template_part( "part", "before-now");  ?>
 
@@ -85,7 +88,7 @@
 			
 			<hr class="greca md-hidden lg-hidden xl-hidden">
 	
-			<div class='row-fluid' id='promo-aside'>
+			<div class='row-fluid clearfix' id='promo-aside'>
 				<?php 	
 					if (is_array($promos) && (count($promos) > $current_promo)) {
 						$promo_array	= $promos[$current_promo++];

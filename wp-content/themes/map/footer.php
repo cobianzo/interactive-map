@@ -3,16 +3,16 @@
 		<div class="container">
 			<?php if ( ! dynamic_sidebar( 'Footer' ) ) : ?><!--Wigitized Footer--><?php endif ?>
 
-			<span class="col-xs-2"><a href="#body"><?php _e('Top'); ?></a></span>
-			<span class='col-xs-7'>
+			<span class='col-xs-12 col-sm-3 text-center'>
+				<a href="<?php bloginfo('rss2_url'); ?>" rel="nofollow"><?php _e('Entries (RSS)'); ?></a> | 
+				<a href="<?php bloginfo('comments_rss2_url'); ?>" rel="nofollow"><?php _e('Comments (RSS)'); ?></a>
+			</span>
+			<span class='col-xs-12 col-sm-7 text-center'>
 					&copy; <?php echo date("Y") ?> 
 					<a href="<?php bloginfo('url'); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a>. 
 					<?php _e('All Rights Reserved.'); ?>
 			</span>
-			<span class='col-xs-3'>
-				<a href="<?php bloginfo('rss2_url'); ?>" rel="nofollow"><?php _e('Entries (RSS)'); ?></a> | 
-				<a href="<?php bloginfo('comments_rss2_url'); ?>" rel="nofollow"><?php _e('Comments (RSS)'); ?></a>
-			</span>
+			<span class="col-xs-12 col-sm-2 text-center"><a href="#body"><?php _e('Top'); ?></a></span>
 
 		</div><!--.container-->
 	</footer></div><!--#footer-->

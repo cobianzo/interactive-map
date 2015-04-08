@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -4951,9 +4952,9 @@ button.close {
 
 .modal-content {
   position: relative;
-  background-color: #fff;
+  background-color: #fbf8e4;
   border: 1px solid #999;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid #bb0000;
   border-radius: 6px;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -5028,7 +5029,7 @@ button.close {
     width: 300px; } }
 @media (min-width: 992px) {
   .modal-lg {
-    width: 900px; } }
+    width: 750px; } }
 .tooltip {
   position: absolute;
   z-index: 1070;

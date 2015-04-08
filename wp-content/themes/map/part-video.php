@@ -25,16 +25,18 @@
 											
 								# note: the link to open in modal window works because of a js in the footer
 								?>
-								<h3><?php echo $titulo; ?></h3>																
 								
-								<div class="col-xs-12 col-sm-6">
+								<div class="col-xs-12 col-sm-6 no-padding-left">
 																		
 									<a class="thumbnail" href="#" data-image-id="<?php echo $i; ?>" data-toggle="modal" data-title="<?php echo esc_attr($titulo); ?>" data-caption="<?php echo esc_attr($descripcion); ?>" data-content="<?php echo esc_attr($video_embed_html); ?>"  data-target="#image-gallery">									
 										<img src="<?php echo $video_img; ?>" class='img-responsive'>
 										<span class="glyphicon glyphicon-play-circle"></span>									
 									</a>								
 								</div>
-								<div class="col-xs-12 col-sm-6 ">
+								<div class="col-xs-12 col-sm-6 no-padding-left no-padding-right">
+								
+									<h3 class='h4 no-margin-top'><?php echo $titulo; ?></h3>																
+								
 									<span class="text-justify">
 										<p><?php echo $descripcion; ?></p>
 									</span>

@@ -52,6 +52,9 @@ h1 {
   margin-top: 15px !important;
   color: #555555 !important; }
 
+h4, .h4 {
+  color: #555555; }
+
 .modal {
   font-size: 14px; }
 
@@ -92,6 +95,12 @@ no-margin {
 
 .margin-top {
   margin-top: 20px; }
+
+.no-padding-left {
+  padding-left: 0 !important; }
+
+.no-padding-right {
+  padding-right: 0 !important; }
 
 .greca {
   height: 9px;
@@ -220,6 +229,9 @@ a.thumbnail {
     margin-bottom: 20px; }
   #comments-list .glyphicon {
     margin-top: 3px; }
+
+#promo-aside {
+  padding-bottom: 25px; }
 
 @media all and (min-width: 768px) {
   #aside {

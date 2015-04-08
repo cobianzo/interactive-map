@@ -485,7 +485,7 @@
 		global $polylang;
 		if (isset($polylang))	$lang = pll_get_post_language($id_map);
 		return get_posts(array(
-											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map, "lang" => $lang, "posts_per_page" => -1,
+											"post_type"		=> 	"mapa",	"post_parent"	=> $id_map, "lang" => $lang, "posts_per_page" => -1, "orderby" => "menu_order", "order" => "ASC",
 											/*"meta_query"	=>	array( array(	'key'     			=> 	"mapa_padre",  'value' 		  	=> 	$id_map,	'compare'		=> '=',	'type'				=> "NUMERIC"  ))*/
 		));		
 	}

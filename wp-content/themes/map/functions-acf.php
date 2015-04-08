@@ -258,20 +258,18 @@ if(function_exists("register_field_group"))
 						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),
 					),
 					array (
-						'name' => 'titulo',
-						'key' => 'field_551ade688542a',
-						'label' => 'Titulo',
-						'type' => 'text',
-						'instructions' => 'Título en la parte superior del bloque',
-						'column_width' => 25,
-						'default_value' => '',
-						'placeholder' => 'Ej. Nuestros ebooks',
-						'prepend' => '',
-						'append' => '',
-						'formatting' => 'html',
-						'maxlength' => '',
-						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),
-						
+						'name' => 'titulo','key' => 'field_551ade688542a','label' => 'Titulo',
+						'type' => 'text','instructions' => 'Título en la parte superior del bloque','column_width' => 20,
+						'default_value' => '', 'placeholder' => 'Ej. Nuestros ebooks','prepend' => '','append' => '',
+						'formatting' => 'html', 'maxlength' => '',
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),						
+					),
+					array (
+						'name' => 'subtitulo','key' => 'field_551ade688542b','label' => 'Subtítulo en cursiva',
+						'type' => 'text','instructions' => 'Subtítulo opcional bajo el título (en cursiva)','column_width' => 20,
+						'default_value' => '', 'placeholder' => '','prepend' => '','append' => '',
+						'formatting' => 'html', 'maxlength' => '',
+						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),						
 					),
 					array (
 						'key' => 'field_551ade688542b',
@@ -602,6 +600,13 @@ if(function_exists("register_field_group"))
 				'formatting' => 'html',
 				'maxlength' => '',
 			),
+			array (
+				'name' => 'subtitulo','key' => 'field_551ade688542c','label' => 'Subtítulo en cursiva',
+				'type' => 'text','instructions' => 'Subtítulo opcional bajo el título (en cursiva)','column_width' => 20,
+				'default_value' => '', 'placeholder' => '','prepend' => '','append' => '',
+				'formatting' => 'html', 'maxlength' => '',
+			),
+			
 			array (
 						'name' => 'descripcion',		'key' => 'field_551ade68854aa',						'label' => 'Descripción',	
 						'type' => 'textarea',						'instructions' => 'Texto descriptivo a un lado de la imagen',	'default_value' => '',	'placeholder' => '','maxlength' => '','rows' => 2,
