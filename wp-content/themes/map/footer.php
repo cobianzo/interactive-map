@@ -144,6 +144,17 @@
 			
 			
 			/* plugin before now */
+			
+			/* esto es mio para hacerlo fullscreen*/
+			function beforeNowFullScreen (action){
+				if (action === "exit") $("#before-now").removeClass("fullscreen");
+				else $("#before-now").addClass("fullscreen");
+				$(window).resize();
+				return ;
+			}
+			
+			
+			
 			// Call & init
 				$(document).ready(function(){
 				  $('.ba-slider').each(function(){

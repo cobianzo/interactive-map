@@ -79,7 +79,7 @@
 	
 	
 	    <!-- Fixed navbar -->
-		<nav id="header-navbar"  class="navbar navbar-default navbar-fixed-top">
+		<nav id="header-navbar"  class="navbar navbar-default ">
 		  <div class=row-fluid>
 		  
 			<div class="navbar-header col-xs-1">

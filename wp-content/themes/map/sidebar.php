@@ -19,7 +19,7 @@
 
 
 <section id="sidebar" class='clearfix row-fluid'>
-	<div class='row-fluid'> <!-- includes gallery, video, before/now, and collumn comments with promo  (everything but the bottom row) -->
+	<div class='row-fluid clearfix'> <!-- includes gallery, video, before/now, and collumn comments with promo  (everything but the bottom row) -->
 	
 		<div class='col-sm-12 col-md-8'>  <!-- img gallery, video and before/now-->
 			

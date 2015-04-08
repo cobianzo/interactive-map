@@ -168,6 +168,7 @@ no-margin {
 // header en todos: mobile, table y desktop
 #header-navbar {
 	height:							88px;			
+	margin-bottom:				0;
 	background-image:		url("images/figura-header.png"), url("images/bg-header.jpg");
 	background-repeat:		no-repeat , repeat-x ;
 	background-color:			$bg-light; 		
@@ -264,9 +265,6 @@ no-margin {
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
  
 
-#map-section{
-	padding:			89px 0 0 0;
-}
 	.map-container {
 	}
 
@@ -275,7 +273,6 @@ no-margin {
 	}
 
 	@media all and (max-width: $screen-xs-max) { 
-		#map-section{		padding-top:	39px; }
 	}	
 /*     ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
@@ -381,6 +378,43 @@ a.thumbnail {
 /*   BEFORE - NOW PLUGIN  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 
+ /* fuera del plugim, mio para hacerlo fullscreen */
+ .only-full-screen { display:		none; }
+ #before-now.fullscreen {
+	position:					fixed; 
+	top:							0;
+	left:							0;
+	width:						100%;
+	height:					100%;
+	padding:					10px; 
+	text-align:				center;
+	z-index:					999;
+	background-color:	rgba(0,0,0,0.5);
+	
+	h3, h2 {	display: none;}
+	.only-full-screen { display:		block; }
+	 
+	.close-btn {
+		position:						fixed;
+		right:							15px;
+		top:								5px; 
+		z-index:						99999;
+		border-radius:			50%;
+	    @include box-shadow( 7px 6px 2px rgba(0, 0, 0, 0.5)); 
+
+	}
+	.ba-slider {
+		max-width:				800px;
+		margin:					auto;
+		border: 					3px solid #f4f4f4;
+		border-radius: 		5px;
+	    @include box-shadow( 7px 6px 2px rgba(0, 0, 0, 0.5)); 
+
+	}
+ }
+ 
+ 
+ 
 .ba-slider {
     position: relative;
     overflow: hidden;
