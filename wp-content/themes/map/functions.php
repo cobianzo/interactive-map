@@ -305,14 +305,53 @@
 					<div class="modal-body">
 						<?php echo $params['html_body']; ?>					
 					</div>
+					<?php if ($params['html_footer']) : ?>
 					<div class="modal-footer">
 						<?php echo $params['html_footer']; ?>
 					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>		
 		<?php
 	}
+	
+	
+	/*function mytheme_list_pages($param) {
+	  $pages = get_pages($param); 
+	  foreach ( $pages as $page ) {
+		$li  = '<li><a class="ajax-open-page" href="' . get_page_link( $page->ID ) . '" title="';
+		$li .= esc_attr($page->post_title);
+		$li .= '" data-pageid="'.$page->ID.'">';
+		$li .= get_the_title($page->ID);
+		$li .= '</a></li>';
+		echo $li;
+		}<
+	}*/
+
+	add_action('wp_head','head_ajaxurl');
+	function head_ajaxurl() {  echo "\n";  ?> <script>  var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';  </script>	<?php echo "\n";  }
+	
+	add_action( 'wp_ajax_open_page_ajax', 'open_page_ajax' );
+	add_action( 'wp_ajax_nopriv_open_page_ajax', 'open_page_ajax' );
+	function open_page_ajax($params = array())
+	{
+		if (empty($params)) $params = $_REQUEST;
+		$params	= array_merge($params, array());		
+		$page_id 	= $params['page_url']? url_to_postid( $params['page_url']) : $params['post_id'];;
+		
+		query_posts("page_id=$page_id");
+		while ( have_posts() ) :		the_post();
+			get_template_part( "part-page", "content");  							
+		endwhile;
+		wp_reset_query();
+		
+		die();
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -498,9 +537,18 @@
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
+		$visibilidad 				= get_post_meta($id_monumento, "visibilidad", true);
 		$link							=  (($cc = get_post_meta($id_monumento, "mapa_redirection", true)) )?	get_the_permalink($cc)  :  null;
-		if ((!$link )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')";
+		// clicando en un nombre en la lista abre una viñeta y	 hace zoom en el mapa, a menos q tengamos esta opción no_zoom activa
+		if (($no_zoom_option = get_post_meta($id_monumento, "no_zoom", true)) && strpos (" ".$no_zoom_option, "no_") )  // total, no_zoom_y_vineta, no_vineta
+		{
+			$link_on_list				= $link? $link : "javascript: abreLocationCard('$post_monumento->post_name')";  // al clicar en el nombre en la lista llevará a este link.
+			$no_vineta					= true;
+			if ($no_zoom_option == "no_zoom_y_vineta")	 $no_zoom = true;
+		}
+		if ((!$link )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')"; // por defecto un hotspot abre su card en popup
 		
+	
 		
 		$post_categories				= wp_get_post_categories($id_monumento,array( ));
 		$category							= (is_array($post_categories) && count($post_categories))?  $post_categories[0] : null;
@@ -516,8 +564,12 @@
 			"x"						=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
 			"y" 						=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
 			"link"					=>	$link,
-			"zoom"				=>	"2"		
+			"zoom"				=>	2,
 		);		
+		if ($link_on_list) 	$array_monumento["link_on_list"] 	= $link_on_list; // javascript: abre...
+		if ($no_zoom) 		$array_monumento["no_zoom"] 	= $no_zoom; //  true
+		if ($no_vineta) 		$array_monumento["no_vineta"] 	= $no_vineta; //  true
+		if ($visibilidad && ($visibilidad != "total") )	$array_monumento["pin"] 				=  $visibilidad; // pin:"hidden" es el código d mapplic  pa ocultar el pin (added option:hidden_in_list)
 		return $array_monumento;
 	}
 	

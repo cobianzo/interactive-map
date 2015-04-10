@@ -117,7 +117,8 @@
 						</li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
-						<?php wp_list_pages( array('title_li' => null) ); ?> 
+					  
+						<?php  wp_list_pages( array('title_li' => null) ); ?> 
 					  </ul>
 					</div><!--/.nav-collapse -->
 				
@@ -144,8 +145,6 @@
 				
 		  </div>
 		</nav>
-	
-	
 	
 	
 	

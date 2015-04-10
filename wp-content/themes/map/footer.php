@@ -19,6 +19,12 @@
 
 
 
+	<?php // hs added to display this when clicking on a page link. (see footer).
+		$html_header	= '  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="page-modal-title"></h4>';
+		print_bt_modal(array("id" => "page-modal",   "html_header" => $html_header,  "html_body" => "<div id='page-content'></div>","html_footer" => "", ))
+	?>
+	
 
 
 	<!-- cerramos del header:    ,  #body, body, html, -->
@@ -60,7 +66,7 @@
 			
 			
 			
-			
+			/* Mapplic map: opens the card of a hotspot, previously hidden on html */
 			function abreLocationCard(locationCardName){
 				
 				$("#modal-"+locationCardName).modal({show: 'false'});				
@@ -71,6 +77,42 @@
 			jQuery(".modal").on('hidden.bs.modal', function () {
 				// no es necesario... el ppopup se ve bien				
 			});
+			
+			
+			
+			
+			/* opens modal to display the page */
+			$(document).ready(function(){
+				
+							
+							
+				$(".page_item a").click(function(e){					
+					
+					$("#page-modal-title").text($(this).text());
+					$("#page-content").html("Loading");
+					// load with ajax the content of the  page
+					jQuery.post(	ajaxurl, {
+												'action': 			'open_page_ajax',
+												'page_url':   	$(this).attr("href")
+											}, 
+										function(response){
+												$("#page-content").html(response);
+											}
+					);									
+					e.preventDefault();				
+					$("#page-modal").modal({show: 'false'});				
+				});
+				
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			

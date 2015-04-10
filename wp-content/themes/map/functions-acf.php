@@ -407,12 +407,24 @@ if(function_exists("register_field_group"))
 				'allow_null' => 1,
 				'multiple' => 0,
 			),
-			array (
-				'key' => 'field_550ca7aaaaa',
-				'label' => 'Popup de monumento',
-				'name' => '',
-				'type' => 'tab',
-			),
+			array (	'name' => 'no_zoom','key' => 'field_552723bc06aaa','label' => 'Efecto al clicar en la lista',
+				'type' => 'radio',
+				'instructions' => 'No hacer zoom al clicar en este hotspot la lista de hotspots a la izquierda. Abrir directamente la tarjeta en modo de popup. Esto es usado con hotspots que no corresponden exactamente a un monumento, como por ejemplo <i>Luz y sonido</i>.<br> Esta variable es sólo aplicable si el hotspot no manda a otro mapa, como en los hotspots de Yucatán', 
+				'choices' => array ('total' => 'Hacer zoom y mostrar viñeta',	'no_zoom_y_vineta' => 'No hacer zoom ni mostrar viñeta (abre directamente el popup del hotspot)',	'no_vineta' => 'Hacer zoom pero no mostrar viñeta (abre directamente el popup del hotspot)',	),
+				'default_value' => 'total', 'other_choice' => 0,	'save_other_choice' => 0, 'layout' => 'vertical',
+			),				
+			array ( 	'name' => 'visibilidad',		'key' => 'field_55272e7fcf841', 'label' => 'Visibilidad',
+				'type' => 'radio',
+				'instructions' => 'Aquí puedes escoger entre mostrar el nombre del hotspot tanto en la lista de la izquierda como el pin en el mapa, u ocultarlo en uno de estos dos lugares.<br>
+				Normalmente se verá en ambos lados, pero por ej. Equinoccio, que corresponde al emplazamiento de un momunmento (y por tanto ya hay un hotspot allí) no querrá mostrar su pin, y por tanto lo ocultaremos en el mapa, pero lo dejaremos en la lista',
+				'choices' => array ('total' => 'Visibilidad en la lista y en el mapa',	'hidden' => 'No mostrar el pin en el mapa',	'hidden_in_list' => 'No mostrar el nombre en la lista',	),
+				'default_value' => 'total', 'other_choice' => 0,	'save_other_choice' => 0, 'layout' => 'horizontal',
+			),			
+			
+			/* TAB -----------------*/			
+			array ('type' => 'tab', 'key' => 'field_550ca7aaaaa','label' => 'Popup de monumento',	'name' => '',	),			
+			/* TAB -----------------*/
+			
 			array (
 				'key' => 'field_550ca8bbbbba',
 				'label' => 'Imagen de título',

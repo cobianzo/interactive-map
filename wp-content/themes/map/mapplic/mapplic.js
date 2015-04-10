@@ -427,11 +427,11 @@
 				});
 			}
 
-			this.addLocation = function(data) {
+			this.addLocation = function(data) {		// ALV: como ref, esta función añade el elemento html en el a lista
 				var item = $('<li></li>').addClass('mapplic-list-location').addClass('mapplic-list-shown');
 				var link = $('<a></a>').attr('href', '#').click(function(e) {
 					e.preventDefault();
-					showLocation(data.id, 600);
+					showLocation(data.id, 600); // esto se ejecuta al clicar en la lista sólo , no en el pin
 
 					// Scroll back to map on mobile
 					if ($(window).width() < 668) {
@@ -722,7 +722,7 @@
 								pin.on('click touchend', function(e) {
 									e.preventDefault();
 									/* ALV: esto se dispara cuando se clica sobre el hotspot (no cuando se clica en el nombre en la lista). añado la apertura directa del link si lo tiene */
-									/* este if es mio */ if (value.link.length) 
+									/* este if es mio, si hay link  lleva a él.  */ if (value.link.length) 
 										window.location.href = value.link;
 									else
 										showLocation(value.id, 600);
@@ -732,8 +732,9 @@
 								pin.addClass(value.pin);
 							}
 						}
-
-						if (self.sidebar) self.sidebar.addLocation(value);
+						/* ALV: si tiene la opcion en el json de value.pin == hide_in_list, no añadimos la location a la list. (esta opción es añadida por mí) */
+						if (value.pin != 'hidden_in_list')
+							if (self.sidebar) self.sidebar.addLocation(value);
 					});
 
 					nrlevels++;
@@ -1054,13 +1055,22 @@
 			return data;
 		}
 
+		// showlocation es el efecto de hacer zoom sobre una location, y mostrar su viñeta (tooltip)
 		var showLocation = function(id, duration, check) {
 			$.each(self.data.levels, function(index, layer) {
 				$.each(layer.locations, function(index, location) {
 					if (location.id == id) {
 
-						self.tooltip.set(location);
-						self.tooltip.show(location);
+
+					/*ALV: esto se dispara cuando se clica en el nombre del hotspot en la lista, pero no cuando se clica en el pin. Añadido por mí que evite showLocation y*/
+						if (typeof(location.link_on_list) !== "undefined")
+							window.location	=	location.link_on_list; // generalmetne link_on_list (si lo hay) será =>  javascript: abreLocationCard('nombre-del-hotspot')
+
+						// ALV: esto es lo que muestra la viñeta. Si el hotspot tiene el param "no_vineta", no se muestra
+						if (typeof(location.no_vineta) == "undefined" ) {
+							self.tooltip.set(location);
+							self.tooltip.show(location);
+						}
 
 						var zoom = typeof location.zoom !== 'undefined' ? location.zoom : 4;
 
@@ -1068,8 +1078,10 @@
 
 						level(layer.id, true);
 
-						zoomTo(location.x, location.y, zoom, duration, 'easeInOutCubic', ry);
-
+						// ALV: esto es lo que hace el zoom al clicar. Si el hotspot tiene el param "no_zoom", no se hace zoom
+						if (typeof(location.no_zoom) == "undefined" ) 
+							zoomTo(location.x, location.y, zoom, duration, 'easeInOutCubic', ry);
+	
 						$('.mapplic-active', self.el).attr('class', 'mapplic-clickable');
 						if (location.onmap) location.onmap.attr('class', 'mapplic-active');
 
