@@ -56,6 +56,12 @@ if(function_exists("register_field_group"))
 			/* TAB -----------------*/
 			array ( 	'type' => 'tab', 'key' => 'field_550ca79222222',	'label' => 'Galería imgs',	'name' => '',	),
 			/* -----------------------  */
+			
+		array ( 'name' => 'add_hotspot_galleries', 	'key' => 'field_55275eae77532',  'label' => 'Añadir galerias de los hotspots',
+				'type' => 'true_false',
+				'instructions' => 'Si deseas que por defecto se añadan todas las imágenes de los slideshows de todos los hotspots de este mapa, clica este checkbox. Además podrás añadir nuevas imágenes de otras galerías o individualmente, usando las opciones más abajo-',		'message' => 'Añadir todas las imágenes de todos los hotspots del mapa',
+				'default_value' => 1,
+			),	
 		array (
 				'key' => 'field_551c7191c0a81',
 				'label' => 'Galeria',
@@ -265,7 +271,7 @@ if(function_exists("register_field_group"))
 						'conditional_logic' => array ('status' => 1,'rules' => array (array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '1',),),'allorany' => 'all',),						
 					),
 					array (
-						'name' => 'subtitulo','key' => 'field_551ade688542b','label' => 'Subtítulo en cursiva',
+						'name' => 'subtitulo','key' => 'field_551ade688bbbb','label' => 'Subtítulo en cursiva',
 						'type' => 'text','instructions' => 'Subtítulo opcional bajo el título (en cursiva)','column_width' => 20,
 						'default_value' => '', 'placeholder' => '','prepend' => '','append' => '',
 						'formatting' => 'html', 'maxlength' => '',
@@ -435,6 +441,22 @@ if(function_exists("register_field_group"))
 				'preview_size' => 'medium',
 				'library' => 'all',
 			),
+		array (
+				'key' => 'field_551c7191c0a82',
+				'label' => 'Galeria',
+				'name' => 'galeria_id',
+				'type' => 'post_object',
+				'instructions' => 'Selecciona la galería que mostrará el carrusel. Recuerda que la galería debe haber sido creada previamente.',
+				'post_type' => array (
+					0 => 'galeria',
+				),
+				'taxonomy' => array (
+					0 => 'all',
+				),
+				'allow_null' => 1,
+				'multiple' => 0,
+			),
+			
 			array (
 				'name' => 'contenido',				'key' => 'field_551179c29e909',			'label' => 'Contenido',
 				'type' => 'textarea',
@@ -486,7 +508,7 @@ if(function_exists("register_field_group"))
 	if ($post->post_parent == 0 ) {
 		$message = "Esto es un mapa. Si lo que querías era editar un hotspot, tendrás que seleccionar el mapa padre al que pertenece en la caja de arriba, donde pone <b>Superior</b>. <br>";
 		if ( (is_object($post)) && ($post->post_type == "mapa")) :
-			$children = get_posts(array("post_parent"=> $post->ID, "post_type" => "mapa", "orderby" => "menu_order" , "order" => "ASC"));
+			$children = get_posts(array("post_parent"=> $post->ID, "post_type" => "mapa", "posts_per_page"=>-1, "orderby" => "menu_order" , "order" => "ASC"));
 			if (is_array($children) && count($children))
 			foreach ($children as $i=> $hotspot) {
 				if (!strlen($post_message))  $post_message = "<ul>";
@@ -613,7 +635,7 @@ if(function_exists("register_field_group"))
 				'maxlength' => '',
 			),
 			array (
-				'name' => 'subtitulo','key' => 'field_551ade688542c','label' => 'Subtítulo en cursiva',
+				'name' => 'subtitulo','key' => 'field_551ade68854aaa','label' => 'Subtítulo en cursiva',
 				'type' => 'text','instructions' => 'Subtítulo opcional bajo el título (en cursiva)','column_width' => 20,
 				'default_value' => '', 'placeholder' => '','prepend' => '','append' => '',
 				'formatting' => 'html', 'maxlength' => '',

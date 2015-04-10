@@ -26,7 +26,7 @@
 						</div><!--.commentText-->
 						<div class="comment-meta small"><i>
 							<?php edit_comment_link('Edit Comment', '', ''); ?>
-							<?php comment_type(); ?> by <?php comment_author_link(); ?> on <?php comment_date(); ?> at <?php comment_time(); ?>
+							<!--<?php comment_type(); ?> by <?php comment_author_link(); ?> on --><?php comment_date(); ?> at <?php comment_time(); ?>
 				         </i></div><!--.commentMeta-->
 					</div>
 		        </li>
@@ -45,20 +45,17 @@
 						$commenter = wp_get_current_commenter();
 						$req = get_option( 'require_name_email' );
 						$aria_req = ( $req ? " aria-required='true'" : '' );
-						$fields =  array(
-							'author' => '<p class="comment-form-author">' . '<label for="author">' . __( 'Name' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
-								'<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' /></p>',
-							'email'  => '<p class="comment-form-email"><label for="email">' . __( 'Email' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
-								'<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' /></p>',
-						);
-						?>
 					
-						<?php
-						$comments_args = array(
-							'fields' =>  $fields
-						);
-						 
-						comment_form($comments_args);
+						comment_form( array(
+								"logged_in_as" => "<br>&nbsp;",
+								'title_reply' 			=>	'',
+								'author' 				=> '<p class="comment-form-author">' . '<label for="author">' . __( 'Name' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
+									'<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' /></p>',
+								'email'  				=> '<p class="comment-form-email"><label for="email">' . __( 'Email' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
+									'<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' /></p>',
+								'class_submit' 	=>  "btn btn-primary",
+								'comment_notes_after' => '',
+							));
 						
 						?> 
 						

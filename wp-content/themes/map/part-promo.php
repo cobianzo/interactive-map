@@ -26,7 +26,7 @@
 								# note: the link to open in modal window works because of a js in the footer
 								?>
 								<h3><?php echo $titulo; ?></h3>																
-								<?php echo (strlen($subtitulo))? "<p><i>$subtitulo</i></p>" : "" ;?>
+								<?php echo (strlen($subtitulo))? "<p class='text-justify small'><i>$subtitulo</i></p>" : "" ;?>
 								
 								<div class="col-xs-12 col-sm-6 no-padding-left text-center">
 										<?php echo $link_a? $link_a : ""; ?>

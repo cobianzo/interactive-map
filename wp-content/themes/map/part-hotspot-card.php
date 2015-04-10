@@ -29,11 +29,13 @@
 					</div>
 					<div class="modal-body">
 						<?php 
-						if (wpba_attachments_exist( ) ) {
-							$carousel_imgs =  wpba_get_attachments( );
-						?>
+						if ( ($galeria_id = 	get_post_meta(get_the_ID(), "galeria_id", true)) && wpba_attachments_exist( $galeria_id  ) )  
+						{
+							$carousel_imgs =  wpba_get_attachments( $galeria_id  );						?>
+							
 							<div id="carousel-<?php echo $post->post_name; ?>" class="carousel slide">
 								<div class="carousel-inner">
+								
 						<?php	foreach ($carousel_imgs as $i => $img) : 
 										$img_url	=	wp_get_attachment_image_src( $img->ID, "large" );
 						?>

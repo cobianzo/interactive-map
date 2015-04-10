@@ -4,9 +4,21 @@
 	The modal window has to be defined with the funcition print_bt_modal(array("id" => "image-gallery", somewhere (kn this case in sidebar.php)
 	The galería works with the custom post type "galeria", associated to a map with "galeria_id" acf. Also you can add custom images for a specific language with repeated field acf
 */
+			$all_images	= array();
 
-				$hay_galeria	= ((($carousel_imgs = get_field("galeria"))&&count($carousel_imgs)) );
-				if (($galeria_id = get_post_meta( get_the_ID(), "galeria_id", true)) )
+				if ($hotspots_galleries	= get_post_meta(get_the_ID(), 'add_hotspot_galleries', true)) {
+					// para cada hotspot
+					foreach (get_monumentos_by_mapa(get_the_ID()) as $hotspot_post) 
+						if ($hotspot_galeria_id		= 	get_post_meta($hotspot_post->ID, "galeria_id", true))
+							if (wpba_attachments_exist( $hotspot_galeria_id )){
+								$hotspot_attachments	= wpba_get_attachments( $hotspot_galeria_id  );
+								$all_images					= array_merge($all_images, $hotspot_attachments);
+						}					
+				}
+				
+				
+				$hay_galeria	= ((($carousel_imgs = get_field("galeria"))&&count($carousel_imgs)) ); // imgs metidas con repeated field en el mapa
+				if (($galeria_id = get_post_meta( get_the_ID(), "galeria_id", true)) )		// fields galeria_id , asociado a  better attachments
 				{	
 					$hay_galeria							=	true;	
 					$hay_galeria_attachments 	=	wpba_attachments_exist( $galeria_id);					
@@ -20,8 +32,8 @@
 
 					if ($hay_galeria_attachments) $attachments	= wpba_get_attachments( $galeria_id);
 
-					if (is_array($attachments))  $all_images	=	array_merge($attachments, $carousel_imgs);
-						else	$all_images	=	$carousel_imgs;
+					if (is_array($attachments))  $all_images	=	array_merge($all_images, $attachments, $carousel_imgs);
+						else	$all_images	=	array_merge($all_images, $carousel_imgs);
 				?>
 				
 				<h2><?php printf( __('Galería multimedia para %s', 'veras'), get_post_meta(get_the_ID(), 'category_name', true) ); ?></h2> 	
