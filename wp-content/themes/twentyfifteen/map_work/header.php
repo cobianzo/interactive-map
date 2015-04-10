@@ -48,27 +48,6 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo( 'name' ); ?>" href="<?php bloginfo( 'rss2_url' ); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo( 'name' ); ?>" href="<?php bloginfo( 'atom_url' ); ?>" />
-
-	<link rel="apple-touch-icon" sizes="57x57" href="<?php bloginfo('template_url'); ?>/images/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="<?php bloginfo('template_url'); ?>/images/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="<?php bloginfo('template_url'); ?>/images/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php bloginfo('template_url'); ?>/images/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="<?php bloginfo('template_url'); ?>/images/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php bloginfo('template_url'); ?>/images/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="<?php bloginfo('template_url'); ?>/images/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php bloginfo('template_url'); ?>/images/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo('template_url'); ?>/images/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="<?php bloginfo('template_url'); ?>/images/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="<?php bloginfo('template_url'); ?>/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="<?php bloginfo('template_url'); ?>/images/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="<?php bloginfo('template_url'); ?>/images/favicon-16x16.png">
-	<link rel="manifest" href="<?php bloginfo('template_url'); ?>/images/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
-
-
-
 	
 	<?php wp_enqueue_script("jquery"); /* Loads jQuery if it hasn't been loaded already */ ?>
 	
@@ -100,8 +79,8 @@
 	
 	
 	    <!-- Fixed navbar -->
-		<nav id="header-navbar"  class="navbar navbar-default  navbar-fixed-top">
-		  <div class="row-fluid">
+		<nav id="header-navbar"  class="navbar navbar-default navbar-fixed-top">
+		  <div class=row-fluid>
 		  
 			<div class="navbar-header col-xs-1">
 			
@@ -138,8 +117,7 @@
 						</li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
-					  
-						<?php  wp_list_pages( array('title_li' => null) ); ?> 
+						<?php wp_list_pages( array('title_li' => null) ); ?> 
 					  </ul>
 					</div><!--/.nav-collapse -->
 				
@@ -166,6 +144,8 @@
 				
 		  </div>
 		</nav>
+	
+	
 	
 	
 	

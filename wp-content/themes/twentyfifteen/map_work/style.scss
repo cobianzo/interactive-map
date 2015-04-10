@@ -1,0 +1,480 @@
+/*
+Theme Name: Map basado en Whiteboard
+Theme URI: http://whiteboardframework.com/
+Author: Alvaro B. Cobian
+Author URI: http://cobianzo.com/
+Plantilla liimpia para desarrollar esta applicación customizada para Verás
+ */
+ 
+ /* "bootstrap-sass-3.3.4 */
+
+@import "bootstrap/mapa-variables-mixins";
+@import "bootstrap/stylesheets/bootstrap/mixins";
+
+ 
+@charset "utf-8";
+
+
+@font-face {
+    font-family: 'caviar_dreamsregular';
+    src: url('fonts/CaviarDreams-webfont.eot');
+    src: url('fonts/CaviarDreams-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/CaviarDreams-webfont.woff') format('woff'),
+         url('fonts/CaviarDreams-webfont.ttf') format('truetype'),
+         url('fonts/CaviarDreams-webfont.svg#caviar_dreamsregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'caviar_dreamsitalic';
+    src: url('fonts/CaviarDreams_Italic-webfont.eot');
+    src: url('fonts/CaviarDreams_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/CaviarDreams_Italic-webfont.woff') format('woff'),
+         url('fonts/CaviarDreams_Italic-webfont.ttf') format('truetype'),
+         url('fonts/CaviarDreams_Italic-webfont.svg#caviar_dreamsitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'caviar_dreamsbold';
+    src: url('fonts/Caviar_Dreams_Bold-webfont.eot');
+    src: url('fonts/Caviar_Dreams_Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Caviar_Dreams_Bold-webfont.woff') format('woff'),
+         url('fonts/Caviar_Dreams_Bold-webfont.ttf') format('truetype'),
+         url('fonts/Caviar_Dreams_Bold-webfont.svg#caviar_dreamsbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'alexbrush_regular';
+    src: url('fonts/CaviarDreams_Italic-webfont.eot');
+    src: url('fonts/CaviarDreams_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/CaviarDreams_Italic-webfont.woff') format('woff'),
+         url('fonts/CaviarDreams_Italic-webfont.ttf') format('truetype'),
+         url('fonts/CaviarDreams_Italic-webfont.svg#caviar_dreamsitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+ 
+ 
+ /*   MAIN  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
+ body {
+	background-color: 	$bg-light;
+	color: 							#888;
+	font-family:  				$font-family-sans-serif;  
+	font-size: 					$font-size-base;
+	margin: 						0;
+}
+
+b {
+	font-family:		'caviar_dreamsbold';
+	font-weight:	bold;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+	font-weight:			bold;
+	color:						$brand-primary;
+}
+h1 {
+	margin-top:			15px !important;
+	color:						$gray!important;	
+}
+
+
+.modal {
+	font-size:		14px;
+
+}
+
+textarea#comment {
+	width:			100%;
+}
+
+/*   GENERIC THINGS  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
+
+
+/* responsive iframe flexible video */
+.flex-video {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+	
+	iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	video {
+	
+	}
+}
+/* end flexible video */
+
+
+.align-center 	{	 text-align: center;}
+.align-left 		{	text-align: left;	}
+.align-right 		{	text-align: right;  }
+
+
+no-margin {
+	margin:			0 !important;;
+}
+
+.no-margin-top {
+	margin-top:	0 !important;
+}
+.margin-top {
+	margin-top:		20px;
+}
+
+.greca {
+	  height: 9px;
+	  border: 0;
+	  padding: 0;
+	  margin: 0;
+	  background: transparent url("images/bg-header.jpg") repeat-x left bottom;
+}
+.sombra {
+	  height: 				65px;
+	  border: 			0;	  padding: 0;	  margin: 0;
+	  background: transparent url("images/bg-sombra.jpg") no-repeat center bottom;
+}
+.mapplic-list-thumbnail {
+	border-radius:		50% !important;		// TO_DO: confirm in every browser  
+}
+
+
+/* HEADER -------------------------------------------*/
+
+
+// header en todos: mobile, table y desktop
+#header-navbar {
+	height:							88px;			
+	background-image:		url("images/figura-header.png"), url("images/bg-header.jpg");
+	background-repeat:		no-repeat , repeat-x ;
+	background-color:			$bg-light; 		
+	background-position:	 right top, center top;
+	border:							0;
+   @include box-shadow($gray-base 2px 2px 10px);
+
+	#logo {
+		img {
+			height:			70px;
+			margin-top:	5px;
+		}
+	}
+ 
+   
+	#navbar { margin-top: 		-4px;		}
+	
+	.navbar-toggle  {	
+			height:			35px;
+			margin-top:	3px;
+	}
+	
+	.navbar-collapse.in {
+			background:	$bg-light;
+	}
+	
+	.navbar-nav > li > a {
+		padding-top:			0;
+		padding-bottom:	0;
+	}
+
+
+		#breadcrums {
+			.glyphicon  {
+				margin-top:	3px;
+				margin-left:		-7px;
+			}
+			font-size:			0.8em;
+		}
+}
+
+#language-dropdown {
+	margin:		52px 60% 0 0;
+}
+
+
+
+
+	// header only MOBIILE and TABLET PORTRAIT
+	@media all and (max-width: $screen-xs-max) { 
+		#header-navbar {
+				height:							40px;			
+				background-position:	 right top, center -39px;
+
+				#titulo h1 {									  // title small for mobile
+					margin:				0px 10px !important;
+					font-size:			floor($font-size-h1 / 2);
+					line-height:			0.9em;
+				}
+			
+				.navbar-header  { 
+					padding:						0;
+					#logo{
+						margin-left:				0;
+						img {
+							height:				47px;			// logo small for 	mobile
+							margin-top:		-4px;
+						}
+					}		
+				}
+				
+				#language-dropdown  {
+					.dropdown-toggle {
+						visibility:				hidden;
+					}
+					#language-dropdown-ul {
+						top:						0;
+						margin-top:		-55px;
+					}
+				}
+				
+				
+				
+				
+		}
+	
+	
+	}
+
+
+
+
+/*   MAP  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
+ 
+
+#map-section{
+	padding:			89px 0 0 0;
+}
+	.map-container {
+	}
+
+	.mapplic-list-thumbnail {
+		max-width:			45px;
+	}
+
+	@media all and (max-width: $screen-xs-max) { 
+		#map-section{		padding-top:	39px; }
+	}	
+/*     ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
+ 
+ 
+ 
+ /*------------- IMAGE GALLLERY -------------------*/
+.navbar-bottom {
+	min-height: 300px;
+	margin-top: 100px;
+	background-color: #28364f;
+	padding-top: 35px;
+	color:#FFFFFF;
+}
+#image-gallery-row {
+	margin-top:			30px;
+}
+
+a.thumbnail {
+	text-align:			center;
+	border:				0;
+	margin-bottom:	0;
+	
+	&.landscape {
+		overflow:				hidden;
+		height:				100px;	
+		
+		img {
+			width:					100%;
+			margin-top:		-39px;		// RESPONSIVE:  el crop se ve bien solo en desktop: verificar el resto.
+		}
+	}
+	
+	.glyphicon {
+		  position: 		absolute;
+		  left: 				0;
+		  width: 			100%;
+		  margin-top: 	26px;
+		  color: 			white;
+		  font-size: 		3em;
+  }
+  &:hover .glyphicon { 	color:	$brand-primary;	}
+}
+		//  RESPONSIVE IMG GALLERY
+	@media all and (min-width: $screen-md-min) {
+		
+		#image-gallery-row {
+			height: 					230px;
+			overflow-y: 				auto;
+		}
+
+	}
+/*------------- end IMAGE GALLLERY -------------------*/
+
+
+
+/*------------- COMMENTS  -------------------*/
+#comments-list {
+	list-style:				none;
+	margin-top:		15px;
+	padding:				0;
+	
+	li {
+		margin-bottom:		20px; 
+	}
+	.glyphicon { margin-top:	3px;}
+}
+
+	
+	// PARA MAS DE TABLET
+	@media all and (min-width: $screen-sm-min) {
+	
+		#aside{
+			margin-top:					2px;
+			background-color:			$gray-lighter;
+
+			.greca { display:none;}
+		}
+
+		#comments-container {
+			#comments-list {
+				height:		225px;
+				overflow-x:	hidden;
+				overflow-y:	auto;
+			}
+		}
+	
+	}
+/*------------- end COMMENTS  -------------------*/
+
+
+
+
+
+
+
+
+
+
+
+/*   BEFORE - NOW PLUGIN  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
+
+.ba-slider {
+    position: relative;
+    overflow: hidden;
+	
+	img {
+		width: 100%;
+		display:block;
+	}
+}
+ 
+ 
+.resize {
+    position: absolute;
+    top:0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    overflow: hidden;
+}
+
+
+.handle { /* Thin line seperator */
+  position:absolute; 
+  left:50%;
+  top:0;
+  bottom:0;
+  width:4px;
+  margin-left:-2px;
+ 
+  background: rgba(0,0,0,.5);
+  cursor: ew-resize;
+  
+  &:after {  /* Big orange knob  */
+    position: absolute;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+ 
+    content:'\21d4';
+    color:white;
+    font-weight:bold;
+    font-size:36px;
+
+    text-align:center;
+    line-height:64px;
+ 
+    background: #ffb800; /* @orange */
+    border:1px solid #e6a600; /* darken(@orange, 5%) */
+    border-radius: 50%;
+    transition:all 0.3s ease;
+    box-shadow:
+      0 2px 6px rgba(0,0,0,.3), 
+      inset 0 2px 0 rgba(255,255,255,.5),
+      inset 0 60px 50px -30px #ffd466; /* lighten(@orange, 20%)*/ 
+}
+
+}
+ 
+
+.draggable:after {
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+    line-height:48px;
+    font-size:30px;
+}
+
+
+
+
+/*   FOOTER   ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
+ #footer {
+	height:				40px;
+	margin-top:		30px; 
+	padding-top:		14px;
+ 	background:		$bg-light url("images/bg-header.jpg")  repeat-x  center top;
+	font-weight:		bold;
+ }
+/*   RESPNSIVE  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+ ------------------------------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
+
+/* Responsivity */
+@media all and (max-width: 667px) {
+	#header {
+		display: none;
+	}
+
+	.inner.over {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	.window-mockup {
+		display: none;
+	}
+}
+
+
+
+

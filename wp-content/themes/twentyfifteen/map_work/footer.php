@@ -3,28 +3,22 @@
 		<div class="container">
 			<?php if ( ! dynamic_sidebar( 'Footer' ) ) : ?><!--Wigitized Footer--><?php endif ?>
 
-			<span class='col-xs-12 col-sm-3 text-center'>
-				<a href="<?php bloginfo('rss2_url'); ?>" rel="nofollow"><?php _e('Entries (RSS)'); ?></a> | 
-				<a href="<?php bloginfo('comments_rss2_url'); ?>" rel="nofollow"><?php _e('Comments (RSS)'); ?></a>
-			</span>
-			<span class='col-xs-12 col-sm-7 text-center'>
+			<span class="col-xs-2"><a href="#body"><?php _e('Top'); ?></a></span>
+			<span class='col-xs-7'>
 					&copy; <?php echo date("Y") ?> 
 					<a href="<?php bloginfo('url'); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a>. 
 					<?php _e('All Rights Reserved.'); ?>
 			</span>
-			<span class="col-xs-12 col-sm-2 text-center"><a href="#body"><?php _e('Top'); ?></a></span>
+			<span class='col-xs-3'>
+				<a href="<?php bloginfo('rss2_url'); ?>" rel="nofollow"><?php _e('Entries (RSS)'); ?></a> | 
+				<a href="<?php bloginfo('comments_rss2_url'); ?>" rel="nofollow"><?php _e('Comments (RSS)'); ?></a>
+			</span>
 
 		</div><!--.container-->
 	</footer></div><!--#footer-->
 
 
 
-	<?php // hs added to display this when clicking on a page link. (see footer).
-		$html_header	= '  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="page-modal-title"></h4>';
-		print_bt_modal(array("id" => "page-modal",   "html_header" => $html_header,  "html_body" => "<div id='page-content'></div>","html_footer" => "", ))
-	?>
-	
 
 
 	<!-- cerramos del header:    ,  #body, body, html, -->
@@ -35,7 +29,7 @@
 
 			<script type="text/javascript">
 			<?php
-			global $mapplic_json_file, $current_user;			
+			global $mapplic_json_file;			
 			?>			
 			$(document).ready(function() {
 				$('#mapplic').mapplic({
@@ -48,7 +42,7 @@
 					deeplinking: true,
 					fullscreen: true,
 					hovertip: true,
-					developer: <?php echo ( !user_can( $current_user, "subscriber" ) )? 'true' : 'false';?>,
+					developer: true,
 					maxscale: 1
 				});
 
@@ -66,7 +60,7 @@
 			
 			
 			
-			/* Mapplic map: opens the card of a hotspot, previously hidden on html */
+			
 			function abreLocationCard(locationCardName){
 				
 				$("#modal-"+locationCardName).modal({show: 'false'});				
@@ -77,42 +71,6 @@
 			jQuery(".modal").on('hidden.bs.modal', function () {
 				// no es necesario... el ppopup se ve bien				
 			});
-			
-			
-			
-			
-			/* opens modal to display the page */
-			$(document).ready(function(){
-				
-							
-							
-				$(".page_item a").click(function(e){					
-					
-					$("#page-modal-title").text($(this).text());
-					$("#page-content").html("Loading");
-					// load with ajax the content of the  page
-					jQuery.post(	ajaxurl, {
-												'action': 			'open_page_ajax',
-												'page_url':   	$(this).attr("href")
-											}, 
-										function(response){
-												$("#page-content").html(response);
-											}
-					);									
-					e.preventDefault();				
-					$("#page-modal").modal({show: 'false'});				
-				});
-				
-			});
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			
@@ -186,17 +144,6 @@
 			
 			
 			/* plugin before now */
-			
-			/* esto es mio para hacerlo fullscreen*/
-			function beforeNowFullScreen (action){
-				if (action === "exit") $("#before-now").removeClass("fullscreen");
-				else $("#before-now").addClass("fullscreen");
-				$(window).resize();
-				return ;
-			}
-			
-			
-			
 			// Call & init
 				$(document).ready(function(){
 				  $('.ba-slider').each(function(){
