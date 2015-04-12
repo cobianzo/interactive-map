@@ -130,6 +130,7 @@ textarea#comment {
 .align-left 		{	text-align: left;	}
 .align-right 		{	text-align: right;  }
 
+.display-inline	{	display:		inline !important; }
 
 no-margin {
 	margin:			0 !important;;
@@ -152,6 +153,18 @@ no-margin {
 	  margin: 0;
 	  background: transparent url("images/bg-header.jpg") repeat-x left bottom;
 }
+.sombra-inferior, .sombra-superior {
+	  background-image:  	url("images/bg-sombra.jpg");
+	  background-repeat:	no-repeat ;
+	  background-position:	center bottom;
+}
+.sombra-inferior {
+	padding-bottom:			100px !important;
+}
+.sombra-superior {
+	padding-top:					100px;
+	background-position:	center-top;
+}
 .sombra {
 	  height: 				65px;
 	  border: 			0;	  padding: 0;	  margin: 0;
@@ -160,6 +173,25 @@ no-margin {
 .mapplic-list-thumbnail {
 	border-radius:		50% !important;		// TO_DO: confirm in every browser  
 }
+
+.shadow {
+	@include box-shadow($gray 2px 2px 10px);
+}
+
+	// GENERIC RESPONSIVE 
+	@media all and (max-width: $screen-sm-max) { 
+		.sombra-inferior-sm-max {
+			  padding-bottom:			100px !important;
+			  background-image:  	url("images/bg-sombra.jpg");
+			  background-repeat:	no-repeat ;
+			  background-position:	center bottom;
+		}
+		
+		.margin-top-sm-max {
+			margin-top:					25px;
+		}
+	}
+
 
 
 /* HEADER -------------------------------------------*/
@@ -302,7 +334,7 @@ no-margin {
 a.thumbnail {
 	text-align:			center;
 	border:				0;
-	margin-bottom:	0;
+	margin-bottom:	5px;
 	
 	&.landscape {
 		overflow:				hidden;
@@ -324,12 +356,24 @@ a.thumbnail {
   }
   &:hover .glyphicon { 	color:	$brand-primary;	}
 }
+
+	// Gallery popup
+	#image-gallery {
+		.modal-body  { text-align:	center; }
+		img 				{ margin: auto; }		
+	}
+	
+
 		//  RESPONSIVE IMG GALLERY
 	@media all and (min-width: $screen-md-min) {
 		
 		#image-gallery-row {
-			height: 					230px;
+			height: 					240px;
 			overflow-y: 				auto;
+			
+			img {
+				max-height:		107px;
+			}
 		}
 
 	}
@@ -342,7 +386,9 @@ a.thumbnail {
 	list-style:				none;
 	margin-top:		15px;
 	padding:				0;
-	
+	max-height:		500px;
+	overflow-y:			auto;
+	 
 	li {
 		margin-bottom:		20px; 
 	}
@@ -352,8 +398,24 @@ a.thumbnail {
 #promo-aside {
 	padding-bottom:		25px; 
 }
+
+	// PARA MENOS DE TABLET
+	@media all and (max-width: $screen-sm-max) {
+	
+		#comments-container {
+			background-color:			$gray-lighter;
+			padding-bottom:			25px;
+			max-height:					500px;
+			overflow-y:						auto;
+			
+		}
+	
+	
+	}
+
+
 	// PARA MAS DE TABLET
-	@media all and (min-width: $screen-sm-min) {
+	@media all and (min-width: $screen-md-min) {
 	
 		#aside{
 			margin-top:					2px;
@@ -387,7 +449,9 @@ a.thumbnail {
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 
  /* fuera del plugim, mio para hacerlo fullscreen */
+
  .only-full-screen { display:		none; }
+
  #before-now.fullscreen {
 	position:					fixed; 
 	top:							0;
@@ -396,11 +460,12 @@ a.thumbnail {
 	height:					100%;
 	padding:					10px; 
 	text-align:				center;
-	z-index:					999;
+	z-index:					9999;
 	background-color:	rgba(0,0,0,0.5);
 	
 	h3, h2 {	display: none;}
 	.only-full-screen { display:		block; }
+	.hide-full-screen { display:	none; }
 	 
 	.close-btn {
 		position:						fixed;
@@ -409,8 +474,12 @@ a.thumbnail {
 		z-index:						99999;
 		border-radius:			50%;
 	    @include box-shadow( 7px 6px 2px rgba(0, 0, 0, 0.5)); 
-
 	}
+	.close-btn-2 {	
+		display:				inline !important; 
+		line-height:			5em; 
+	}
+	  
 	.ba-slider {
 		max-width:				800px;
 		margin:					auto;
@@ -426,6 +495,7 @@ a.thumbnail {
 .ba-slider {
     position: relative;
     overflow: hidden;
+    @include box-shadow( 7px 6px 2px rgba(0, 0, 0, 0.5)); 
 	
 	img {
 		width: 100%;
@@ -500,8 +570,10 @@ a.thumbnail {
 	height:				40px;
 	margin-top:		30px; 
 	padding-top:		14px;
- 	background:		$bg-light url("images/bg-header.jpg")  repeat-x  center top;
+ 	background:		$gray-darker url("images/bg-footer.jpg")  repeat-x  center top;
 	font-weight:		bold;
+	
+	footer {  background:	$gray-darker url("images/bg-footer.jpg")  repeat-x  center -10px;	}
  }
 /*   RESPNSIVE  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 

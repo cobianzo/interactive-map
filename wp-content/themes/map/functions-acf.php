@@ -643,8 +643,9 @@ if(function_exists("register_field_group"))
 			
 			array (
 						'name' => 'descripcion',		'key' => 'field_551ade68854aa',						'label' => 'Descripción',	
-						'type' => 'textarea',						'instructions' => 'Texto descriptivo a un lado de la imagen',	'default_value' => '',	'placeholder' => '','maxlength' => '','rows' => 2,
-						'formatting' => 'html',
+						'type' => 'wysiwyg','default_value' => '',	'toolbar' => 'basic',	'media_upload' => 'no',
+						/*'type' => 'textarea',						'instructions' => 'Texto descriptivo a un lado de la imagen',	'default_value' => '',	'placeholder' => '','maxlength' => '','rows' => 2,
+						'formatting' => 'html', */
 					),
 			/*
 			array (

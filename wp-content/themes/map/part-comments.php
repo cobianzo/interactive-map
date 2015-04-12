@@ -1,4 +1,4 @@
-		<div class=row>
+		<div class="row-fluid clearfix">
 			<h3 class='col-xs-7'><?php 	comments_number('No comments', 'One comment', '% comments'); ?></h3>
 			<a class="col-xs-4 btn btn-primary btn-xs margin-top" href="javascript:   $('#modal-comments').modal({show: 'false'}); ">
 				<?php _e("Añadir comentario"); ?>
@@ -8,12 +8,12 @@
 			
 			<?php
 			$comments	=	get_comments(array("post_id" => get_the_ID())); ?>
-			<ul id='comments-list'> <?php 
+			<ul id='comments-list' class='row-fluid'> <?php 
 			if (!count ($comments )) echo "<li><blockquote>".__("Nadie ha comentado este mapa aún. Sé el primero en hacerlo")."</blockquote></li>";
 			foreach($comments as $comment) : ?>
 	    	<?php $comment_type = get_comment_type(); ?> <!-- checks for comment type -->
 	    	<?php if($comment_type == 'comment') { ?> <!-- outputs only comments -->
-		        <li id="comment-<?php comment_ID(); ?>" class="row comment <?php if($i&1) { echo 'odd';} else {echo 'even';} ?> <?php $user_info = get_userdata(1); if ($user_info->ID == $comment->user_id) echo 'authorComment'; ?> <?php if ($comment->user_id > 0) echo 'user-comment'; ?>">
+		        <li id="comment-<?php comment_ID(); ?>" class="row-fluid comment <?php if($i&1) { echo 'odd';} else {echo 'even';} ?> <?php $user_info = get_userdata(1); if ($user_info->ID == $comment->user_id) echo 'authorComment'; ?> <?php if ($comment->user_id > 0) echo 'user-comment'; ?>">
 					<i class="glyphicon glyphicon-comment col-xs-1"></i>
 					<div class=col-xs-11>
 		            <?php if ($comment->comment_approved == '0') : ?> <!-- if comment is awaiting approval -->

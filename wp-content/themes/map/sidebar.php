@@ -28,7 +28,7 @@
 			
 			<div class='row'> <!-- row video + before/now-->
 			
-				<div class='col-sm-12 col-md-6' id='col-video'> <!-- col  video -->
+				<div class='col-xs-12 col-sm-6' id='col-video'> <!-- col  video -->
 				<?php
 				$videos		= get_field("galeria_videos");
 				if (is_array($videos) && count($videos)) : 		?>
@@ -58,7 +58,7 @@
 				?>
 				</div> <!-- col videos-->
 				
-				<div class='col-sm-12 col-md-6'> <!-- col  before/now-->	<?php
+				<div class='col-xs-12 col-sm-6'> <!-- col  before/now-->	<?php
 					global $antes_ahora;
 					 $antes_ahora		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa[0] : null;					 
 					 if ($antes_ahora && ($img_before_id =	$antes_ahora["img_antes"])): ?>
@@ -79,15 +79,12 @@
 		</div> <!-- / col imagegallery , video and before/now-->
 		
 
-		<!-- verdadero sidebar: comentarios y primera promo -->
-		<aside id='aside' class='col-sm-12 col-md-4'>
-			<div class='row-fluid' id='comments-container'>
+		<!-- verdadero sidebar de fondon gris: comentarios y primera promo -->
+		<aside id='aside' class='col-sm-12 col-md-4 margin-top-sm-max'>
+			<div class='row sombra-inferior-sm-max' id='comments-container'>
 				<?php 	get_template_part( "part", "comments"); ?> 
 			</div>
 			
-			
-			<hr class="greca md-hidden lg-hidden xl-hidden">
-	
 			<div class='row-fluid clearfix' id='promo-aside'>
 				<?php 	
 					if (is_array($promos) && (count($promos) > $current_promo)) {
@@ -108,10 +105,13 @@
 	
 	
 
-	<?php if (is_array($promos) && (count($promos) > $current_promo))  :?>
+	<?php 
+	global $promo_format_md;
+	$promo_format_md	= "apaisado";
+	if (is_array($promos) && (count($promos) > $current_promo))  :?>
 	<div class='row-fluid' id='bottom-row'>
 			<?php for ($i = $current_promo; $i < count($promos); $i++) { ?>
-				<div class='col-xs-12 col-sm-6 col-md-3'>
+				<div class='col-xs-12 col-sm-6 col-md-6'>
 				<?php 
 						$promo_array	= $promos[$i];						
 						get_template_part( "part", "promo"); 

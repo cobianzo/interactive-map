@@ -87,6 +87,9 @@ textarea#comment {
 .align-right {
   text-align: right; }
 
+.display-inline {
+  display: inline !important; }
+
 no-margin {
   margin: 0 !important; }
 
@@ -109,6 +112,18 @@ no-margin {
   margin: 0;
   background: transparent url("images/bg-header.jpg") repeat-x left bottom; }
 
+.sombra-inferior, .sombra-superior {
+  background-image: url("images/bg-sombra.jpg");
+  background-repeat: no-repeat;
+  background-position: center bottom; }
+
+.sombra-inferior {
+  padding-bottom: 100px !important; }
+
+.sombra-superior {
+  padding-top: 100px;
+  background-position: center-top; }
+
 .sombra {
   height: 65px;
   border: 0;
@@ -119,6 +134,19 @@ no-margin {
 .mapplic-list-thumbnail {
   border-radius: 50% !important; }
 
+.shadow {
+  -webkit-box-shadow: #555555 2px 2px 10px;
+  box-shadow: #555555 2px 2px 10px; }
+
+@media all and (max-width: 991px) {
+  .sombra-inferior-sm-max {
+    padding-bottom: 100px !important;
+    background-image: url("images/bg-sombra.jpg");
+    background-repeat: no-repeat;
+    background-position: center bottom; }
+
+  .margin-top-sm-max {
+    margin-top: 25px; } }
 /* HEADER -------------------------------------------*/
 #header-navbar {
   height: 88px;
@@ -200,7 +228,7 @@ no-margin {
 a.thumbnail {
   text-align: center;
   border: 0;
-  margin-bottom: 0; }
+  margin-bottom: 5px; }
   a.thumbnail.landscape {
     overflow: hidden;
     height: 100px; }
@@ -217,16 +245,25 @@ a.thumbnail {
   a.thumbnail:hover .glyphicon {
     color: #bb0000; }
 
+#image-gallery .modal-body {
+  text-align: center; }
+#image-gallery img {
+  margin: auto; }
+
 @media all and (min-width: 992px) {
   #image-gallery-row {
-    height: 230px;
-    overflow-y: auto; } }
+    height: 240px;
+    overflow-y: auto; }
+    #image-gallery-row img {
+      max-height: 107px; } }
 /*------------- end IMAGE GALLLERY -------------------*/
 /*------------- COMMENTS  -------------------*/
 #comments-list {
   list-style: none;
   margin-top: 15px;
-  padding: 0; }
+  padding: 0;
+  max-height: 500px;
+  overflow-y: auto; }
   #comments-list li {
     margin-bottom: 20px; }
   #comments-list .glyphicon {
@@ -235,7 +272,13 @@ a.thumbnail {
 #promo-aside {
   padding-bottom: 25px; }
 
-@media all and (min-width: 768px) {
+@media all and (max-width: 991px) {
+  #comments-container {
+    background-color: #eeeeee;
+    padding-bottom: 25px;
+    max-height: 500px;
+    overflow-y: auto; } }
+@media all and (min-width: 992px) {
   #aside {
     margin-top: 2px;
     background-color: #eeeeee; }
@@ -261,12 +304,14 @@ a.thumbnail {
   height: 100%;
   padding: 10px;
   text-align: center;
-  z-index: 999;
+  z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5); }
   #before-now.fullscreen h3, #before-now.fullscreen h2 {
     display: none; }
   #before-now.fullscreen .only-full-screen {
     display: block; }
+  #before-now.fullscreen .hide-full-screen {
+    display: none; }
   #before-now.fullscreen .close-btn {
     position: fixed;
     right: 15px;
@@ -275,6 +320,9 @@ a.thumbnail {
     border-radius: 50%;
     -webkit-box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5);
     box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5); }
+  #before-now.fullscreen .close-btn-2 {
+    display: inline !important;
+    line-height: 5em; }
   #before-now.fullscreen .ba-slider {
     max-width: 800px;
     margin: auto;
@@ -285,7 +333,9 @@ a.thumbnail {
 
 .ba-slider {
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  -webkit-box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5); }
   .ba-slider img {
     width: 100%;
     display: block; }
@@ -343,8 +393,10 @@ a.thumbnail {
   height: 40px;
   margin-top: 30px;
   padding-top: 14px;
-  background: #fbf8e4 url("images/bg-header.jpg") repeat-x center top;
+  background: #222222 url("images/bg-footer.jpg") repeat-x center top;
   font-weight: bold; }
+  #footer footer {
+    background: #222222 url("images/bg-footer.jpg") repeat-x center -10px; }
 
 /*   RESPNSIVE  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 

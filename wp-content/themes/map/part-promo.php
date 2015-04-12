@@ -1,7 +1,7 @@
 								<?php
 									/* Dos tipos de promos: los escritos directamente sobre el mapa post type , y los que son un custom post type*/								
 									
-									global $promo_array;  $promo_post_id;
+									global $promo_array, $promo_post_id, $promo_format_md;	/* promo_format_md -> apaisado, vertical*/
 									
 									
 									
@@ -21,6 +21,7 @@
 										$link, $link_text						
 									*/
 									$link_a							= 	$link?	"<a href='$link' class='btn btn-primary btn-xs' target='_new'>" : null;
+									$link_a_img					= 	$link?	"<a href='$link' class='' target='_new'>" : null;
 									$promo_img					= 	$imagen_preview? wp_get_attachment_image_src( $imagen_preview, "medium" )[0] : null; 
 									
 								# note: the link to open in modal window works because of a js in the footer
@@ -28,12 +29,12 @@
 								<h3><?php echo $titulo; ?></h3>																
 								<?php echo (strlen($subtitulo))? "<p class='text-justify small'><i>$subtitulo</i></p>" : "" ;?>
 								
-								<div class="col-xs-12 col-sm-6 no-padding-left text-center">
-										<?php echo $link_a? $link_a : ""; ?>
-										<img src="<?php echo $promo_img; ?>" class='img-responsive'>
-										<?php echo $link_a? "</a>" : ""; ?>
+								<div class=" col-xs-4 <?php echo $promo_format_md == "apaisado"? "col-md-2" : "col-md-6"; ?> no-padding-left text-center">
+										<?php echo $link_a_img? $link_a_img : ""; ?>
+										<img src="<?php echo $promo_img; ?>" class='img-responsive shadow'>
+										<?php echo $link_a_img? "</a>" : ""; ?>
 								</div>
-								<div class="col-xs-12 col-sm-6 no-padding-left no-padding-right">
+								<div class=" col-xs-8 <?php echo $promo_format_md == "apaisado"? "col-md-10" : "col-md-6"; ?> no-padding-left no-padding-right">
 									<span class="text-justify">
 										<p><?php echo $descripcion; ?></p>
 										

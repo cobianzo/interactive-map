@@ -51,7 +51,7 @@
 									$img_url_large		=	wp_get_attachment_image_src( $img_id, "large" );				
 									$title						= 	get_the_title($img_id);
 									$desc						=	(is_object($img))? $img->post_excerpt : ""; ?>
-					  <div class="col-xs-6 col-sm-4 col-md-3  col-lg-2 thumb">
+					  <div class="col-xs-4 col-sm-3 col-md-3  col-lg-2 thumb">
 							<a class="thumbnail thumbnail-landscape" href="#" data-image-id="" data-toggle="modal" data-title="<?php echo esc_attr($title); ?>" data-caption="<?php echo esc_attr($desc); ?>" data-image="<?php echo $img_url_large[0]; ?>" data-target="#image-gallery">
 								<img class="img-responsive" src="<?php echo $img_url_thumb[0]; ?>" alt="Alt- <?php echo esc_attr($title); ?>">
 							</a>
