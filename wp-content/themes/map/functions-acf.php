@@ -250,7 +250,7 @@ if(function_exists("register_field_group"))
 					array ( 	'name' => 'predefinida', 'key' => 'field_551f4aa4f8cc2',	'label' => 'Predefinida',
 						'type' => 'select',
 						'instructions' => 'Selecciona el nombre de la promo',
-						'required' => 1,
+						'required' => 0,
 						'conditional_logic' => array ('status' => 1,	'rules' => array (	array ('field' => 'field_551f4a2df8cc1','operator' => '==','value' => '0',),),'allorany' => 'all',),
 						'column_width' => 80,
 						'choices' => $promos_for_select,

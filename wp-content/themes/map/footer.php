@@ -190,10 +190,15 @@
 			/* esto es mio para hacerlo fullscreen*/
 			function beforeNowFullScreen (action){
 				if (action === "exit") $("#before-now").removeClass("fullscreen");
-				else $("#before-now").addClass("fullscreen");
+				else {
+					$("#before-now").addClass("fullscreen");
+					$("#img-before").attr("src", $("#img-before").attr("data-imagefull"));
+					$("#img-now").attr("src", $("#img-now").attr("data-imagefull"));
+				}
 				$(window).resize();
 				return ;
-			}
+			}	
+			//$("#before-now").click(function(){   beforeNowFullScreen ("exit") });
 			
 			
 			

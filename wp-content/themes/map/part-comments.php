@@ -13,7 +13,7 @@
 			foreach($comments as $comment) : ?>
 	    	<?php $comment_type = get_comment_type(); ?> <!-- checks for comment type -->
 	    	<?php if($comment_type == 'comment') { ?> <!-- outputs only comments -->
-		        <li id="comment-<?php comment_ID(); ?>" class="row-fluid comment <?php if($i&1) { echo 'odd';} else {echo 'even';} ?> <?php $user_info = get_userdata(1); if ($user_info->ID == $comment->user_id) echo 'authorComment'; ?> <?php if ($comment->user_id > 0) echo 'user-comment'; ?>">
+		        <li id="comment-<?php comment_ID(); ?>" class="row-fluid clearfix comment <?php if($i&1) { echo 'odd';} else {echo 'even';} ?> <?php $user_info = get_userdata(1); if ($user_info->ID == $comment->user_id) echo 'authorComment'; ?> <?php if ($comment->user_id > 0) echo 'user-comment'; ?>">
 					<i class="glyphicon glyphicon-comment col-xs-1"></i>
 					<div class=col-xs-11>
 		            <?php if ($comment->comment_approved == '0') : ?> <!-- if comment is awaiting approval -->

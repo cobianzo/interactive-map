@@ -154,6 +154,7 @@ no-margin {
 	  background: transparent url("images/bg-header.jpg") repeat-x left bottom;
 }
 .sombra-inferior, .sombra-superior {
+	  background-color:		$bg-light;
 	  background-image:  	url("images/bg-sombra.jpg");
 	  background-repeat:	no-repeat ;
 	  background-position:	center bottom;
@@ -181,10 +182,15 @@ no-margin {
 	// GENERIC RESPONSIVE 
 	@media all and (max-width: $screen-sm-max) { 
 		.sombra-inferior-sm-max {
-			  padding-bottom:			100px !important;
+			  padding-bottom:			65px !important;			  
+			  background-color:			$bg-light;
 			  background-image:  	url("images/bg-sombra.jpg");
 			  background-repeat:	no-repeat ;
 			  background-position:	center bottom;
+			  
+		} 
+		hr.sombra-inferior-sm-max { 
+				margin-top:		0 !important;
 		}
 		
 		.margin-top-sm-max {
@@ -368,7 +374,7 @@ a.thumbnail {
 	@media all and (min-width: $screen-md-min) {
 		
 		#image-gallery-row {
-			height: 					240px;
+			height: 					234px;
 			overflow-y: 				auto;
 			
 			img {
@@ -377,8 +383,33 @@ a.thumbnail {
 		}
 
 	}
+	
+	@media (max-width: $screen-sm-max) {
+		.modal-dialog {			width: 					95%;		}
+	}
+	@media (max-width: $screen-xs-max) {
+		.modal-dialog {			width: 					99%;		}
+	}
+
+	
 /*------------- end IMAGE GALLLERY -------------------*/
 
+/*------------- VIDEOS  -------------------*/
+
+	@media all and (max-width: $screen-sm-max) {
+		#col-video > .row-fluid {
+			margin-bottom:			20px;
+			.col-xs-12, .text-justify {
+				text-align:			center;
+			}
+		}	
+	}
+	@media all and (min-width: $screen-md-min) {
+		#col-video  {
+			max-height: 			365px;
+			overflow-y: 				auto;
+		}	
+	}
 
 
 /*------------- COMMENTS  -------------------*/
@@ -403,11 +434,10 @@ a.thumbnail {
 	@media all and (max-width: $screen-sm-max) {
 	
 		#comments-container {
-			background-color:			$gray-lighter;
-			padding-bottom:			25px;
 			max-height:					500px;
 			overflow-y:						auto;
-			
+			margin-top:					65px;
+			background-color:			$gray-lighter;
 		}
 	
 	
@@ -420,15 +450,16 @@ a.thumbnail {
 		#aside{
 			margin-top:					2px;
 			background-color:			$gray-lighter;
-
+			min-height:						674px;
 			.greca { display:none;}
 		}
 
 		#comments-container {
-			#comments-list {
-				height:		225px;
-				overflow-x:	hidden;
-				overflow-y:	auto;
+			#comments-list { 
+				height:					237px;
+				overflow-x:				hidden;
+				overflow-y:				auto;  
+				margin-bottom:		8px; 
 			}
 		}
 	
@@ -562,6 +593,15 @@ a.thumbnail {
 }
 
 
+
+
+
+
+@media all and (min-width: $screen-md-min) {
+	#bottom-row {
+		margin-top:		80px;
+	}
+}
 
 
 /*   FOOTER   ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 

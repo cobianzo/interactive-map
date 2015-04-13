@@ -2,8 +2,9 @@
 	/*
 	EY: aquí compruebo que el usuario acceda a la web pasando el pw adecuado como params en url	
 	*/
+
 	
-	if( !is_user_logged_in() ) :
+	if( ! is_user_logged_in() ) :
 		# si no está loggeado, puede que esté usando el key y value correctos (se loggea), o no (aparece mensaje de error)
 		
 		if (check_url_login())
@@ -16,11 +17,9 @@
 			wp_set_auth_cookie( $user_id );
 			do_action( 'wp_login', $user_login );
 			
-		}else {
-			get_template_part( "page-not-loggedin");  						
-			die();
-		}	
+		}
 	endif;
+	
 
 ?><!DOCTYPE html>
 
@@ -96,7 +95,15 @@
 
 <body <?php body_class(); ?>>
 <div id="body"><!-- this encompasses the entire Web site -->
+<?php
 	
+	if( ! is_user_logged_in() ) :
+		# si no está loggeado, puede que esté usando el key y value correctos (se loggea), o no (aparece mensaje de error)
+			get_template_part( "page-not-loggedin");  						
+			die();
+	endif;
+?>
+
 	
 	
 	    <!-- Fixed navbar -->

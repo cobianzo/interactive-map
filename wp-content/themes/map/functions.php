@@ -253,6 +253,7 @@
 		}<
 	}*/
 
+		/* CONFIGUrACION NECESARIA PARA USAR AJAX */
 	add_action('wp_head','head_ajaxurl');
 	function head_ajaxurl() {  echo "\n";  ?> <script>  var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';  </script>	<?php echo "\n";  }
 	
@@ -274,7 +275,21 @@
 	}
 	
 	
-	
+add_action( 'admin_init', 'admin_area_for_manage_options_only');
+function admin_area_for_manage_options_only() {
+
+      if( defined('DOING_AJAX') && DOING_AJAX ) {
+            //Allow ajax calls
+            return;
+      }
+
+      if( ! current_user_can( "manage_options" ) ) {
+           //Redirect to main page if the user has no "manage_options" capability
+           wp_redirect( get_site_url( ) );
+           exit();
+      }
+
+}
 	
 	
 	

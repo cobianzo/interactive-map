@@ -113,6 +113,7 @@ no-margin {
   background: transparent url("images/bg-header.jpg") repeat-x left bottom; }
 
 .sombra-inferior, .sombra-superior {
+  background-color: #fbf8e4;
   background-image: url("images/bg-sombra.jpg");
   background-repeat: no-repeat;
   background-position: center bottom; }
@@ -140,10 +141,14 @@ no-margin {
 
 @media all and (max-width: 991px) {
   .sombra-inferior-sm-max {
-    padding-bottom: 100px !important;
+    padding-bottom: 65px !important;
+    background-color: #fbf8e4;
     background-image: url("images/bg-sombra.jpg");
     background-repeat: no-repeat;
     background-position: center bottom; }
+
+  hr.sombra-inferior-sm-max {
+    margin-top: 0 !important; }
 
   .margin-top-sm-max {
     margin-top: 25px; } }
@@ -252,11 +257,27 @@ a.thumbnail {
 
 @media all and (min-width: 992px) {
   #image-gallery-row {
-    height: 240px;
+    height: 234px;
     overflow-y: auto; }
     #image-gallery-row img {
       max-height: 107px; } }
+@media (max-width: 991px) {
+  .modal-dialog {
+    width: 95%; } }
+@media (max-width: 767px) {
+  .modal-dialog {
+    width: 99%; } }
 /*------------- end IMAGE GALLLERY -------------------*/
+/*------------- VIDEOS  -------------------*/
+@media all and (max-width: 991px) {
+  #col-video > .row-fluid {
+    margin-bottom: 20px; }
+    #col-video > .row-fluid .col-xs-12, #col-video > .row-fluid .text-justify {
+      text-align: center; } }
+@media all and (min-width: 992px) {
+  #col-video {
+    max-height: 365px;
+    overflow-y: auto; } }
 /*------------- COMMENTS  -------------------*/
 #comments-list {
   list-style: none;
@@ -274,21 +295,23 @@ a.thumbnail {
 
 @media all and (max-width: 991px) {
   #comments-container {
-    background-color: #eeeeee;
-    padding-bottom: 25px;
     max-height: 500px;
-    overflow-y: auto; } }
+    overflow-y: auto;
+    margin-top: 65px;
+    background-color: #eeeeee; } }
 @media all and (min-width: 992px) {
   #aside {
     margin-top: 2px;
-    background-color: #eeeeee; }
+    background-color: #eeeeee;
+    min-height: 674px; }
     #aside .greca {
       display: none; }
 
   #comments-container #comments-list {
-    height: 225px;
+    height: 237px;
     overflow-x: hidden;
-    overflow-y: auto; } }
+    overflow-y: auto;
+    margin-bottom: 8px; } }
 /*------------- end COMMENTS  -------------------*/
 /*   BEFORE - NOW PLUGIN  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
@@ -387,6 +410,9 @@ a.thumbnail {
   line-height: 48px;
   font-size: 30px; }
 
+@media all and (min-width: 992px) {
+  #bottom-row {
+    margin-top: 80px; } }
 /*   FOOTER   ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 #footer {

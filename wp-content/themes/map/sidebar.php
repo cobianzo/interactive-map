@@ -81,9 +81,10 @@
 
 		<!-- verdadero sidebar de fondon gris: comentarios y primera promo -->
 		<aside id='aside' class='col-sm-12 col-md-4 margin-top-sm-max'>
-			<div class='row sombra-inferior-sm-max' id='comments-container'>
+			<div class='row' id='comments-container'>
 				<?php 	get_template_part( "part", "comments"); ?> 
 			</div>
+			<hr class="hidden-lg  hidden-md sombra-inferior-sm-max">
 			
 			<div class='row-fluid clearfix' id='promo-aside'>
 				<?php 	

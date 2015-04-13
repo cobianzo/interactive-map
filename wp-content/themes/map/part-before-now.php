@@ -17,14 +17,16 @@
 			$img_before_id				=	$antes_ahora['img_antes'];  //get_post_meta(get_the_ID(), "image_before", true);
 			$img_now_id					=	$antes_ahora['img_ahora'];  //get_post_meta(get_the_ID(), "image_now", true);
 			$img_before_src				= 	wp_get_attachment_image_src( $img_before_id, "medium" ); 
+			$img_before_large_src	= 	wp_get_attachment_image_src( $img_before_id, "large" ); 
 			$img_now_src					= 	wp_get_attachment_image_src( $img_now_id, "medium" ); 
+			$img_now_large_src		= 	wp_get_attachment_image_src( $img_now_id, "large" ); 
 			$descripcion						= $antes_ahora['descripcion'];
 	?>
 
 			<div class="ba-slider">
-			  <img src="<?php echo $img_before_src[0]; ?>" alt="">       
+			  <img id='img-before' src="<?php echo $img_before_src[0]; ?>" alt="" data-imagefull="<?php echo $img_before_large_src[0]; ?>">       
 			  <div class="resize">
-				<img src="<?php echo $img_now_src[0]; ?>" alt="">
+				<img id='img-now' src="<?php echo $img_now_src[0]; ?>" alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>">
 			  </div>
 			  <span class="handle"></span>
 			</div>
