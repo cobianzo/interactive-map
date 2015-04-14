@@ -101,9 +101,21 @@ textarea#comment {
 	width:			100%;
 }
 
+a > img {
+	
+}
+a:hover > img {
+	@include box-shadow($bg-light 2px 2px 10px);
+}
+
 /*   GENERIC THINGS  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 
+ .dropdown-toggle {
+	padding:		0 6px 0 20px;
+	
+	.caret { 		 margin: 		-5px 0 0 16px;	}
+ }
 
 /* responsive iframe flexible video */
 .flex-video {
@@ -249,18 +261,41 @@ no-margin {
 }
 
 #language-dropdown {
-	margin:		52px 60% 0 0;
+	margin:		52px 60px 0 0;
 }
 
 
-
+#mobile-nav{ 
+	display:	none;
+}
 
 	// header only MOBIILE and TABLET PORTRAIT
 	@media all and (max-width: $screen-xs-max) { 
+		#mobile-home-btn{
+			position: 		absolute;
+			z-index: 			999;
+			margin: 			8px;
+		
+		}
+		#mobile-nav{
+			display:				block;
+			position: 			absolute;
+			z-index: 				99999;
+			right: 					0;
+			top:						0;
+			
+			#language-dropdown-mobile-ul{
+				background:		$bg-light;
+			}
+		}
+	
 		#header-navbar {
 				height:							40px;			
 				background-position:	 right top, center -39px;
-
+				margin-top:					-55px;			// Oculto el header y a tomar pol culo 
+				position:							fixed;
+				
+				
 				#titulo h1 {									  // title small for mobile
 					margin:				0px 10px !important;
 					font-size:			floor($font-size-h1 / 2);

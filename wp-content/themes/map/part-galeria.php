@@ -44,13 +44,28 @@
 				<div id='image-gallery-row' class="row-fluid clearfix"> <!-- gallery,-->
 		
 					<?php	if (is_array($all_images)) foreach ($all_images as $i => $img) : 
+								
 									if (is_object($img))
 													$img_id						= $img->ID;
 									else			$img_id						= $img['imagen'];
+									
+									// TO_DO: use google cloud translate JSON call: GET https://www.googleapis.com/language/translate/v2?key=INSERT-YOUR-KEY&source=en&target=de&q=Hello%20world
+
+									global $polylang;		// translation fo the image, if exists
+									$post_ids = $polylang->get_translations('post', $img_id);
+									$lang_slug = pll_current_language("slug");
+									if (array_key_exists( $lang_slug, $post_ids)) {
+										$img_id	=	$post_ids[$lang_slug];
+										$img		= get_post($img_id);
+									}
+
 									$img_url_thumb	=	wp_get_attachment_image_src( $img_id, "thumbnail" );
 									$img_url_large		=	wp_get_attachment_image_src( $img_id, "large" );				
 									$title						= 	get_the_title($img_id);
-									$desc						=	(is_object($img))? $img->post_excerpt : ""; ?>
+									$desc						=	(is_object($img))? $img->post_excerpt : ""; 
+									
+					?>
+								
 					  <div class="col-xs-4 col-sm-3 col-md-3  col-lg-2 thumb">
 							<a class="thumbnail thumbnail-landscape" href="#" data-image-id="" data-toggle="modal" data-title="<?php echo esc_attr($title); ?>" data-caption="<?php echo esc_attr($desc); ?>" data-image="<?php echo $img_url_large[0]; ?>" data-target="#image-gallery">
 								<img class="img-responsive" src="<?php echo $img_url_thumb[0]; ?>" alt="Alt- <?php echo esc_attr($title); ?>">

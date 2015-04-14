@@ -133,19 +133,20 @@
 				<div id="navbar"  class='row-fluid'>
 					<div class="hidden-xs">
 					  <ul id='breadcrums' class="nav navbar-nav">
-						<li <?php if (is_home() || is_front_page()) { ?> class="active" <?php } ?>>
-							<a href="<?php echo get_home_url(); //the_permalink($yucatan_post->ID); ?>"><b><?php echo get_post_meta($yucatan_post->ID, 'category_name', true);?></b></a>
-						</li>
-						<?php if ((!is_front_page()) && (!is_home())  && $post->post_type == "mapa" ) : ?>
-						<li>
-							<span class="glyphicon glyphicon-chevron-right pull-left"></span>
-							<a  class='active' href="<?php  the_permalink() ?>"><?php echo get_post_meta(get_the_ID(), 'category_name', true); ?></a></li>
-						<?php endif;?>
+							<li <?php if (is_home() || is_front_page()) { ?> class="active" <?php } ?>>
+								<a href="<?php echo get_home_url(); //the_permalink($yucatan_post->ID); ?>"><b><?php echo get_post_meta($yucatan_post->ID, 'category_name', true);?></b></a>
+							</li>
+							<?php if ((!is_front_page()) && (!is_home())  && $post->post_type == "mapa" ) : ?>
+							<li>
+								<span class="glyphicon glyphicon-chevron-right pull-left"></span>
+								<a  class='active' href="<?php  the_permalink() ?>"><?php echo get_post_meta(get_the_ID(), 'category_name', true); ?></a></li>
+							<?php endif;?>
+						  </ul>
+							</li>
 					  </ul>
-						</li>
-					  </ul>
-					  <ul class="nav navbar-nav navbar-right">
+				<!-- end breadcrums -->
 					  
+					  <ul class="nav navbar-nav navbar-right">					  
 						<?php  wp_list_pages( array('title_li' => null) ); ?> 
 					  </ul>
 					</div><!--/.nav-collapse -->
@@ -155,13 +156,9 @@
 			</div> <!-- col-9-->
 			<div class='col-xs-2'>
 		
-				<!--  Mobile botón expandible  que abre el dropdown de idiomas -->
-				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#language-dropdown-ul" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only"><?php _e("Toggle navigation"); ?></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>
-				  </button> 
 				  
 				  	<div id="language-dropdown" class="dropdown pull-right "> 
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
+						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
 						  <ul id='language-dropdown-ul' class="dropdown-menu" role="menu">
 								<li class="dropdown-header"><?php _e("Otros idiomas"); ?></li>						  
 					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1));; ?>
@@ -174,6 +171,24 @@
 		  </div>
 		</nav>
 	
+		<nav id='mobile-nav' class="nav navbar-nav navbar-right text-right" >
+						<!--  MOBILE  botón expandible  que abre el dropdown de idiomas -->
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#language-dropdown-ul" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only"><?php _e("Toggle navigation"); ?></span>	
+						<span class="icon-bar"></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>
+				  </button> 
+				  
+				  	<div id="language-dropdown-mobile" class="dropdown pull-right "> 
+						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
+						  <ul id='language-dropdown-mobile-ul' class="dropdown-menu" role="menu">
+								<li class="dropdown-header"><?php _e("Otros idiomas"); ?></li>						  
+					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1));; ?>
+						   </ul>
+					</div>
+
+		</nav>
+
+		<a id='mobile-home-btn' class="btn btn-default btn-xs" href="<?php home_url(); ?>"><i class="glyphicon glyphicon-home"></i></a>
 	
 	
 	

@@ -37,6 +37,17 @@
 								<div class="carousel-inner">
 								
 						<?php	foreach ($carousel_imgs as $i => $img) : 
+						
+									global $polylang;	// not used yet, but if we display the title and description, we will need it.
+									$post_ids = $polylang->get_translations('post', $img->ID);
+									$lang_slug = pll_current_language("slug");
+									if (array_key_exists( $lang_slug, $post_ids)) {
+										$img_id	=	$post_ids[$lang_slug];
+										$img		= get_post($img_id);
+									}
+						
+						
+						
 										$img_url	=	wp_get_attachment_image_src( $img->ID, "large" );
 						?>
 									<div class="item<?php echo ($i == 0)? " active": ""; ?>">
