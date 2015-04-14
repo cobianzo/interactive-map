@@ -107,7 +107,7 @@
 															
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><?php  _e("Cerrar"); ?></button>								
+						<button type="button" class="btn btn-default" data-dismiss="modal"><?php  _e("Close", "map"); ?></button>								
 					</div>
 				</div>
 			</div>

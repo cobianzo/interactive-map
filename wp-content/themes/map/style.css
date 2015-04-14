@@ -194,11 +194,12 @@ no-margin {
 #language-dropdown {
   margin: 52px 60px 0 0; }
 
-#mobile-nav {
+#mobile-nav, #mobile-home-btn {
   display: none; }
 
 @media all and (max-width: 767px) {
   #mobile-home-btn {
+    display: block;
     position: absolute;
     z-index: 999;
     margin: 8px; }

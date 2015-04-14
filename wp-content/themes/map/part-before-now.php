@@ -1,12 +1,12 @@
 		<div id="before-now" class='normal'>
 			
 			<h3 class="h2">
-				<?php printf( __('Antes / ahora', 'veras') ); ?>
-				<a class="btn btn-primary btn-xs pull-right" href='javascript: beforeNowFullScreen (); '><i class="glyphicon glyphicon-fullscreen"></i>&nbsp;<?php _e("Agranda");  ?></a>
+				<?php printf( __('Before / now', 'map') ); ?>
+				<a class="btn btn-primary btn-xs pull-right" href='javascript: beforeNowFullScreen (); '><i class="glyphicon glyphicon-fullscreen"></i>&nbsp;<?php _e("Enlarge", "map");  ?></a>
 			</h3>
 			
 			<a class='only-full-screen btn btn-primary text-center close-btn' href="javascript: beforeNowFullScreen('exit'); "><i class="glyphicon glyphicon-remove-sign"></i></a>
-	<!--		<small><?php printf( __('Mueve el cursor para comparar los estados del monumento', 'veras') ); ?></small> -->
+	<!--		<small><?php printf( __('Move the handle to compare both states', 'map') ); ?></small> -->
 							
 	<?php 
 		global $antes_ahora;
@@ -33,6 +33,6 @@
 	<?php if (strlen($descripcion)) echo "<br><i class='hide-full-screen text-center'>$descripcion</i>"; ?>
 	<?php endif; ?>
 	
-		<br class='only-full-screen'><a class='only-full-screen btn btn-primary text-center close-btn-2' href="javascript: beforeNowFullScreen('exit'); "><?php _e("cerrar");  ?></a>
+		<br class='only-full-screen'><a class='only-full-screen btn btn-primary text-center close-btn-2' href="javascript: beforeNowFullScreen('exit'); "><?php _e("Close", "map");  ?></a>
 
 	</div>

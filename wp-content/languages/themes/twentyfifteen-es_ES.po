@@ -1,14 +1,27 @@
-# Translation of Twenty Fifteen in Spanish (Spain)
-# This file is distributed under the same license as the Twenty Fifteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-12-18 01:07:31+0000\n"
+"Project-Id-Version: Twenty Fifteen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Tue Apr 14 2015 17:51:29 GMT+0200 (Hora de verano "
+"romance)\n"
+"PO-Revision-Date: Tue Apr 14 2015 17:51:52 GMT+0200 (Hora de verano romance)\n"
+"Last-Translator: cobianzo <cobianzo@gmail.com>\n"
+"Language-Team: \n"
+"Language: Spanish (Spain)\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/1.0-alpha-1000\n"
-"Project-Id-Version: Twenty Fifteen\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../../themes/twentyfifteen\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Loco-Target-Locale: es_ES"
 
 #: single.php:37
 msgid "Previous post:"
@@ -20,7 +33,9 @@ msgstr "Entrada siguiente:"
 
 #: inc/customizer.php:52 inc/customizer.php:68 inc/customizer.php:73
 msgid "Applied to the header on small screens and the sidebar on wide screens."
-msgstr "Aplicado a la cabecera en pantallas pequeñas y a la barra lateral en pantallas anchas."
+msgstr ""
+"Aplicado a la cabecera en pantallas pequeñas y a la barra lateral en "
+"pantallas anchas."
 
 #: single.php:36
 msgid "Previous"
@@ -60,6 +75,7 @@ msgid "% Comments"
 msgstr "% comentarios"
 
 #: search.php:18
+#, c-format
 msgid "Search Results for: %s"
 msgstr "Resultados de búsqueda por: %s"
 
@@ -116,8 +132,21 @@ msgid "Header and Sidebar Background Color"
 msgstr "Color de fondo de la cabecera y barra lateral"
 
 #. Description of the plugin/theme
-msgid "Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer."
-msgstr "Nuestro tema por defecto de 2015 es limpio, enfocado a los blogs y con un diseño claro. La tipografía de Twenty Finten es sencilla, clara y legible en una gran variedad de tamaños de pantalla, además de disponible en multitud de idiomas. Lo hemos diseñado pensando primero en su uso móvil, lo que implica que tu contenido ocupará el centro de la escena independientemente de como lleguen tus visitantes, ya sea desde un móvil inteligente, una tableta, un portátil o un ordenador de escritorio."
+msgid ""
+"Our 2015 default theme is clean, blog-focused, and designed for clarity. "
+"Twenty Fifteen's simple, straightforward typography is readable on a wide "
+"variety of screen sizes, and suitable for multiple languages. We designed it "
+"using a mobile-first approach, meaning your content takes center-stage, "
+"regardless of whether your visitors arrive by smartphone, tablet, laptop, or "
+"desktop computer."
+msgstr ""
+"Nuestro tema por defecto de 2015 es limpio, enfocado a los blogs y con un "
+"diseño claro. La tipografía de Twenty Finten es sencilla, clara y legible en "
+"una gran variedad de tamaños de pantalla, además de disponible en multitud "
+"de idiomas. Lo hemos diseñado pensando primero en su uso móvil, lo que "
+"implica que tu contenido ocupará el centro de la escena independientemente "
+"de como lleguen tus visitantes, ya sea desde un móvil inteligente, una "
+"tableta, un portátil o un ordenador de escritorio."
 
 #: inc/template-tags.php:113
 msgctxt "Used before full size attachment link."
@@ -153,13 +182,22 @@ msgid "Header and Sidebar Text Color"
 msgstr "Color de texto de cabecera y barra lateral"
 
 #: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
-msgid "Twenty Fifteen requires at least WordPress version 4.1. You are running version %s. Please upgrade and try again."
-msgstr "Twenty Finten requiere al menos la versión 4.1 de WordPress. Estás ejecutando la versión %s. Por favor, actualiza e inténtalo de nuevo."
+#, c-format
+msgid ""
+"Twenty Fifteen requires at least WordPress version 4.1. You are running "
+"version %s. Please upgrade and try again."
+msgstr ""
+"Twenty Finten requiere al menos la versión 4.1 de WordPress. Estás "
+"ejecutando la versión %s. Por favor, actualiza e inténtalo de nuevo."
 
 #: image.php:84
 msgctxt "Parent post link"
-msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
-msgstr "<span class=\"meta-nav\">Publicado en</span><span class=\"post-title\">%title</span>"
+msgid ""
+"<span class=\"meta-nav\">Published in</span><span class=\"post-"
+"title\">%title</span>"
+msgstr ""
+"<span class=\"meta-nav\">Publicado en</span><span class=\"post-"
+"title\">%title</span>"
 
 #: inc/template-tags.php:76
 msgctxt "Used before publish date."
@@ -184,6 +222,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #: footer.php:25
+#, c-format
 msgid "Proudly powered by %s"
 msgstr "Creado con %s"
 
@@ -200,16 +239,25 @@ msgid "Nothing Found"
 msgstr "No se ha encontrado nada"
 
 #: content-none.php:22
+#, c-format
 msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 msgstr "¿Preparado para publicar tu primera entrada? <a href=\"%1$s\">Empieza aquí</a>."
 
 #: content-none.php:26
-msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
-msgstr "Lo siento pero no hay nada que se ajuste a tus criterios de búsqueda. Por favor, inténtalo de nuevo con palabras claves distintas."
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+"Lo siento pero no hay nada que se ajuste a tus criterios de búsqueda. Por "
+"favor, inténtalo de nuevo con palabras claves distintas."
 
 #: content-none.php:31
-msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
-msgstr "Parece que no podemos encontrar lo que estás buscando. Tal vez la búsqueda te pueda ayudar."
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+"Mmmmm... Parece que no podemos encontrar lo que estás buscando. Tal vez la "
+"búsqueda te pueda ayudar."
 
 #: functions.php:133
 msgid "Widget Area"
@@ -227,6 +275,7 @@ msgstr "https://wordpress.org/"
 
 #. translators: %s: Name of current post
 #: content-link.php:31 content.php:33 inc/template-tags.php:237
+#, c-format
 msgid "Continue reading %s"
 msgstr "Continúa leyendo %s"
 
@@ -267,6 +316,7 @@ msgid "Add widgets here to appear in your sidebar."
 msgstr "Añade aquí los widgets para que aparezca en la barra lateral."
 
 #: comments.php:28
+#, c-format
 msgctxt "comments title"
 msgid "One thought on &ldquo;%2$s&rdquo;"
 msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
@@ -286,6 +336,7 @@ msgid "It looks like nothing was found at this location. Maybe try a search?"
 msgstr "Parece que no hay nada en esa ubicación ¿quieres probar a buscar?"
 
 #: author-bio.php:34
+#, c-format
 msgid "View all posts by %s"
 msgstr "Lee todas las entradas de %s"
 

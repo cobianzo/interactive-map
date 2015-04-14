@@ -265,13 +265,14 @@ no-margin {
 }
 
 
-#mobile-nav{ 
+#mobile-nav, #mobile-home-btn{ 
 	display:	none;
 }
 
 	// header only MOBIILE and TABLET PORTRAIT
 	@media all and (max-width: $screen-xs-max) { 
 		#mobile-home-btn{
+			display:			block;
 			position: 		absolute;
 			z-index: 			999;
 			margin: 			8px;

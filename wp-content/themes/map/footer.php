@@ -4,15 +4,15 @@
 			<?php if ( ! dynamic_sidebar( 'Footer' ) ) : ?><!--Wigitized Footer--><?php endif ?>
 
 			<span class='col-xs-12 col-sm-3 text-center'>
-				<a href="<?php bloginfo('rss2_url'); ?>" rel="nofollow"><?php _e('Entries (RSS)'); ?></a> | 
-				<a href="<?php bloginfo('comments_rss2_url'); ?>" rel="nofollow"><?php _e('Comments (RSS)'); ?></a>
+				<!--<a href="<?php bloginfo('rss2_url'); ?>" rel="nofollow"><?php _e('Entries (RSS)', "map"); ?></a> |  -->
+				<a href="<?php bloginfo('comments_rss2_url'); ?>" rel="nofollow"><?php _e('Comments (RSS)', "map"); ?></a>
 			</span>
 			<span class='col-xs-12 col-sm-7 text-center'>
 					&copy; <?php echo date("Y") ?> 
 					<a href="<?php bloginfo('url'); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a>. 
-					<?php _e('All Rights Reserved.'); ?>
+					<?php _e('All Rights Reserved.', "map"); ?>
 			</span>
-			<span class="col-xs-12 col-sm-2 text-center"><a href="#body"><?php _e('Top'); ?></a></span>
+			<span class="col-xs-12 col-sm-2 text-center"><a href="#body"><?php _e('Top', "map"); ?></a></span>
 
 		</div><!--.container-->
 	</footer></div><!--#footer-->
@@ -124,11 +124,16 @@
 
 				//This function disables buttons when needed
 				function disableButtons(counter_max, counter_current){
+					if (typeof(counter_current) === "undefined" ) return;
 					$('#show-previous-image, #show-next-image').show();
+					$('#image-gallery-image').bind("click", function(){ $('#show-next-image').click() });	// clicar la imagen pasa a la siguiente img
 					if(counter_max == counter_current){
 						$('#show-next-image').hide();
-					} else if (counter_current == 1){
+						$('#image-gallery-image').unbind("click");						// si no hay siguiente img cancelamos ese efecto
+					} else {						
+						if (counter_current == 1){
 						$('#show-previous-image').hide();
+						}
 					}
 				}
 
@@ -154,7 +159,7 @@
 						updateGallery(selector);
 					});
 
-					function updateGallery(selector) {
+					function updateGallery(selector) { 
 						var $sel = selector;
 						current_image = $sel.data('image-id');
 						$('#image-gallery-caption').text($sel.data('caption'));
@@ -163,11 +168,12 @@
 						$('#content-gallery').html("");
 						
 							
-						if (typeof($sel.attr("data-image")) !== "undefined") 
-							$('#image-gallery-image').attr('src', $sel.data('image')).fadeIn();
+						if (typeof($sel.attr("data-image")) !== "undefined") {
+							$('#image-gallery-image').attr('src', $sel.data('image')).fadeIn("slow", function(){$('#image-gallery-image').show()} );
+						}
 						if (typeof($sel.attr("data-content")) !== "undefined") 
 							$('#content-gallery').html($sel.attr("data-content"));
-						disableButtons(counter, $sel.data('image-id'));
+						disableButtons(counter, $sel.data('image-id'));						
 					}
 
 					if(setIDs == true){

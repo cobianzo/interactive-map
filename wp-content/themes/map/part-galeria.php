@@ -36,7 +36,7 @@
 						else	$all_images	=	array_merge($all_images, $carousel_imgs);
 				?>
 				
-				<h2><?php printf( __('Galería multimedia para %s', 'veras'), get_post_meta(get_the_ID(), 'category_name', true) ); ?></h2> 	
+				<h2><?php printf( __('Multimedia Gallery for %s', 'map'), get_post_meta(get_the_ID(), 'category_name', true) ); ?></h2> 	
 		
 				<?php 	# $carousel_imgs =  wpba_get_attachments( );  
 								

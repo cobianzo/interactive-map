@@ -6,16 +6,16 @@ add_action( 'init', 'veras_custom_post_types', 0 );
 function veras_custom_post_types() {
 
 	// REGISTRAR LOS MAPAS PRINCIPALES: corresponderán al mapa de Yucatán, el de Tulúm ...
-	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
-		'name'                => _x( 'Mapas', 'Mapa General Name', 'veras' ),		'singular_name'       => _x( 'Mapa', 'Mapa Singular Name', 'veras' ),
-		'menu_name'           => __( 'Mapa + Hotspots', 'veras' ),										'parent_item_colon'   => __( 'Mapa padre (si este item es un hotspot)', 'veras' ),
-		'all_items'           => __( 'Todos los mapas y hotspots', 'veras' ),							'view_item'           => __( 'Ver Mapa  o Hotspot', 'veras' ),
-		'add_new_item'        => __( 'Nuevo Mapa o Hotspot', 'veras' ),								'add_new'             => __( 'Añade nuevo mapa o hotspot', 'veras' ),
-		'edit_item'           => __( 'Edita Mapa o Hotspot', 'veras' ),									'update_item'         => __( 'Actualiza Mapa o Hotspot', 'veras' ),
-		'search_items'        => __( 'Busca Item', 'veras' ),								'not_found'           => __( 'No encontrado', 'veras' ),	);
+	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'admin-map' ),
+		'name'                => _x( 'Mapas', 'Mapa General Name', 'admin-map' ),		'singular_name'       => _x( 'Mapa', 'Mapa Singular Name', 'admin-map' ),
+		'menu_name'           => __( 'Mapa + Hotspots', 'admin-map' ),										'parent_item_colon'   => __( 'Mapa padre (si este item es un hotspot)', 'admin-map' ),
+		'all_items'           => __( 'Todos los mapas y hotspots', 'admin-map' ),							'view_item'           => __( 'Ver Mapa  o Hotspot', 'admin-map' ),
+		'add_new_item'        => __( 'Nuevo Mapa o Hotspot', 'admin-map' ),								'add_new'             => __( 'Añade nuevo mapa o hotspot', 'admin-map' ),
+		'edit_item'           => __( 'Edita Mapa o Hotspot', 'admin-map' ),									'update_item'         => __( 'Actualiza Mapa o Hotspot', 'admin-map' ),
+		'search_items'        => __( 'Busca Item', 'admin-map' ),								'not_found'           => __( 'No encontrado', 'admin-map' ),	);
 		
 	$args = array(
-		'label'               => __( 'mapa', 'veras' ),		'description'         => __( 'Mapa Description', 'veras' ),
+		'label'               => __( 'mapa', 'admin-map' ),		'description'         => __( 'Mapa Description', 'admin-map' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title',  'page-attributes' ,'thumbnail' , 'excerpt', 'comments' ) ,  /* thumbnail, */
 		'taxonomies'          => array( 'category'), 
@@ -32,16 +32,16 @@ function veras_custom_post_types() {
 
 	
 	/*
-	$labels = array(		'name'                => _x( 'Monumentos', 'Monumento General Name', 'veras' ),
-		'singular_name'       => _x( 'Monumento', 'Monumento Singular Name', 'veras' ),		'menu_name'           => __( 'Monumento', 'veras' ),
-		'parent_item_colon'   => __( 'Item padre:', 'veras' ),												'all_items'           => __( 'Todos los items', 'veras' ),
-		'view_item'           => __( 'Ver Item', 'veras' ),															'add_new_item'        => __( 'Nuevo Item', 'veras' ),
-		'add_new'             => __( 'Añade nuevo', 'veras' ),													'edit_item'           => __( 'Edita Item', 'veras' ),
-		'update_item'         => __( 'Actualiza Item', 'veras' ),												'search_items'        => __( 'Busca Item', 'veras' ),
-		'not_found'           => __( 'No encontrado', 'veras' ),												'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
+	$labels = array(		'name'                => _x( 'Monumentos', 'Monumento General Name', 'admin-map' ),
+		'singular_name'       => _x( 'Monumento', 'Monumento Singular Name', 'admin-map' ),		'menu_name'           => __( 'Monumento', 'admin-map' ),
+		'parent_item_colon'   => __( 'Item padre:', 'admin-map' ),												'all_items'           => __( 'Todos los items', 'admin-map' ),
+		'view_item'           => __( 'Ver Item', 'admin-map' ),															'add_new_item'        => __( 'Nuevo Item', 'admin-map' ),
+		'add_new'             => __( 'Añade nuevo', 'admin-map' ),													'edit_item'           => __( 'Edita Item', 'admin-map' ),
+		'update_item'         => __( 'Actualiza Item', 'admin-map' ),												'search_items'        => __( 'Busca Item', 'admin-map' ),
+		'not_found'           => __( 'No encontrado', 'admin-map' ),												'not_found_in_trash'  => __( 'No encontrado en Trash', 'admin-map' ),
 	);
 	$args = array(
-		'label'               => __( 'monumento', 'veras' ),		'description'         => __( 'Monumento Description', 'veras' ),
+		'label'               => __( 'monumento', 'admin-map' ),		'description'         => __( 'Monumento Description', 'admin-map' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title',  'page-attributes' , 'thumbnail' , 'excerpt' ),
 		'taxonomies'          => array( 'category', 'post_tag' ),
@@ -58,16 +58,16 @@ function veras_custom_post_types() {
 	*/
 	
 	
-	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
-		'name'                => _x( 'Promos', 'Promo General Name', 'veras' ),		'singular_name'       => _x( 'Promo', 'Promo Singular Name', 'veras' ),
-		'menu_name'           => __( 'Bloque Img+Text', 'veras' ),										'parent_item_colon'   => __( 'bloque padre:', 'veras' ),
-		'all_items'           => __( 'Todos los bloques', 'veras' ),							'view_item'           => __( 'Ver bloque', 'veras' ),
-		'add_new_item'        => __( 'Nuevo bloque', 'veras' ),								'add_new'             => __( 'Añade nuevo', 'veras' ),
-		'edit_item'           => __( 'Edita bloque', 'veras' ),									'update_item'         => __( 'Actualiza bloque', 'veras' ),
-		'search_items'        => __( 'Busca Item', 'veras' ),								'not_found'           => __( 'No encontrado', 'veras' ),	);
+	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'admin-map' ),
+		'name'                => _x( 'Promos', 'Promo General Name', 'admin-map' ),		'singular_name'       => _x( 'Promo', 'Promo Singular Name', 'admin-map' ),
+		'menu_name'           => __( 'Bloque Img+Text', 'admin-map' ),										'parent_item_colon'   => __( 'bloque padre:', 'admin-map' ),
+		'all_items'           => __( 'Todos los bloques', 'admin-map' ),							'view_item'           => __( 'Ver bloque', 'admin-map' ),
+		'add_new_item'        => __( 'Nuevo bloque', 'admin-map' ),								'add_new'             => __( 'Añade nuevo', 'admin-map' ),
+		'edit_item'           => __( 'Edita bloque', 'admin-map' ),									'update_item'         => __( 'Actualiza bloque', 'admin-map' ),
+		'search_items'        => __( 'Busca Item', 'admin-map' ),								'not_found'           => __( 'No encontrado', 'admin-map' ),	);
 		
 	$args = array(
-		'label'               => __( 'promo', 'veras' ),		'description'         => __( 'Promo Description', 'veras' ),
+		'label'               => __( 'promo', 'admin-map' ),		'description'         => __( 'Promo Description', 'admin-map' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title',  'editor', 'page-attributes' ,'thumbnail'  ) ,  /* thumbnail, */
 		//'taxonomies'          => array( 'category', 'post_tag' ),
@@ -84,16 +84,16 @@ function veras_custom_post_types() {
  
  
  	
-	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'veras' ),
-		'name'                => _x( 'Galerias', 'Galeria General Name', 'veras' ),		'singular_name'       => _x( 'Galeria', 'Galeria Singular Name', 'veras' ),
-		'menu_name'           => __( 'Galerías Imgs', 'veras' ),						'parent_item_colon'   => __( 'Item padre:', 'veras' ),
-		'all_items'           => __( 'Todos las galerias', 'veras' ),							'view_item'           => __( 'Ver Item', 'veras' ),
-		'add_new_item'        => __( 'Nueva galeria', 'veras' ),								'add_new'             => __( 'Añade nuevo galeria', 'veras' ),
-		'edit_item'           => __( 'Edita galeria', 'veras' ),									'update_item'         => __( 'Actualiza galeria', 'veras' ),
-		'search_items'        => __( 'Busca galeria', 'veras' ),								'not_found'           => __( 'No encontrado', 'veras' ),	);
+	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'admin-map' ),
+		'name'                => _x( 'Galerias', 'Galeria General Name', 'admin-map' ),		'singular_name'       => _x( 'Galeria', 'Galeria Singular Name', 'admin-map' ),
+		'menu_name'           => __( 'Galerías Imgs', 'admin-map' ),						'parent_item_colon'   => __( 'Item padre:', 'admin-map' ),
+		'all_items'           => __( 'Todos las galerias', 'admin-map' ),							'view_item'           => __( 'Ver Item', 'admin-map' ),
+		'add_new_item'        => __( 'Nueva galeria', 'admin-map' ),								'add_new'             => __( 'Añade nuevo galeria', 'admin-map' ),
+		'edit_item'           => __( 'Edita galeria', 'admin-map' ),									'update_item'         => __( 'Actualiza galeria', 'admin-map' ),
+		'search_items'        => __( 'Busca galeria', 'admin-map' ),								'not_found'           => __( 'No encontrado', 'admin-map' ),	);
 		
 	$args = array(
-		'label'               => __( 'galeria', 'veras' ),		'description'         => __( 'Galeria Description', 'veras' ),
+		'label'               => __( 'galeria', 'admin-map' ),		'description'         => __( 'Galeria Description', 'admin-map' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title',  'editor', 'page-attributes' ,'thumbnail'  ) ,  /* thumbnail, */
 		'taxonomies'          => array(  ),

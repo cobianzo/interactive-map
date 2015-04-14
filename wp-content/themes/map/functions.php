@@ -3,6 +3,20 @@
 	include_once("functions-custom-pt.php");  	# todo lo relacionado con custom post types
 	include_once("functions-acf.php");				# todo lo relacionado con advanced custom fields
 	
+	add_action('after_setup_theme', 'my_theme_setup');
+	function my_theme_setup(){
+		load_theme_textdomain( 'map', 					get_template_directory().'/languages' );
+		
+		$base = dirname(__FILE__);
+		$path		= dirname(dirname($base))."\\languages";
+
+		 load_theme_textdomain( 'twentyfifteen', 	$path  );
+	}	
+	
+	/*add_action('load_textdomain','debug_load_textdomain');
+	function debug_load_textdomain( $domain , $mofile  ){
+		echo "Trying ",$domain," at ",$mofile,"<br />\n";
+	}*/
 	
 	
 	/* ALVARO : mis cosas */
@@ -676,3 +690,7 @@ function admin_area_for_manage_options_only() {
 	function hide_admin_bar_from_front_end(){
 		return (is_blog_admin());
 	}
+	
+	
+	
+	

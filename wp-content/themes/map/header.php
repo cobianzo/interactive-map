@@ -4,6 +4,8 @@
 	*/
 
 	
+	
+	
 	if( ! is_user_logged_in() ) :
 		# si no está loggeado, puede que esté usando el key y value correctos (se loggea), o no (aparece mensaje de error)
 		
@@ -107,7 +109,7 @@
 	
 	
 	    <!-- Fixed navbar -->
-		<nav id="header-navbar"  class="navbar navbar-default  navbar-fixed-top">
+		<nav id="header-navbar"  class="navbar navbar-default ">
 		  <div class="row-fluid">
 		  
 			<div class="navbar-header col-xs-1">
@@ -160,7 +162,7 @@
 				  	<div id="language-dropdown" class="dropdown pull-right "> 
 						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
 						  <ul id='language-dropdown-ul' class="dropdown-menu" role="menu">
-								<li class="dropdown-header"><?php _e("Otros idiomas"); ?></li>						  
+								<li class="dropdown-header"><?php _e("Other languages", "map"); ?></li>						  
 					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1));; ?>
 						   </ul>
 					</div>
@@ -174,14 +176,14 @@
 		<nav id='mobile-nav' class="nav navbar-nav navbar-right text-right" >
 						<!--  MOBILE  botón expandible  que abre el dropdown de idiomas -->
 				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#language-dropdown-ul" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only"><?php _e("Toggle navigation"); ?></span>	
+						<span class="sr-only"><?php _e("Toggle navigation", "map"); ?></span>	
 						<span class="icon-bar"></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>
 				  </button> 
 				  
 				  	<div id="language-dropdown-mobile" class="dropdown pull-right "> 
 						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
 						  <ul id='language-dropdown-mobile-ul' class="dropdown-menu" role="menu">
-								<li class="dropdown-header"><?php _e("Otros idiomas"); ?></li>						  
+								<li class="dropdown-header"><?php _e("Other languages", "map"); ?></li>						  
 					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1));; ?>
 						   </ul>
 					</div>

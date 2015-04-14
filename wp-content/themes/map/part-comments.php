@@ -1,7 +1,12 @@
 		<div class="row-fluid clearfix">
-			<h3 class='col-xs-7'><?php 	comments_number('No comments', 'One comment', '% comments'); ?></h3>
+			<h3 class='col-xs-7'>
+				<?php 	
+				$comments_number 	= get_comments_number(  );
+				echo (!$comments_number)? __('No comments', 'map') :  (($comments_number == 1) ? __('One comment', 'map'):  sprintf(__('%s comments', 'map'), $comments_number)); 
+				?>				
+			</h3>
 			<a class="col-xs-4 btn btn-primary btn-xs margin-top" href="javascript:   $('#modal-comments').modal({show: 'false'}); ">
-				<?php _e("Añadir comentario"); ?>
+				<?php _e("Add comment" , "map"); ?>
 			</a>
 		</div>
 
@@ -9,7 +14,7 @@
 			<?php
 			$comments	=	get_comments(array("post_id" => get_the_ID())); ?>
 			<ul id='comments-list' class='row-fluid'> <?php 
-			if (!count ($comments )) echo "<li><blockquote>".__("Nadie ha comentado este mapa aún. Sé el primero en hacerlo")."</blockquote></li>";
+			if (!count ($comments )) echo "<li><blockquote>".__("Nobody has commented on this map yet. Be the first one doing it.", "map")."</blockquote></li>";
 			foreach($comments as $comment) : ?>
 	    	<?php $comment_type = get_comment_type(); ?> <!-- checks for comment type -->
 	    	<?php if($comment_type == 'comment') { ?> <!-- outputs only comments -->
@@ -38,7 +43,7 @@
 			<div class="modal-dialog"> 
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1><?php _e("Añade un comentario"); ?></h1>
+						<h1><?php _e("Add your own comment", "map"); ?></h1>
 					</div>
 					<div class="modal-body">
 						<?php  // TO_DO: editar campos y formato 	
@@ -49,9 +54,9 @@
 						comment_form( array(
 								"logged_in_as" => "<br>&nbsp;",
 								'title_reply' 			=>	'',
-								'author' 				=> '<p class="comment-form-author">' . '<label for="author">' . __( 'Name' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
+								'author' 				=> '<p class="comment-form-author">' . '<label for="author">' . __( 'Name', "map" ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
 									'<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' /></p>',
-								'email'  				=> '<p class="comment-form-email"><label for="email">' . __( 'Email' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
+								'email'  				=> '<p class="comment-form-email"><label for="email">' . __( 'Email' , "map") . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
 									'<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' /></p>',
 								'class_submit' 	=>  "btn btn-primary",
 								'comment_notes_after' => '',
@@ -61,7 +66,7 @@
 						
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><?php  _e("Cerrar"); ?></button>								
+						<button type="button" class="btn btn-default" data-dismiss="modal"><?php  _e("Close"); ?></button>								
 					</div>
 				</div>
 			</div>
@@ -83,8 +88,6 @@
 					number_format_i18n( get_comments_number() ), get_the_title() );
 			?>
 			</h2>
-
-			<?php echo "LISTA DE COMENTARIOS";  ?>
 
 			<ol class="comment-list">
 				<?php

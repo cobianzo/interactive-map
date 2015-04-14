@@ -33,7 +33,7 @@
 				$videos		= get_field("galeria_videos");
 				if (is_array($videos) && count($videos)) : 		?>
 				
-					<h3 class="h2"><?php printf( __('Videos', 'veras') ); ?></h3>
+					<h3 class="h2"><?php printf( __('Videos', 'map') ); ?></h3>
 					<?php 
 					
 					#foreach ($videos as $video_id) : 
