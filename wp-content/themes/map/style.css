@@ -68,9 +68,9 @@ a:hover > img {
 /*   GENERIC THINGS  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 .dropdown-toggle {
-  padding: 0 6px 0 20px; }
+  padding: 0 7px 0 10px; }
   .dropdown-toggle .caret {
-    margin: -5px 0 0 16px; }
+    margin: -5px 0 0 5px; }
 
 /* responsive iframe flexible video */
 .flex-video {
@@ -188,8 +188,7 @@ no-margin {
   #header-navbar #breadcrums {
     font-size: 0.8em; }
     #header-navbar #breadcrums .glyphicon {
-      margin-top: 3px;
-      margin-left: -7px; }
+      margin: 3px 10px  0 -7px; }
 
 #language-dropdown {
   margin: 52px 60px 0 0; }
