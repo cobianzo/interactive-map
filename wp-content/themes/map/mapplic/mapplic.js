@@ -411,11 +411,11 @@
 				var list = this.list;
 
 				$.each(categories, function(index, category) {
-					var item = $('<li></li>').addClass('mapplic-list-category').attr('data-category', category.id);
+					var item = $('<li></li>').addClass('mapplic-list-category').addClass('mapplic-list-category-'+category.id).attr('data-category', category.id);
 					var ol = $('<ol></ol>').css('border-color', category.color).appendTo(item);
 					if (category.show == 'false') ol.hide();
 					else item.addClass('mapplic-opened');
-					var link = $('<a></a>').attr('href', '#').attr('title', category.title).css('background-color', category.color).text(category.title).prependTo(item);
+					var link = $('<a></a>').attr('href', '#').attr('title', category.title).addClass('category-title').css('background-color', category.color).text(category.title).prependTo(item);
 					link.on('click', function(e) {
 						e.preventDefault();
 						item.toggleClass('mapplic-opened');
@@ -718,7 +718,8 @@
 								var target = '#';
 								if (value.action == 'redirect') target = value.link;
 
-								var pin = $('<a></a>').attr('href', target).addClass('mapplic-pin').css({'top': top + '%', 'left': left + '%'}).appendTo(layer);
+								// ALV: añadida clase maplic-pin-[id_cagegoria], para poder cambiar el pin en función de la categoria
+								var pin = $('<a></a>').attr('href', target).addClass('mapplic-pin').addClass('mapplic-pin-'+value.category).css({'top': top + '%', 'left': left + '%'}).appendTo(layer);
 								pin.on('click touchend', function(e) {
 									e.preventDefault();
 									/* ALV: esto se dispara cuando se clica sobre el hotspot (no cuando se clica en el nombre en la lista). añado la apertura directa del link si lo tiene */

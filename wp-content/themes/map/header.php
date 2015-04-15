@@ -144,9 +144,8 @@
 									<a class='dropdown-toggle btn btn-default btn-xs' href="<?php  the_permalink() ?>"  data-toggle="dropdown" role="button" aria-expanded="false">
 										<?php 
 													if ((!is_front_page()) && (!is_home())  && $post->post_type == "mapa" ) 
-														echo __("Select site", "map");								
-													else
-														echo get_post_meta(get_the_ID(), 'category_name', true);
+																echo get_post_meta(get_the_ID(), 'category_name', true);
+													else		echo __("Select site", "map");								
 										  ?>
 										<span class="caret"></span>
 									</a>

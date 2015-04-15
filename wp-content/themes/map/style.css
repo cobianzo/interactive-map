@@ -238,12 +238,23 @@ no-margin {
 .mapplic-list-thumbnail {
   max-width: 45px; }
 
+/* CATEGORIA */
+.mapplic-list-category-32 .category-title {
+  background-color: purple  !important; }
+
+.mapplic-pin-32 {
+  background: transparent url("mapplic/images/pin-32.png") no-repeat center bottom; }
+
 /* ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 /*------------- CARD HTOPOST  -------------------*/
-.section-contenido {
+#mapplic .section-contenido {
   margin-top: 20px;
   text-align: justify;
   font-size: 16px; }
+#mapplic .modal-header img {
+  border-radius: 50%; }
+#mapplic .modal-title {
+  padding: 4px 0 0 48px; }
 
 /*     ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ 
  ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
@@ -284,9 +295,13 @@ a.thumbnail {
   margin: auto; }
 
 @media all and (min-width: 992px) {
+  #promo-aside {
+    margin-top: 50px; }
+
   #image-gallery-row {
     height: 234px;
-    overflow-y: auto; }
+    overflow-y: auto;
+    margin-bottom: 50px; }
     #image-gallery-row img {
       max-height: 107px; } }
 @media (max-width: 991px) {
