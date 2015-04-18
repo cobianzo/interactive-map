@@ -69,6 +69,10 @@
 			/* Mapplic map: opens the card of a hotspot, previously hidden on html */
 			function abreLocationCard(locationCardName){
 				
+				/* dos opciones: si el hotspot redirecciona a otro mapa, y se tiene acceso a él (no protegido por contraseña o ya introducida, se redirecciona*/
+				if ( (url_redirect = $("#modal-"+locationCardName).attr("data-redirect")) && ( $("#modal-"+locationCardName).attr("data-goredirect") == "si"))
+					window.location	=	url_redirect; 
+				else 
 				$("#modal-"+locationCardName).modal({show: 'false'});				
 				
 			}

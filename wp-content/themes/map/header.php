@@ -4,9 +4,9 @@
 	*/
 
 	
+	//print_array($_POST); die();
 	
-	
-	if( ! is_user_logged_in() ) :
+	if( ! is_user_logged_in() ) :	# BOOK:LOGINSITE
 		# si no está loggeado, puede que esté usando el key y value correctos (se loggea), o no (aparece mensaje de error)
 		
 		if (check_url_login())
@@ -22,6 +22,17 @@
 		}
 	endif;
 	
+	
+	
+	// si al abrir la página ya está seleccionado un hotspot, es posible que se acabe de submitir la form del password. Y si es correcta, hay que redireccionar al mapa al que apunta
+	if (isset($_REQUEST['location']) && $hotspot_id = $_REQUEST['location']) {
+		if (($link_to_map = hotspot_apunta_a_mapa_no_protegido($hotspot_id)) && (!isset($_REQUEST['no-redirect-to-map'])) )  //  redireccionar a ese mapa
+				wp_redirect($link_to_map);	
+		elseif ( $link_to_map === 0 ) {
+		// si el hotspot seleccionado apunta  a un mapa protegido, estamos en la página recargada trasa haber metido mal el passwrd
+				$_REQUEST['error-map-password'] = $hotspot_id; // paso la variable para más adelanto mostrar mensaje de error en la tarjeta q se abrirá
+		}
+	}
 
 ?><!DOCTYPE html>
 
@@ -99,7 +110,7 @@
 <div id="body"><!-- this encompasses the entire Web site -->
 <?php
 	
-	if( ! is_user_logged_in() ) :
+	if( ! is_user_logged_in() ) :		# BOOK:LOGINSITE
 		# si no está loggeado, puede que esté usando el key y value correctos (se loggea), o no (aparece mensaje de error)
 			get_template_part( "page-not-loggedin");  						
 			die();
@@ -191,10 +202,6 @@
 	
 		<nav id='mobile-nav' class="nav navbar-nav navbar-right text-right" >
 						<!--  MOBILE  botón expandible  que abre el dropdown de idiomas -->
-				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#language-dropdown-ul" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only"><?php _e("Toggle navigation", "map"); ?></span>	
-						<span class="icon-bar"></span>	<span class="icon-bar"></span>	<span class="icon-bar"></span>
-				  </button> 
 				  
 				  	<div id="language-dropdown-mobile" class="dropdown pull-right "> 
 						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>

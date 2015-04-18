@@ -231,6 +231,14 @@
 		params:
 			id, html_header, html_body, html_footer
 	*/
+	
+	function print_img_candado($atributos) {
+		if ($atributos == "xs") $atributos = "width=10 height=10"; 
+		if ($atributos == "sm") $atributos = "width=15 height=15"; 
+		if ($atributos == "md") $atributos = "width=30 height=30"; 
+		echo "<img src='".get_template_directory_uri()."/images/candado.png' $atributos>";		
+	}
+	
 	function print_bt_modal($params = array())
 	{
 		?>
@@ -380,7 +388,7 @@ function admin_area_for_manage_options_only() {
 			# we include the map in the array. The following function will include the locations of the map too
 			if ($aa = array_level_configuration(get_the_ID()))	$array_levels[]	=	$aa; 
 			if (!$map_width) {
-				$map_img_id						=	get_post_meta(get_the_ID(), "mapa_hi", true);
+				$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);
 				$map_img_large				= 	wp_get_attachment_image_src( $map_img_id, "large" ); 
 				$map_width						=	$map_img_large[1];
 				$map_height						=	$map_img_large[2];
@@ -409,6 +417,23 @@ function admin_area_for_manage_options_only() {
 	
 	# MAPAS (tb llamados level en el contexto Mapplic) 
 	# --------------------------------------------------------------------------------------------------------
+
+	// devuelve 0 si apunta a mapa  pero está protegido. Devuelve el link si apunta a mapa y es accesible. Devuelve false otherwise
+	function 	hotspot_apunta_a_mapa_no_protegido($hotspot_id)	{ 
+	
+		#1. ver si el hotspot apunta a un mapa
+		if ($mapa_id_redirect = get_post_meta($hotspot_id, "mapa_redirection", true)) 
+		{	
+		#2. ver si el mapa al que apunta no está inaccesible debido a su contraseña
+			if (post_password_required($mapa_id_redirect)) 
+					return 0;
+			else	return get_permalink($mapa_id_redirect);
+		}	
+			
+		return $mapa_id_redirect;
+	}
+	
+	
 	function get_all_mapas($lang=null){  // esta función prácticamente no tiene utilidad
 		$query_args	= array("post_type"=>"mapa","posts_per_page"=>-1,"post_parent"=>0,"orderby"=>"menu_order","order"=>"ASC");
 		if ($lang)  /* TO_DO: apply this only if polylang plugin is active */
@@ -486,18 +511,22 @@ function admin_area_for_manage_options_only() {
 	function array_location_configuration($id_monumento){
 		  
 		$post_monumento  	= (is_object($id_monumento))?  $id_monumento : get_post($id_monumento);
-		$id_monumento			=	$post_monumento ->ID;
+		$id_monumento		=	$post_monumento ->ID;
 		$img_id						=	get_post_meta($id_monumento, "icono", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
 		$mapa_padre_id		= wp_get_post_parent_id( $id_monumento );
 		$visibilidad 				= get_post_meta($id_monumento, "visibilidad", true);
-		$link							=  (($cc = get_post_meta($id_monumento, "mapa_redirection", true)) )?	get_the_permalink($cc)  :  null;
+		
+		// TO_DO:  Si el enlace es pw protected, el link no existe, pero si un JS que abre un popup con una imagen del mapa enlazado y un texto excerpt. Variable "javascript". El popup a abrir puede ser el de imágenes
+		// $link							=  (($cc = get_post_meta($id_monumento, "mapa_redirection", true)) )?	get_the_permalink($cc)  :  null;
+			
+		
 		// clicando en un nombre en la lista abre una viñeta y	 hace zoom en el mapa, a menos q tengamos esta opción no_zoom activa
 		if (($no_zoom_option = get_post_meta($id_monumento, "no_zoom", true)) && strpos (" ".$no_zoom_option, "no_") )  // total, no_zoom_y_vineta, no_vineta
 		{
 			$link_on_list				= $link? $link : "javascript: abreLocationCard('$post_monumento->post_name')";  // al clicar en el nombre en la lista llevará a este link.
-			$no_vineta					= true;
-			if ($no_zoom_option == "no_zoom_y_vineta")	 $no_zoom = true;
+			//$no_vineta					= true;
+			if ($no_zoom_option == "no_zoom_y_vineta")	 $no_zoom = $no_vineta = true;
 		}
 		if ((!$link )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')"; // por defecto un hotspot abre su card en popup
 		

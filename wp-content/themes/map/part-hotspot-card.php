@@ -1,6 +1,9 @@
-
-		<!-- Modal windoes di Bootstrap.  Card for <?php the_title(); ?> -->
-		<div class="modal fade" id="modal-<?php echo $post->post_name; ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?php echo $post->post_name; ?>" aria-hidden="true">
+		<?php $map_redirect_protected = false; ?>
+		<!-- Modal windoes di Bootstrap.  Card for <?php the_title(); ?> . In this div we include the info for js, to redirect or open the modal if the hotspot redirects to another map -->
+		<div class="modal fade" id="modal-<?php echo $post->post_name; ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?php echo $post->post_name; ?>" aria-hidden="true"
+				<?php if ($redirect_map_id = get_post_meta(get_the_ID(), "mapa_redirection", true)) { ?> data-redirect='<?php echo get_permalink($redirect_map_id); ?>' 
+				data-goredirect='<?php echo  ($map_redirect_protected = post_password_required($redirect_map_id))? "no" : "si" ?>' 	<?php } ?>
+		>
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -27,13 +30,13 @@
 							
 						</div>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body <?php echo  $redirect_map_id?  "row-fluid clearfix" : "" ; ?>">
 						<?php 
 						if ( ($galeria_id = 	get_post_meta(get_the_ID(), "galeria_id", true)) && wpba_attachments_exist( $galeria_id  ) )  
 						{
 							$carousel_imgs =  wpba_get_attachments( $galeria_id  );						?>
 							
-							<div id="carousel-<?php echo $post->post_name; ?>" class="carousel slide">
+							<div id="carousel-<?php echo $post->post_name; ?>" class="carousel slide <?php echo $redirect_map_id?  "col-xs-6" : "" ; ?>">
 								<div class="carousel-inner">
 								
 						<?php	foreach ($carousel_imgs as $i => $img) : 
@@ -67,7 +70,7 @@
 						<?php	}	?>
 							
 						<?php if ($contenido = get_post_meta(get_the_ID(), "contenido", true)) : ?>
-							<section class='row-fluid clearfix section-contenido'><p>
+							<section class='<?php echo $redirect_map_id?  "col-xs-6" : "row-fluid clearfix " ; ?> section-contenido'><p>
 								<?php echo str_replace("\n", "</p><p>", $contenido); ?>
 							</p></section>		
 						<?php endif; ?>
@@ -80,10 +83,31 @@
 							</section>		
 						<?php endif; ?>
 
+						
+						<?php echo $redirect_map_id?  "</div> <!-- modal-body--> \n <div class='row-fluid clearfix'>" : "" ?>
+						
+						
+						<?php if ($map_redirect_protected) :?>
+							
+							<section class='row-fluid clearfix section-password-form'>
+								<h3 class='container'><?php printf(__("Accede a la navegación completa de %s"), get_the_title()); ?></h3>
+								<div class='col-xs-1 col-sm-2 col-md-3'>
+									<?php $img_mapa	= get_post_meta($redirect_map_id, "mapa_hi", true); ?>
+									<img src="<?php echo wp_get_attachment_image_src( $img_mapa, "thumbnail" )[0];?>" class='img-responsive'>
+									<!-- img del mapa -->
+								</div>
+								<div class='col-xs-11 col-sm-10 col-md-9'>
+									<?php echo get_the_password_form($redirect_map_id ); ?>
+									<?php if (isset($_REQUEST['error-map-password']) && (get_the_ID() == $_REQUEST['error-map-password']) ) 
+													echo "<p class='alert alert-danger'>".__("The password you entered is not correct. Please try again.", "map")."</p>";
+									?>
+								</div>
+							</section>
+						<?php endif; ?>
+						
+						
 
-
-
-						<?php 
+						<?php  	// YA NO HAY PROMOS EN LAS CARDS
 						$promos	=	get_post_meta(get_the_ID(), "promos", true);
 						if (is_array($promos) && (count($promos))) : ?>
 							<section class='row-fluid clearfix section-promos'>

@@ -1,4 +1,5 @@
 <?php 
+	# BOOK:LOGINSITE  para toda la página
 	get_header();
 ?> 
 

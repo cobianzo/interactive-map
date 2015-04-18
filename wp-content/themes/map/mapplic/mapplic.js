@@ -718,15 +718,18 @@
 								var target = '#';
 								if (value.action == 'redirect') target = value.link;
 
-								// ALV: añadida clase maplic-pin-[id_cagegoria], para poder cambiar el pin en función de la categoria
-								var pin = $('<a></a>').attr('href', target).addClass('mapplic-pin').addClass('mapplic-pin-'+value.category).css({'top': top + '%', 'left': left + '%'}).appendTo(layer);
-								pin.on('click touchend', function(e) {
-									e.preventDefault();
-									/* ALV: esto se dispara cuando se clica sobre el hotspot (no cuando se clica en el nombre en la lista). añado la apertura directa del link si lo tiene */
-									/* este if es mio, si hay link  lleva a él.  */ if (value.link.length) 
-										window.location.href = value.link;
-									else
+									// ALV: añadida clase maplic-pin-[id_cagegoria], para poder cambiar el pin en función de la categoria
+									var pin = $('<a></a>').attr('href', target).addClass('mapplic-pin').addClass('mapplic-pin-'+value.category).css({'top': top + '%', 'left': left + '%'}).appendTo(layer);
+									pin.on('click touchend', function(e) {
+										e.preventDefault();
+										/* ALV: esto se dispara cuando se clica sobre el hotspot (no cuando se clica en el nombre en la lista). añado la apertura directa del link si lo tiene */
 										showLocation(value.id, 600);
+										
+										/* este if es mio, si hay link  lleva a él.  TO_DO: que ponga la pantalla seminegra diciendo loading */ 
+										if (value.link.length) {
+											window.location.href = value.link;
+										}
+										//else
 								});
 								if (value.fill) pin.css('background-color', value.fill);
 								pin.attr('data-location', value.id);

@@ -125,7 +125,8 @@ no-margin {
   background-color: #fbf8e4;
   background-image: url("images/bg-sombra.jpg");
   background-repeat: no-repeat;
-  background-position: center bottom; }
+  background-position: center bottom;
+  background-size: 100% 100%; }
 
 .sombra-inferior {
   padding-bottom: 100px !important; }
@@ -207,7 +208,7 @@ no-margin {
     display: block;
     position: absolute;
     z-index: 99999;
-    right: 0;
+    right: 20px;
     top: 0; }
     #mobile-nav #language-dropdown-mobile-ul {
       background: #fbf8e4; }
@@ -238,12 +239,29 @@ no-margin {
 .mapplic-list-thumbnail {
   max-width: 45px; }
 
-/* CATEGORIA */
+/* CATEGORIA y pines*/
+.mapplic-pin {
+  width: 30px;
+  height: 35px;
+  background-size: 30px 35px; }
+
 .mapplic-list-category-32 .category-title {
   background-color: purple  !important; }
 
 .mapplic-pin-32 {
-  background: transparent url("mapplic/images/pin-32.png") no-repeat center bottom; }
+  background-image: url("mapplic/images/pin-veras-32.png") !important; }
+
+.mapplic-list-category-86 .category-title {
+  background-color: #0bc478  !important; }
+
+.mapplic-pin-86 {
+  background-image: url("mapplic/images/pin-veras-86.png") !important; }
+
+.mapplic-list-category-34 .category-title {
+  background-color: #c47c0b  !important; }
+
+.mapplic-pin-34 {
+  background-image: url("mapplic/images/pin-veras-34.png") !important; }
 
 /* ------------------------------------------------------ ------------------------------------------------------ ------------------------------------------------------ */
 /*------------- CARD HTOPOST  -------------------*/
@@ -326,7 +344,7 @@ a.thumbnail {
   list-style: none;
   margin-top: 15px;
   padding: 0;
-  max-height: 500px;
+  max-height: 1000px;
   overflow-y: auto; }
   #comments-list li {
     margin-bottom: 20px; }
