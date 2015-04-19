@@ -407,7 +407,8 @@ if(function_exists("register_field_group"))
 				'label' => 'Al clicar abrir otro mapa',
 				'name' => 'mapa_redirection',
 				'type' => 'select',
-				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"<br> '.(($tt = get_post_meta($post->ID, "mapa_redirection", true))?  "Edita <a href='".admin_url()."post.php?post=$tt&action=edit&message=1'>".get_the_title($tt)."</a>" : ""),
+				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"<br> '.(($tt = get_post_meta($post->ID, "mapa_redirection", true))?  "Edita <a href='".admin_url()."post.php?post=$tt&action=edit&message=1'>".get_the_title($tt)."</a>".(post_password_required($tt)? " <br>
+				".print_img_candado('', false)."Este mapa está protegido con contraseña. Deberías escoger la tercera de estas opciones, y editar la pestaña Popup de Monumento": "") : ""),
 				'choices' => $maps_for_select,
 				'default_value' => null,
 				'allow_null' => 1,
@@ -436,7 +437,7 @@ if(function_exists("register_field_group"))
 				'label' => 'Imagen de título',
 				'name' => 'imagen_titulo',
 				'type' => 'image',
-				'instructions' => 'Si deseas que el popup muestre una imagen para el título, selecciónala de la galería o súbela aquí.',
+				'instructions' => 'Se ha decidido no usar este campo. Pero si aún se prefiere poner una imagen de título, es decir, si deseas que el popup muestre una imagen en la cabecera, selecciónala de la galería o súbela aquí.',
 				'save_format' => 'id',
 				'preview_size' => 'medium',
 				'library' => 'all',
@@ -459,7 +460,7 @@ if(function_exists("register_field_group"))
 			
 			array (
 				'name' => 'contenido',				'key' => 'field_551179c29e909',			'label' => 'Contenido',
-				'type' => 'textarea',
+				'type' => 'wysiwyg','default_value' => '',	'toolbar' => 'basic',	'media_upload' => 'no',
 				'instructions' => 'Escribe aquí la descripción completa del emplazamiento.',	'default_value' => '',
 				'placeholder' => 'Ej: "La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente..."',    'maxlength' => '',		'rows' => '',	'formatting' => 'br',
 			),
@@ -496,8 +497,7 @@ if(function_exists("register_field_group"))
 		'options' => array (
 			'position' => 'acf_after_title',
 			'layout' => 'default',
-			'hide_on_screen' => array ( 'comments'
-			),
+			'hide_on_screen' => array ( 'discussion', 'comments'. 'author', 'send-trackbacks'),
 		),
 		'menu_order' => 0,
 	));
