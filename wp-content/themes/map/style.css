@@ -380,7 +380,7 @@ a.thumbnail {
 .only-full-screen {
   display: none; }
 
-#before-now.fullscreen {
+.before-now.fullscreen {
   position: fixed;
   top: 0;
   left: 0;
@@ -390,13 +390,13 @@ a.thumbnail {
   text-align: center;
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5); }
-  #before-now.fullscreen h3, #before-now.fullscreen h2 {
+  .before-now.fullscreen h3, .before-now.fullscreen h2 {
     display: none; }
-  #before-now.fullscreen .only-full-screen {
+  .before-now.fullscreen .only-full-screen {
     display: block; }
-  #before-now.fullscreen .hide-full-screen {
+  .before-now.fullscreen .hide-full-screen {
     display: none; }
-  #before-now.fullscreen .close-btn {
+  .before-now.fullscreen .close-btn {
     position: fixed;
     right: 15px;
     top: 5px;
@@ -404,16 +404,19 @@ a.thumbnail {
     border-radius: 50%;
     -webkit-box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5);
     box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5); }
-  #before-now.fullscreen .close-btn-2 {
+  .before-now.fullscreen .close-btn-2 {
     display: inline !important;
     line-height: 5em; }
-  #before-now.fullscreen .ba-slider {
+  .before-now.fullscreen .ba-slider {
     max-width: 800px;
     margin: auto;
     border: 3px solid #f4f4f4;
     border-radius: 5px;
     -webkit-box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5);
     box-shadow: 7px 6px 2px rgba(0, 0, 0, 0.5); }
+
+.modal-dialog .btn-primary {
+  color: #eeeeee; }
 
 .ba-slider {
   position: relative;

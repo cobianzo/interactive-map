@@ -233,10 +233,16 @@
 	*/
 	
 	function print_img_candado($atributos, $echo = true) {
+		print_img(get_template_directory_uri()."/images/candado.png", $atributos, $echo);
+	}
+	function print_img_mundo($atributos, $echo = true) {
+		print_img(get_template_directory_uri()."/images/mundo.png", $atributos, $echo);
+	}
+	function print_img($src, $atributos, $echo = true) {
 		if ($atributos == "xs") $atributos = "width=10 height=10"; 
 		if ($atributos == "sm") $atributos = "width=15 height=15"; 
 		if ($atributos == "md") $atributos = "width=30 height=30"; 
-		$img_html = "<img src='".get_template_directory_uri()."/images/candado.png' $atributos>";		
+		$img_html = "<img src='".$src."' $atributos>";		
 		if ($echo) echo $img_html;
 		return $img_html;
 	}
@@ -318,10 +324,9 @@ function admin_area_for_manage_options_only() {
 	
 	
 add_filter( 'the_title', 'candado_si_password', 10, 2 );
-	function candado_si_password( $title, $id = null ) {
-		if (!is_admin()) return $title;
-		if (($link = hotspot_apunta_a_mapa_no_protegido($id)) === 0)
-			$title .= " -- hotspot que apunta a mapa";
+function candado_si_password( $title, $id = null ) {	
+		if ( (!is_admin()) && (($link = hotspot_apunta_a_mapa_no_protegido($id)) === 0))
+			$title .= " -- (hotspot apunta a mapa)";
 		return $title;
 }
 	

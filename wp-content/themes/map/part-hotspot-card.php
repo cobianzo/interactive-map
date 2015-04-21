@@ -1,15 +1,18 @@
-		<?php $map_redirect_protected = false; ?>
+		<?php 
+			$redirect_map_id = get_post_meta(get_the_ID(), "mapa_redirection", true);  if ($redirect_map_id == "null") $redirect_map_id = null;
+			$map_redirect_protected = post_password_required($redirect_map_id); 
+		?>
 		<!-- Modal windoes di Bootstrap.  Card for <?php the_title(); ?> . In this div we include the info for js, to redirect or open the modal if the hotspot redirects to another map -->
 		<div class="modal fade" id="modal-<?php echo $post->post_name; ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?php echo $post->post_name; ?>" aria-hidden="true"
-				<?php if ($redirect_map_id = get_post_meta(get_the_ID(), "mapa_redirection", true)) { ?> data-redirect='<?php echo get_permalink($redirect_map_id); ?>' 
-				data-goredirect='<?php echo  ($map_redirect_protected = post_password_required($redirect_map_id))? "no" : "si" ?>' 	<?php } ?>
+				<?php if ($redirect_map_id) { ?> data-redirect='<?php echo get_permalink($redirect_map_id); ?>' 
+				data-goredirect='<?php echo  ($map_redirect_protected)? "no" : "si" ?>' 	<?php } ?>
 		>
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 						<div>
-							<?php
+							<?php 
 							// El icono
 							if ($icono_id = get_post_meta(get_the_ID(), "icono", true)) :
 								$icono_src		= 	wp_get_attachment_image_src( $icono_id, "thumbnail" ); 		
@@ -32,9 +35,19 @@
 					</div>
 					<div class="modal-body <?php echo  $redirect_map_id?  "row-fluid clearfix" : "" ; ?>">
 						<?php 
+						/* CARRUSEL -------------------------------------------------------------------------------------------------------------------
+							-----------------------------------------------------------------------------------------------------------------------------------------------   */						
+						$carousel_imgs =	array();
+						if ($galeria_al_vuelo = get_field("galeria")) {
+							if (is_array($galeria_al_vuelo))
+								foreach 	($galeria_al_vuelo as $row_galeria) 		$carousel_imgs[] = get_post($row_galeria['imagen']);
+						}
+						
 						if ( ($galeria_id = 	get_post_meta(get_the_ID(), "galeria_id", true)) && wpba_attachments_exist( $galeria_id  ) )  
-						{
-							$carousel_imgs =  wpba_get_attachments( $galeria_id  );						?>
+								$carousel_imgs =  array_merge($carousel_imgs, wpba_get_attachments( $galeria_id  ));					
+
+						if (count($carousel_imgs )) {
+							?>
 							
 							<div id="carousel-<?php echo $post->post_name; ?>" class="carousel slide <?php echo $redirect_map_id?  "col-xs-6" : "" ; ?>">
 								<div class="carousel-inner">
@@ -42,9 +55,9 @@
 						<?php	foreach ($carousel_imgs as $i => $img) : 
 						
 									global $polylang;	// not used yet, but if we display the title and description, we will need it.
-									$post_ids = $polylang->get_translations('post', $img->ID);
-									$lang_slug = pll_current_language("slug");
-									if (array_key_exists( $lang_slug, $post_ids)) {
+									$post_ids = $polylang->get_translations('post', $img->ID);			# GET  	los idiomas a los que está traducido la img
+									$lang_slug = pll_current_language("slug");										# GET		current langauag
+									if (array_key_exists( $lang_slug, $post_ids)) {									# SI existe imagen traducida al idioma actual --> ACTUALIZAMOS la img a usar
 										$img_id	=	$post_ids[$lang_slug];
 										$img		= get_post($img_id);
 									}
@@ -83,11 +96,34 @@
 							</section>		
 						<?php endif; ?>
 
+
+						<?php
+					/* ANTES / AHORA -------------------------------------------------------------------------------------------------------------------
+					-----------------------------------------------------------------------------------------------------------------------------------------------   */
+					global $antes_ahora;
+					 $antes_ahora_array		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa : null;
+					 if (is_array($antes_ahora_array)) foreach ($antes_ahora_array as $aa) {
+							$antes_ahora = $aa;
+							if ($antes_ahora && ($img_before_id =	$antes_ahora["img_antes"]))
+
+								get_template_part( "part", "before-now");  
+
+									
+						}
+					?>
+						
+						
+						
+						
+						
+						
+						
+						
 						
 						<?php echo $redirect_map_id?  "</div> <!-- modal-body--> \n <div class='row-fluid clearfix'>" : "" ?>
 						
 						
-						<?php if ($map_redirect_protected) :?>
+						<?php if ($map_redirect_protected) :	/* esto sólo para hotspot de Yucatán que redirecionan a mapas protegidos con contraseña */	?>
 							
 							<section class='row-fluid clearfix section-password-form'>
 								<h3 class='container'><?php printf(__("Accede a la navegación completa de %s"), get_the_title()); ?></h3>

@@ -1,11 +1,13 @@
-		<div id="before-now" class='normal'>
+		<div id="before-now-<?php the_ID();?>" class='before-now'>
 			
 			<h3 class="h2">
 				<?php printf( __('Before / now', 'map') ); ?>
-				<a class="btn btn-primary btn-xs pull-right" href='javascript: beforeNowFullScreen (); '><i class="glyphicon glyphicon-fullscreen"></i>&nbsp;<?php _e("Enlarge", "map");  ?></a>
+				<a class="btn btn-primary btn-xs pull-right" href='javascript: beforeNowFullScreen ("before-now-<?php the_ID();?>"); '>
+						<i class="glyphicon glyphicon-fullscreen"></i>&nbsp;<?php _e("Enlarge", "map");  ?>
+				</a>
 			</h3>
 			
-			<a class='only-full-screen btn btn-primary text-center close-btn' href="javascript: beforeNowFullScreen('exit'); "><i class="glyphicon glyphicon-remove-sign"></i></a>
+			<a class='only-full-screen btn btn-primary text-center close-btn' href="javascript: beforeNowFullScreen('before-now-<?php the_ID();?>', 'exit'); "><i class="glyphicon glyphicon-remove-sign"></i></a>
 	<!--		<small><?php printf( __('Move the handle to compare both states', 'map') ); ?></small> -->
 							
 	<?php 
@@ -24,15 +26,15 @@
 	?>
 
 			<div class="ba-slider">
-			  <img id='img-before' src="<?php echo $img_before_src[0]; ?>" alt="" data-imagefull="<?php echo $img_before_large_src[0]; ?>">       
+			  <img class='img-before' src="<?php echo $img_before_src[0]; ?>" alt="" data-imagefull="<?php echo $img_before_large_src[0]; ?>">       
 			  <div class="resize">
-				<img id='img-now' src="<?php echo $img_now_src[0]; ?>" alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>">
+				<img class='img-now' src="<?php echo $img_now_src[0]; ?>" alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>">
 			  </div>
 			  <span class="handle"></span>
 			</div>
 	<?php if (strlen($descripcion)) echo "<br><i class='hide-full-screen text-center'>$descripcion</i>"; ?>
 	<?php endif; ?>
 	
-		<br class='only-full-screen'><a class='only-full-screen btn btn-primary text-center close-btn-2' href="javascript: beforeNowFullScreen('exit'); "><?php _e("Close", "map");  ?></a>
+		<br class='only-full-screen'><a class='only-full-screen btn btn-primary text-center close-btn-2' href="javascript: beforeNowFullScreen('before-now-<?php the_ID();?>', 'exit'); "><?php _e("Close", "map");  ?></a>
 
 	</div>

@@ -8,7 +8,7 @@ function veras_custom_post_types() {
 	// REGISTRAR LOS MAPAS PRINCIPALES: corresponderán al mapa de Yucatán, el de Tulúm ...
 	$labels = array(				'not_found_in_trash'  => __( 'No encontrado en Trash', 'admin-map' ),
 		'name'                => _x( 'Mapas', 'Mapa General Name', 'admin-map' ),		'singular_name'       => _x( 'Mapa', 'Mapa Singular Name', 'admin-map' ),
-		'menu_name'           => __( 'Mapa + Hotspots', 'admin-map' ),										'parent_item_colon'   => __( 'Mapa padre (si este item es un hotspot)', 'admin-map' ),
+		'menu_name'           => __( 'Mapa + Hotspots', 'admin-map' ),										'parent_item_colon'   => __( 'Mapa padre (si este item es un hotspot)', 'admin-map' ),	
 		'all_items'           => __( 'Todos los mapas y hotspots', 'admin-map' ),							'view_item'           => __( 'Ver Mapa  o Hotspot', 'admin-map' ),
 		'add_new_item'        => __( 'Nuevo Mapa o Hotspot', 'admin-map' ),								'add_new'             => __( 'Añade nuevo mapa o hotspot', 'admin-map' ),
 		'edit_item'           => __( 'Edita Mapa o Hotspot', 'admin-map' ),									'update_item'         => __( 'Actualiza Mapa o Hotspot', 'admin-map' ),

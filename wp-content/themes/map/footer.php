@@ -73,13 +73,12 @@
 				if ( (url_redirect = $("#modal-"+locationCardName).attr("data-redirect")) && ( $("#modal-"+locationCardName).attr("data-goredirect") == "si"))
 					window.location	=	url_redirect; 
 				else 
-				$("#modal-"+locationCardName).modal({show: 'false'});				
-				
+				$("#modal-"+locationCardName).modal({show: 'false'});	// al llamar esta función se ejecuta la de abajo (shown.bs.modal)
 			}
-			
-			// al cerrar el modal devolvemos la visibilidad del mapa en fullScreen
-			jQuery(".modal").on('hidden.bs.modal', function () {
-				// no es necesario... el ppopup se ve bien				
+				
+			jQuery(".modal").on('shown.bs.modal', function () {
+				  // necesario para q funcione el before/now
+				$(window).resize();		
 			});
 			
 			
@@ -198,12 +197,15 @@
 			/* plugin before now */
 			
 			/* esto es mio para hacerlo fullscreen*/
-			function beforeNowFullScreen (action){
-				if (action === "exit") $("#before-now").removeClass("fullscreen");
+			function beforeNowFullScreen (id, action){
+				if (action === "exit") {
+					$("#"+id).removeClass("fullscreen").parents(".modal-dialog.remove-modal-lg:first").removeClass("modal-lg");
+				}
 				else {
-					$("#before-now").addClass("fullscreen");
-					$("#img-before").attr("src", $("#img-before").attr("data-imagefull"));
-					$("#img-now").attr("src", $("#img-now").attr("data-imagefull"));
+					$("#"+id).addClass("fullscreen");
+					$("#"+id+" .img-before").attr("src", $("#"+id+" .img-before").attr("data-imagefull"));
+					$("#"+id+" .img-now").attr("src", $("#"+id+" .img-now").attr("data-imagefull"));
+					if ($(".modal-dialog #"+id).length > 0) $( "#"+id).parents(".modal-dialog:first").addClass("modal-lg remove-modal-lg");
 				}
 				$(window).resize();
 				return ;

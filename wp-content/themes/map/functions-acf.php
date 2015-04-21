@@ -21,6 +21,15 @@ if(function_exists("register_field_group"))
 	$promos_posts		= get_posts(array("post_type" => "promo", "posts_per_page" => -1,	"lang" => $post_lang ));
 	foreach ($promos_posts as $promo_post)  $promos_for_select[$promo_post->ID] = $promo_post->post_title;
 	
+	$hotspots_for_select	= array(); $mm = get_monumentos_by_mapa($post->ID);
+	if (is_array($mm)) 
+		foreach ( $mm as $hotspot) 	{
+			$a_a = get_field("antes_ahora", $hotspot->ID);
+	//		echo get_the_title($hotspot->ID)."--".print_r($a_a, 1);
+		//	if (is_array($a_a) && count($a_a) && array_key_exists("img_antes", $a_a[0])) 
+				$hotspots_for_select[$hotspot->ID] = get_the_title($hotspot->ID)."--".print_r($a_a, 1);
+		}
+	
 	# calcular las categorías que acepta 
 	# 1. recogemos la categoría que tiene el mapa padre
 	# 2. tomamos todas las categorías hijas
@@ -78,29 +87,16 @@ if(function_exists("register_field_group"))
 				'multiple' => 0,
 			),
 			
-			array (
-				'key' => 'field_551ac9c287087',
-				'label' => 'Galería',
-				'name' => 'galeria',
+			array ( 'name' => 'galeria',   'key' => 'field_551ac9c287087',   'label' => 'Galería',				
 				'type' => 'repeater',
-				'instructions' => 'Selecciona las imágenes. Recuerda que al seleccionar la imagen puedes editar su título en diferentes idiomas ',
+				'instructions' => 'Además de usar las imágenes de los hotspots y de asignar una galería, puedes añadir imágenes individualmente. Recuerda que al seleccionar la imagen puedes editar su título en diferentes idiomas, dándole al icono del lápiz en la imagen',
+				
 				'sub_fields' => array (
-					array (
-						'key' => 'field_551aca0387088',
-						'label' => 'Imagen',
-						'name' => 'imagen',
+					array ('name' => 'imagen','key' => 'field_551aca0387088','label' => 'Imagen',
 						'type' => 'image',
-						'instructions' => 'Selcciona imagen',
-						'column_width' => 20,
-						'save_format' => 'id',
-						'preview_size' => 'thumbnail',
-						'library' => 'all',
-					),
-				),
-				'row_min' => '',
-				'row_limit' => '',
-				'layout' => 'table',
-				'button_label' => 'Nueva imagen',
+						'instructions' => 'Selcciona imagen','column_width' => 20,'save_format' => 'id','preview_size' => 'thumbnail','library' => 'all',
+					),),
+				'row_min' => '','row_limit' => '','layout' => 'table','button_label' => 'Nueva imagen',
 			),
 			
 			
@@ -177,13 +173,29 @@ if(function_exists("register_field_group"))
 			array ( 	'type' => 'tab', 'key' => 'field_550ca79233332',	'label' => 'Antes / Ahora',	'name' => '',	),
 			/* -----------------------  */
 			
-			
+			array ( 	'name' => 'tipo_antes_ahora', 'key' => 'field_551f4aa4f8cc6',	'label' => 'Tipo de Antes / Ahora',
+						'type' => 'select',
+						'instructions' => 'Si el mapa tiene un módulo Antes/Ahora, selecciona si lo quieres crear, o si quieres usar un Antes/Ahora asociado a uno de los hotspots del mapa',
+						'required' => 0,
+						'choices' => array( 0 => "Sin Antes/Ahora", 1 => "Seleccionar un Antes/Ahora asociado a un hotspot", 2 => "Crear nuevo Antes/Ahora"),
+						'default_value' => null, 'allow_null' => 0, 'multiple' => 0,
+			),
+			array ( 	'name' => 'antes_ahora_predefinida', 'key' => 'field_551f4aa4f8abab',	'label' => 'Predefinida',
+						'type' => 'select',
+						'instructions' => 'Selecciona el nombre de la promo',
+						'required' => 0,
+						'conditional_logic' => array ('status' => 1,	'rules' => array (	array ('field' => 'field_551f4aa4f8cc6','operator' => '==','value' => '1',),),'allorany' => 'all',),
+						'column_width' => 80,
+						'choices' => $hotspots_for_select,
+						'default_value' => null, 'allow_null' => 0, 'multiple' => 0,
+			),			
 			array (
 				'key' => 'field_551b17f6e347b',
 				'label' => 'Antes / Ahora',
 				'name' => 'antes_ahora',
 				'type' => 'repeater',
 				'instructions' => 'Selecciona las dos imágenes de comparación. Una para antes y otra para ahora.',
+				'conditional_logic' => array ('status' => 1,	'rules' => array (	array ('field' => 'field_551f4aa4f8cc6','operator' => '==','value' => '2',),),'allorany' => 'all',),
 				'sub_fields' => array (
 					array (
 						'key' => 'field_551b1864e347c',
@@ -407,7 +419,7 @@ if(function_exists("register_field_group"))
 				'label' => 'Al clicar abrir otro mapa',
 				'name' => 'mapa_redirection',
 				'type' => 'select',
-				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"<br> '.(($tt = get_post_meta($post->ID, "mapa_redirection", true))?  "Edita <a href='".admin_url()."post.php?post=$tt&action=edit&message=1'>".get_the_title($tt)."</a>".(post_password_required($tt)? " <br>
+				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"<br> '.(($tt = get_post_meta($post->ID, "mapa_redirection", true))?  "Edita <a href='".admin_url()."post.php?post=$tt&action=edit&message=1'>".get_the_title($tt)."</a>".((post_password_required($tt) !== false)? " <br>
 				".print_img_candado('', false)."Este mapa está protegido con contraseña. Deberías escoger la tercera de estas opciones, y editar la pestaña Popup de Monumento": "") : ""),
 				'choices' => $maps_for_select,
 				'default_value' => null,
@@ -444,7 +456,7 @@ if(function_exists("register_field_group"))
 			),
 		array (
 				'key' => 'field_551c7191c0a82',
-				'label' => 'Galeria',
+				'label' => 'Galeria predefinida',
 				'name' => 'galeria_id',
 				'type' => 'post_object',
 				'instructions' => 'Selecciona la galería que mostrará el carrusel. Recuerda que la galería debe haber sido creada previamente.',
@@ -457,6 +469,18 @@ if(function_exists("register_field_group"))
 				'allow_null' => 1,
 				'multiple' => 0,
 			),
+			array ( 'name' => 'galeria',   'key' => 'field_551ac9c287aab',   'label' => 'Galería al vuelo',				
+				'type' => 'repeater',
+				'instructions' => 'Además de asignar una galería, puedes añadir imágenes individualmente. Esto es útil para cuando el hotspot sólo tenga una imagen',
+				
+				'sub_fields' => array (
+					array ('name' => 'imagen','key' => 'field_551aca0387000','label' => 'Imagen',
+						'type' => 'image',
+						'instructions' => 'Selcciona imagen','column_width' => 20,'save_format' => 'id','preview_size' => 'thumbnail','library' => 'all',
+					),),
+				'row_min' => '','row_limit' => '','layout' => 'table','button_label' => 'Nueva imagen',
+			),
+
 			
 			array (
 				'name' => 'contenido',				'key' => 'field_551179c29e909',			'label' => 'Contenido',
@@ -464,6 +488,26 @@ if(function_exists("register_field_group"))
 				'instructions' => 'Escribe aquí la descripción completa del emplazamiento.',	'default_value' => '',
 				'placeholder' => 'Ej: "La ciudad prehispánica de Chichén Itzá fue la capital más sobresaliente..."',    'maxlength' => '',		'rows' => '',	'formatting' => 'br',
 			),
+			array (
+				'key' => 'field_551b17f6e3aaa',
+				'label' => 'Antes / Ahora',
+				'name' => 'antes_ahora',
+				'type' => 'repeater',
+				'instructions' => 'Selecciona las dos imágenes de comparación. Una para antes y otra para ahora.',
+				'sub_fields' => array (
+					array (	'key' => 'field_551b1864eaaaa',	'label' => 'Imagen Antes',	'name' => 'img_antes',	'type' => 'image', 'instructions' => 'Imagen de antes',
+						'column_width' => 50,	'save_format' => 'id',		'preview_size' => 'medium',	'library' => 'all',),
+					array (	'key' => 'field_551b188aaaaa',	'label' => 'Imagen_ahora', 'name' => 'img_ahora', 'type' => 'image',	'instructions' => 'Imagen de ahora',
+						'column_width' => 50,	'save_format' => 'id', 	'preview_size' => 'medium',	'library' => 'all',	),
+					array (	'key' => 'field_551b1fa3b6589',	'label' => 'Descripcion', 'name' => 'descripcion',	'type' => 'text', 'instructions' => 'Escribe una breve descripción de las imágenes',
+						'column_width' => '','default_value' => '','placeholder' => '','prepend' => '','append' => '','formatting' => 'html','maxlength' => '',),
+				),
+				'row_min' => '',
+				'row_limit' => 3,
+				'layout' => 'row',
+				'button_label' => 'Añade las imágenes Antes/Ahora',
+			),
+
 			array (
 				'key' => 'field_55118d7411357',
 				'label' => 'Video',

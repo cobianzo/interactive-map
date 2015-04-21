@@ -60,8 +60,24 @@
 				
 				<div class='col-xs-12 col-sm-6'> <!-- col  before/now-->	<?php
 					global $antes_ahora;
-					 $antes_ahora		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa[0] : null;					 
-					 if ($antes_ahora && ($img_before_id =	$antes_ahora["img_antes"])): ?>
+					
+					switch ($tipo_antes_ahora = get_post_meta( get_the_ID(), "tipo_antes_ahora", true)) {
+						case 1 :
+								$hotspot_antes_ahora		= get_post_meta(get_the_ID(), "antes_ahora_predefinida", true);	
+								$antes_ahora		= (($aa = get_field("antes_ahora", $hotspot_antes_ahora)) && is_array($aa) && count($aa))?  $aa[0] : null;					 													
+							break;
+						case 2 :
+							$antes_ahora		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa[0] : null;
+							break;
+							
+						default: 
+							$antes_ahora	= 	null;
+						break;
+					}
+
+					
+					if ($antes_ahora && ($img_before_id =	$antes_ahora["img_antes"])):
+					?>
 
 							<?php get_template_part( "part", "before-now");  ?>
 
