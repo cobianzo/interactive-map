@@ -325,7 +325,7 @@ function admin_area_for_manage_options_only() {
 	
 add_filter( 'the_title', 'candado_si_password', 10, 2 );
 function candado_si_password( $title, $id = null ) {	
-		if ( (!is_admin()) && (($link = hotspot_apunta_a_mapa_no_protegido($id)) === 0))
+		if ( (!is_admin()) && (($link = hotspot_apunta_a_mapa_no_protegido($id)) !== false))
 			$title .= " -- (hotspot apunta a mapa)";
 		return $title;
 }
@@ -434,7 +434,7 @@ function candado_si_password( $title, $id = null ) {
 
 	// devuelve 0 si apunta a mapa  pero está protegido. Devuelve el link si apunta a mapa y es accesible. Devuelve false otherwise
 	function 	hotspot_apunta_a_mapa_no_protegido($hotspot_id)	{ 
-	
+		if (get_post_type($hotspot_id) != "mapa") return false;
 		#1. ver si el hotspot apunta a un mapa
 		if ($mapa_id_redirect = get_post_meta($hotspot_id, "mapa_redirection", true)) 
 		{	
@@ -442,7 +442,9 @@ function candado_si_password( $title, $id = null ) {
 			if (post_password_required($mapa_id_redirect)) 
 					return 0;
 			else	return get_permalink($mapa_id_redirect);
-		}	
+		}
+		else  
+			return false;
 			
 		return $mapa_id_redirect;
 	}
