@@ -1,5 +1,6 @@
 <?php
 		global $antes_ahora; // we set this before we call to this script
+		global $preload_img;
 		$id_rand	= rand(0, 10000);
 ?>
 		<div id="before-now-<?php echo $id_rand;?>" class='before-now'>
@@ -29,10 +30,20 @@
 	?>
 
 			<div class="ba-slider">
-			  <img class='img-before' src="<?php echo $img_before_src[0]; ?>" alt="" data-imagefull="<?php echo $img_before_large_src[0]; ?>">       
-			  <div class="resize">
-				<img class='img-now' src="<?php echo $img_now_src[0]; ?>" alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>">
-			  </div>
+
+				<?php if ( $preload_img ) { ?>
+					<img class='img-before load-src-on-open-modal'   data-imagefull="<?php echo $img_before_large_src[0]; ?>" alt="" 
+							data-preloadsrc="<?php echo $img_before_src[0]; ?>" src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">
+					<div class="resize">
+						<img class='img-now load-src-on-open-modal'  alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>" 
+							data-preloadsrc="<?php echo $img_now_src[0]; ?>" src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">
+					</div>					 					
+				<?php } else { ?>
+					<img class='img-before'   data-imagefull="<?php echo $img_before_large_src[0]; ?>" alt="" src="<?php echo $img_before_src[0]; ?>"  >       
+					<div class="resize">
+						<img class='img-now'  alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>"  src="<?php echo $img_now_src[0]; ?>">
+					</div>					 
+				<?php } ?>
 			  <span class="handle"></span>
 			</div>
 	<?php if (strlen($descripcion)) echo "<br><i class='hide-full-screen text-center'>$descripcion</i>"; ?>

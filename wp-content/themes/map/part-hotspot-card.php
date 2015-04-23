@@ -7,7 +7,7 @@
 				<?php if ($redirect_map_id) { ?> data-redirect='<?php echo get_permalink($redirect_map_id); ?>' 
 				data-goredirect='<?php echo  ($map_redirect_protected)? "no" : "si" ?>' 	<?php } ?>
 		>
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
@@ -49,13 +49,13 @@
 						if (count($carousel_imgs )) {
 							?>
 							
-							<div id="carousel-<?php echo $post->post_name; ?>" class="carousel slide <?php echo $redirect_map_id?  "col-xs-6" : "" ; ?>">
+							<div id="carousel-<?php echo $post->post_name; ?>" class="carousel slide <?php echo $redirect_map_id?  "col-xs-12 col-sm-6" : "" ; ?>">
 								<div class="carousel-inner">
 								
 						<?php	foreach ($carousel_imgs as $i => $img) : 
 						
 									global $polylang;	// not used yet, but if we display the title and description, we will need it.
-									$post_ids = $polylang->get_translations('post', $img->ID);			# GET  	los idiomas a los que está traducido la img
+									$post_ids = $polylang->model->get_translations('post', $img->ID);			# GET  	los idiomas a los que está traducido la img
 									$lang_slug = pll_current_language("slug");										# GET		current langauag
 									if (array_key_exists( $lang_slug, $post_ids)) {									# SI existe imagen traducida al idioma actual --> ACTUALIZAMOS la img a usar
 										$img_id	=	$post_ids[$lang_slug];
@@ -83,7 +83,7 @@
 						<?php	}	?>
 							
 						<?php if ($contenido = get_post_meta(get_the_ID(), "contenido", true)) : ?>
-							<section class='<?php echo $redirect_map_id?  "col-xs-6" : "row-fluid clearfix " ; ?> section-contenido'><p>
+							<section class='<?php echo $redirect_map_id?  "col-xs-12 col-sm-6" : "row-fluid clearfix " ; ?> section-contenido'><p>
 								<?php echo str_replace("\n", "</p><p>", $contenido); ?>
 							</p></section>		
 						<?php endif; ?>
@@ -100,7 +100,8 @@
 						<?php
 					/* ANTES / AHORA -------------------------------------------------------------------------------------------------------------------
 					-----------------------------------------------------------------------------------------------------------------------------------------------   */
-					global $antes_ahora;
+					global $antes_ahora, $preload_img;
+					$preload_img					= true;
 					 $antes_ahora_array		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa : null;
 					 if (is_array($antes_ahora_array)) foreach ($antes_ahora_array as $aa) {
 							$antes_ahora = $aa;
@@ -126,7 +127,7 @@
 						<?php if ($map_redirect_protected) :	/* esto sólo para hotspot de Yucatán que redirecionan a mapas protegidos con contraseña */	?>
 							
 							<section class='row-fluid clearfix section-password-form'>
-								<h3 class='container'><?php printf(__("Accede a la navegación completa de %s"), get_the_title()); ?></h3>
+								<h3 class='container'><?php printf(__("Access to the whole navigation of %s", "map"), get_the_title()); ?></h3>
 								<div class='col-xs-1 col-sm-2 col-md-3'>
 									<?php $img_mapa	= get_post_meta($redirect_map_id, "mapa_hi", true); ?>
 									<img src="<?php echo wp_get_attachment_image_src( $img_mapa, "thumbnail" )[0];?>" class='img-responsive'>

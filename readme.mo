@@ -26,3 +26,8 @@ Esta web se ha hecho
 * la hotspot card (popup)
 		- Muestra un carrusel standar de bootstrap, contenido y un antes/ahora, si procede. 
 		- distribución del contenido depende de si hay redirección a mapa (se muestra en dos cols) o no (una col).
+		
+		
+ * METODO DE TRABAJO:
+	- Para importar la DB uso el plugin DB Manage. En el folder wp-content/backup-db están los backups. Cada vez que se importa la BD hay que actualizar la sección Database -> DB Options, dejar que el sistema calcule los campos "Path To mysqldump" y así, y "Path To Backup" => /home2/radiofq1/public_html/maps/wp-content/backup-db
+	

@@ -51,8 +51,14 @@
 									
 									// TO_DO: use google cloud translate JSON call: GET https://www.googleapis.com/language/translate/v2?key=INSERT-YOUR-KEY&source=en&target=de&q=Hello%20world
 
-									global $polylang;		// translation fo the image, if exists
-									$post_ids = $polylang->get_translations('post', $img_id);
+									global $polylang;		// translation fo the image, if exists. TO_DO: I think this function is deprecated. Use alternatives: http://catsandcodes.blogspot.com.es/2014/08/wordpress-get-id-of-post-in-current.html
+									/* check this out:
+										 if(pll_current_language() != pll_get_post_language($img_id)) {  
+												$img_id = pll_get_post($id);  
+												$img		= get_post($img_id);
+										};  									
+									*/
+									$post_ids = $polylang->model->get_translations('post', $img_id);
 									$lang_slug = pll_current_language("slug");
 									if (array_key_exists( $lang_slug, $post_ids)) {
 										$img_id	=	$post_ids[$lang_slug];

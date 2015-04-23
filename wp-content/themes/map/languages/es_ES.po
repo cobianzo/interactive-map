@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Tue Apr 14 2015 17:58:37 GMT+0200 (Hora de verano "
 "romance)\n"
-"PO-Revision-Date: Tue Apr 14 2015 19:17:27 GMT+0200 (Hora de verano romance)\n"
+"PO-Revision-Date: Thu Apr 23 2015 19:16:13 GMT+0200 (Hora de verano romance)\n"
 "Last-Translator: cobianzo <cobianzo@gmail.com>\n"
 "Language-Team: \n"
 "Language: Spanish (Spain)\n"
@@ -221,19 +221,23 @@ msgstr ""
 msgid "Galeria Description"
 msgstr ""
 
-#: ../header.php:165 ../header.php:186
+#: ../header.php:159
+msgid "Select site"
+msgstr ""
+
+#: ../header.php:164
+msgid "Other maps"
+msgstr ""
+
+#: ../header.php:192 ../header.php:209
 msgid "Other languages"
 msgstr "Otros idiomas"
 
-#: ../header.php:179
-msgid "Toggle navigation"
-msgstr "Navegación"
-
-#: ../page-not-loggedin.php:11
+#: ../page-not-loggedin.php:12
 msgid "No access"
 msgstr "Sin acceso"
 
-#: ../page-not-loggedin.php:15
+#: ../page-not-loggedin.php:16
 msgid ""
 "Sorry, you can not access to this web application without the access key "
 "specified in your Verás publication,"
@@ -241,7 +245,7 @@ msgstr ""
 "Lo sentimos; no puedes acceder a esta aplicación web sin la llave de acceso "
 "especificada en la publicación Verás"
 
-#: ../page-not-loggedin.php:19
+#: ../page-not-loggedin.php:20
 msgid ""
 "Please check the QR code from you Verás paper document in order to be able "
 "to access to this website"
@@ -261,47 +265,61 @@ msgstr ""
 msgid " at "
 msgstr ""
 
-#: ../part-before-now.php:4
+#: ../part-before-now.php:9
 msgid "Before / now"
 msgstr "Antes / ahora"
 
-#: ../part-before-now.php:5
+#: ../part-before-now.php:11
 msgid "Enlarge"
 msgstr "Agrandar"
 
-#: ../part-before-now.php:9
+#: ../part-before-now.php:16
 msgid "Move the handle to compare both states"
 msgstr "Mueve el cursor para comparar los estados"
 
-#: ../part-before-now.php:36 ../part-comments.php:64 ../part-hotspot-card.php:110
+#: ../part-before-now.php:52 ../part-comments.php:69 ../part-hotspot-card.php:171
+#: ../sidebar.php:10
 msgid "Close"
 msgstr "Cierra"
 
-#: ../part-comments.php:4
+#: ../part-comments.php:5
+msgid "No comments"
+msgstr "Sin comentarios"
+
+#: ../part-comments.php:5
+msgid "One comment"
+msgstr "Un comentario"
+
+#: ../part-comments.php:5
+#, php-format
+msgid "%s comments"
+msgstr "%s comentarios"
+
+#: ../part-comments.php:9
 msgid "Add comment"
 msgstr "Añade comentario"
 
-#: ../part-comments.php:12
+#: ../part-comments.php:17
 msgid "Nobody has commented on this map yet. Be the first one doing it."
 msgstr "Nadie ha comentado en el mapa aún. Sé el primero en hacerlo."
 
-#: ../part-comments.php:21
+#: ../part-comments.php:26
 msgid "Your comment is awaiting approval."
 msgstr "Tu comentario está esperando a ser aprobado."
 
-#: ../part-comments.php:41
+#: ../part-comments.php:46
 msgid "Add your own comment"
 msgstr "Añade tu propio comentario"
 
-#: ../part-comments.php:52
+#: ../part-comments.php:57
 msgid "Name"
 msgstr "Nombre"
 
-#: ../part-comments.php:54
+#: ../part-comments.php:59
 msgid "Email"
 msgstr "Email"
 
-#: ../part-comments.php:82
+#: ../part-comments.php:87
 #, php-format
 msgid "One thought on &ldquo;%2$s&rdquo;"
 msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
@@ -313,20 +331,23 @@ msgstr[1] "%1$s pensamientos en &ldquo;%2$s&rdquo;"
 msgid "Multimedia Gallery for %s"
 msgstr "Galería Multimedia para %s"
 
+#: ../part-hotspot-card.php:130
+#, php-format
+msgid "Access to the whole navigation of %s"
+msgstr "Accede a la navegación completa de %s"
+
+#: ../part-hotspot-card.php:139
+msgid "The password you entered is not correct. Please try again."
+msgstr "La contraseña introducida no es correcta. Por favor prueba de nuevo"
+
 #: ../part-promo.php:43
-msgid "Abre enlace"
-msgstr ""
+msgid "Open link"
+msgstr "Abre enlace"
 
 #: ../sidebar.php:36
 msgid "Videos"
 msgstr "Videos"
 
-#, c-format
-msgid "%s comments"
-msgstr "%s comentarios"
-
-msgid "No comments"
-msgstr "Sin comentarios"
-
-msgid "One comment"
-msgstr "Un comentario"
+#: ../single.php:10
+msgid "Password protected"
+msgstr "Protegido con contraseña"

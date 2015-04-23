@@ -9,7 +9,7 @@
 			</span>
 			<span class='col-xs-12 col-sm-7 text-center'>
 					&copy; <?php echo date("Y") ?> 
-					<a href="<?php bloginfo('url'); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a>. 
+					<a href="<?php echo esc_url(home_url()); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a>. 
 					<?php _e('All Rights Reserved.', "map"); ?>
 			</span>
 			<span class="col-xs-12 col-sm-2 text-center"><a href="#body"><?php _e('Top', "map"); ?></a></span>
@@ -39,7 +39,7 @@
 			?>			
 			$(document).ready(function() {
 				$('#mapplic').mapplic({
-					source: "<?php echo $mapplic_json_file;  ?>?v=3", //  'http://localhost/interactive-map/www/mapplic/yucatan.json?v=10',
+					source: "<?php echo $mapplic_json_file;  ?>?v=4", //  'http://localhost/interactive-map/www/mapplic/yucatan.json?v=10',
 					height: 500,
 					animate: true,
 					mapfill: true,
@@ -74,9 +74,8 @@
 					window.location	=	url_redirect; 
 				else 
 				{
-					$("#modal-"+locationCardName).find("img.load-src-on-open-modal").each(function(index){
-							// $(this).attr("src", $(this).attr("data-preloadsrc"));
-					});
+					// this is to load dynamically the imgs
+					$("#modal-"+locationCardName).find("img.load-src-on-open-modal").each(function(index){		$(this).attr("src", $(this).attr("data-preloadsrc"));       });
 					$("#modal-"+locationCardName).modal({show: 'false'});	// al llamar esta función se ejecuta la de abajo (shown.bs.modal)
 					
 				}
@@ -309,11 +308,32 @@
 				  });
 				}
 			
-			
-			
-			
 		</script>
 
 
+		<!-- Truquito para que cargue más rápido -->
+				<?php 
+				# dejamos que mapplic acargue la imagen en baja resolución ("large, 1100x1100"). 
+				# cargamos la imagen a tamaño "mapa", 3000x3000
+				# cuando acabe de cargar, las remplazamos (img.mapplic-map-image)
+				$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);
+				$map_img_large				= 	$map_img_id? wp_get_attachment_image_src( $map_img_id, "map_hi" ) : null; 
+				$map_img_low					= 	$map_img_id? wp_get_attachment_image_src( $map_img_id, "medium" ) : null;  /* same as mapplic json loads, set in functions.php*/ 
+				
+				if ($map_img_id) :
+				?>
+				<script> jQuery(document).ready(function() {
+										jQuery("#map-image-hi").load(function() {
+												//alert('I loaded!');
+												$('img.mapplic-map-image').attr("src" ,  $("img#map-image-hi").attr("src"));
+										}).each(function() {  if(this.complete) jQuery(this).load();});
+										jQuery("img.mapplic-map-image").load(function() {
+												alert('I loaded!');
+										}).each(function() {  if(this.complete) jQuery(this).load();});
+				}); </script>
+				<img class='mapa-image-hi' src='<?php echo $map_img_large[0]?>' data-srcreplace='<?php echo $map_img_low[0];?>'  style='position:absolute; left: -10000px; top: -10000px'>
+				<?php 
+				endif; ?>
+				
 </body>
 </html>

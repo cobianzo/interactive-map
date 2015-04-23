@@ -847,6 +847,10 @@
 
 			zoomTo(0.5, 0.5, 1, 0);
 
+				
+			
+			
+			
 			// Deeplinking
 			if (self.o.deeplinking) {
 				if (history.pushState) self.deeplinking = new Deeplinking();
@@ -1175,7 +1179,22 @@
 		return this.each(function(index) {
 			var me = $(this),
 				key = 'mapplic' + (len > 1 ? '-' + ++index : ''),
-				instance = (new Mapplic).init(me, params);
+				instance = (new Mapplic).init(me, params);				
 		});
 	};
 })(jQuery);
+
+
+function alv_set_mapplic_hi() {
+
+			// ALV: this is  a trick to improve time loading. If Mapplic load maps imgs at low res .TENGO q encontrar un modo de cargarlo cuando mapplic acabe y cuando la img hi esté cargada
+			if ($(".mapa-image-hi").length) {
+				$(".mapa-image-hi").each(function(index) {
+					var src_low			= $(this).attr("data-srcreplace");
+					var src_hi				= $(this).attr("src");
+					var mapplic_img	= $("img[src='"+src_low+"']");
+					mapplic_img.attr("src" ,  src_hi);
+					$(this).removeClass("mapa-image-hi");
+				} );				
+			} 
+}

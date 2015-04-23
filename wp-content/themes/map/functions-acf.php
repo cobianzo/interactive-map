@@ -10,8 +10,8 @@ if(function_exists("register_field_group"))
 		$post = get_post($rr);
 	
 	
-	$maps_for_select			=	array( );
-	$post_lang					=   function_exists("pll_get_post_language")?    pll_get_post_language($post->ID) : "es";	// use only posts on this language
+	$maps_for_select				=	array( );
+	$post_lang							=   (function_exists("pll_get_post_language")&&(is_object($post)))?    pll_get_post_language($post->ID) : "es";	// use only posts on this language
 	$maps_without_parent	= 	get_posts(array("post_type" => "mapa", "posts_per_page" => -1, "post_parent" => 0, "lang" => $post_lang));
 																	//"tax_query" => array(array(	"taxonomy" => "language" , "field" => "slug", "terms" => $post_lang))));
 	foreach ($maps_without_parent as $i => $mapp)	$maps_for_select[$mapp->ID] = get_the_title($mapp->ID);
@@ -21,7 +21,7 @@ if(function_exists("register_field_group"))
 	$promos_posts		= get_posts(array("post_type" => "promo", "posts_per_page" => -1,	"lang" => $post_lang ));
 	foreach ($promos_posts as $promo_post)  $promos_for_select[$promo_post->ID] = $promo_post->post_title;
 	
-	$hotspots_for_select	= array(); $mm = get_monumentos_by_mapa($post->ID);
+	$hotspots_for_select	= array(); $mm = is_object($post)? get_monumentos_by_mapa($post->ID) : null;
 	if (is_array($mm)) 
 		foreach ( $mm as $hotspot) 	{
 			$a_a = get_field("antes_ahora", $hotspot->ID);
@@ -419,7 +419,7 @@ if(function_exists("register_field_group"))
 				'label' => 'Al clicar abrir otro mapa',
 				'name' => 'mapa_redirection',
 				'type' => 'select',
-				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"<br> '.(($tt = get_post_meta($post->ID, "mapa_redirection", true))?  "Edita <a href='".admin_url()."post.php?post=$tt&action=edit&message=1'>".get_the_title($tt)."</a>".((post_password_required($tt) !== false)? " <br>
+				'instructions' => 'Si deseas que al clicar en este hotspot, se cargue otro mapa, selecciona cual. Normalmente esta casilla estará vacía, y al clicar en el hotspot se abrirá una ventana con información adicional del monumento, que se rellena en la pesta&ntilde;a "Popop del monumento"<br> '.(((is_object($post)) && ($tt = get_post_meta($post->ID, "mapa_redirection", true)))?  "Edita <a href='".admin_url()."post.php?post=$tt&action=edit&message=1'>".get_the_title($tt)."</a>".((post_password_required($tt) !== false)? " <br>
 				".print_img_candado('', false)."Este mapa está protegido con contraseña. Deberías escoger la tercera de estas opciones, y editar la pestaña Popup de Monumento": "") : ""),
 				'choices' => $maps_for_select,
 				'default_value' => null,
@@ -549,7 +549,7 @@ if(function_exists("register_field_group"))
 
 
 	$message	= $post_message = "";
-	if ($post->post_parent == 0 ) {
+	if ( (is_object($post)) && ($post->post_parent == 0 ))  {
 		$message = "Esto es un mapa. Si lo que querías era editar un hotspot, tendrás que seleccionar el mapa padre al que pertenece en la caja de arriba, donde pone <b>Superior</b>. <br>";
 		if ( (is_object($post)) && ($post->post_type == "mapa")) :
 			$children = get_posts(array("post_parent"=> $post->ID, "post_type" => "mapa", "posts_per_page"=>-1, "orderby" => "menu_order" , "order" => "ASC"));

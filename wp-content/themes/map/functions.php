@@ -3,8 +3,15 @@
 	include_once("functions-custom-pt.php");  	# todo lo relacionado con custom post types
 	include_once("functions-acf.php");				# todo lo relacionado con advanced custom fields
 	
+	
+	add_theme_support( 'post-thumbnails' );
+
 	add_action('after_setup_theme', 'my_theme_setup');
 	function my_theme_setup(){
+		
+		add_image_size( 'map_hi', 3000, 3000 ); // Unlimited Height Mode
+
+		
 		load_theme_textdomain( 'map', 					get_template_directory().'/languages' );
 		
 		$base = dirname(__FILE__);
@@ -106,7 +113,9 @@
 	        }
 	    </style><?php
 	} 
-	add_custom_image_header( '', 'admin_header_style' );
+	add_theme_support( 'custom-header', array() );
+	
+	//add_custom_image_header( '', 'admin_header_style' );
 
 	// adds Post Format support
 	// learn more: http://codex.wordpress.org/Post_Formats
@@ -324,10 +333,10 @@ function admin_area_for_manage_options_only() {
 }
 	
 	
-add_filter( 'the_title', 'candado_si_password', 10, 2 );
+//add_filter( 'the_title', 'candado_si_password', 10, 2 );
 function candado_si_password( $title, $id = null ) {	
-		if ( (!is_admin()) && (($link = hotspot_apunta_a_mapa_no_protegido($id)) !== false))
-			$title .= " -- (hotspot apunta a mapa)";
+//		if ( (is_admin()) && (($link = hotspot_apunta_a_mapa_no_protegido($id)) !== false))
+	//		$title .= " -- (hotspot apunta a mapa)";
 		return $title;
 }
 	
@@ -404,7 +413,7 @@ function candado_si_password( $title, $id = null ) {
 			if ($aa = array_level_configuration(get_the_ID()))	$array_levels[]	=	$aa; 
 			if (!$map_width) {
 				$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);
-				$map_img_large				= 	wp_get_attachment_image_src( $map_img_id, "large" ); 
+				$map_img_large				= 	wp_get_attachment_image_src( $map_img_id, "map_hi" ); 
 				$map_width						=	$map_img_large[1];
 				$map_height						=	$map_img_large[2];
 				
@@ -488,7 +497,7 @@ function candado_si_password( $title, $id = null ) {
 			# 3.1 - First the image at high resolution and thumbnail.
 		$img_id						=	get_post_meta($id_map, "mapa_hi", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
-		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "large" ); 
+		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "medium" ); 
 		
 			# 3.2 - Then the rest of params
 		if (!strlen($map_post->post_name)) return false;
@@ -541,11 +550,11 @@ function candado_si_password( $title, $id = null ) {
 		// clicando en un nombre en la lista abre una viñeta y	 hace zoom en el mapa, a menos q tengamos esta opción no_zoom activa
 		if (($no_zoom_option = get_post_meta($id_monumento, "no_zoom", true)) && strpos (" ".$no_zoom_option, "no_") )  // total, no_zoom_y_vineta, no_vineta
 		{
-			$link_on_list				= $link? $link : "javascript: abreLocationCard('$post_monumento->post_name')";  // al clicar en el nombre en la lista llevará a este link.
+			$link_on_list				= isset($link)? $link : "javascript: abreLocationCard('$post_monumento->post_name')";  // al clicar en el nombre en la lista llevará a este link.
 			//$no_vineta					= true;
 			if ($no_zoom_option == "no_zoom_y_vineta")	 $no_zoom = $no_vineta = true;
 		}
-		if ((!$link )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')"; // por defecto un hotspot abre su card en popup
+		if ((!isset($link) )|| (!strlen($link))) 		$link	=	"javascript:   abreLocationCard('$post_monumento->post_name')"; // por defecto un hotspot abre su card en popup
 		
 	
 		
@@ -565,10 +574,10 @@ function candado_si_password( $title, $id = null ) {
 			"link"					=>	$link,
 			"zoom"				=>	2,
 		);		
-		if ($link_on_list) 	$array_monumento["link_on_list"] 	= $link_on_list; // javascript: abre...
-		if ($no_zoom) 		$array_monumento["no_zoom"] 	= $no_zoom; //  true
-		if ($no_vineta) 		$array_monumento["no_vineta"] 	= $no_vineta; //  true
-		if ($visibilidad && ($visibilidad != "total") )	$array_monumento["pin"] 				=  $visibilidad; // pin:"hidden" es el código d mapplic  pa ocultar el pin (added option:hidden_in_list)
+		if (isset($link_on_list)) 	$array_monumento["link_on_list"] 	= $link_on_list; // javascript: abre...
+		if (isset($no_zoom)) 		$array_monumento["no_zoom"] 	= $no_zoom; //  true
+		if (isset($no_vineta)) 		$array_monumento["no_vineta"] 	= $no_vineta; //  true
+		if (isset($visibilidad) && ($visibilidad != "total") )	$array_monumento["pin"] 				=  $visibilidad; // pin:"hidden" es el código d mapplic  pa ocultar el pin (added option:hidden_in_list)
 		return $array_monumento;
 	}
 	
@@ -611,7 +620,7 @@ function candado_si_password( $title, $id = null ) {
 	# saves the file with all the maps configuration separated in levels (each map is one level)
 	function save_mapplic_file($name = "mapplic", $lang = "es", $array_mapas_id = null, $echo = false) {
 		global $polylang;
-		$curlang =  isset($polylang)? $polylang->curlang->slug : $lang ;
+		$curlang =  isset($polylang)? pll_current_language("slug")  : $lang ;
 		
 		$array 	= array_mapplic_configuration($lang, $array_mapas_id);
 		
@@ -668,7 +677,7 @@ function candado_si_password( $title, $id = null ) {
 				echo "<h1>Polylang no instalado!</h1>"; return;  
 			}
 			# 1. seleccioamos cada idioma instalado
-			$all_langs 	 = $polylang->get_languages_list();
+			$all_langs 	 = $polylang->model->get_languages_list();
 			foreach ($all_langs as $lang) {
 				# 2. Para cada idioma, seleccionamos los mapas (sin padre)
 				echo "<h3>$lang->name</h3>";

@@ -40,7 +40,7 @@
 										
 										<?php if ($link_a) {
 												echo "<p class='text-center'>".$link_a;						?>
-											<?php echo ($link_text)?  $link_text :   __("Abre enlace") ;?>
+											<?php echo ($link_text)?  $link_text :   __("Open link", "map") ;?>
 												</a></p>
 										<?php } ?>
 									</span>

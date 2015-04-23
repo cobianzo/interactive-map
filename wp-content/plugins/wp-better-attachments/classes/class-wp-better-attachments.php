@@ -434,9 +434,6 @@ class WP_Better_Attachments
 	{
 		extract( $args );
 
-		
-	
-		
 		if ( isset( $post_id ) )
 			$post = get_post( $post_id );
 
@@ -458,12 +455,9 @@ class WP_Better_Attachments
 			'posts_per_page' => -1,
 			'post_parent'    => $post->ID,
 			'order'          => 'ASC',
-			'orderby'        => 'menu_order',
-			'lang'				=> ''	// ALV:
+			'orderby'        => 'menu_order'
 		);
 
-		
-		
 		// Should we exclude the thumb?
 		$post_settings_thumb = isset( $post_settings['thumbnail'] );
 		$global_settings_thumb = isset( $this->global_settings['thumbnail'] );
@@ -568,6 +562,10 @@ class WP_Better_Attachments
 			'image/gif',
 			'image/png'
 		);
+
+		// Filter the image mime types
+		$image_mime_types = apply_filters( 'wpba_is_image', $image_mime_types );
+
 		if ( in_array( $mime_type, $image_mime_types ) )
 			return true;
 
@@ -591,13 +589,18 @@ class WP_Better_Attachments
 			'application/pdf',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'application/msword',
+			'application/epub+zip',
 			'application/vnd.ms-powerpoint',
-			'application/vnd.ms-powerpoint',
+			'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'application/vnd.oasis.opendocument.text',
 			'application/vnd.ms-excel',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 			'application/zip'
 		);
+
+		// Filter the document mime types
+		$document_mime_types = apply_filters( 'wpba_is_document', $document_mime_types );
+
 		if ( in_array( $mime_type, $document_mime_types ) )
 			return true;
 
@@ -623,6 +626,10 @@ class WP_Better_Attachments
 			'audio/ogg',
 			'audio/wav'
 		);
+
+		// Filter the audio mime types
+		$audio_mime_types = apply_filters( 'wpba_is_audio', $audio_mime_types );
+
 		if ( in_array( $mime_type, $audio_mime_types ) )
 			return true;
 
@@ -650,6 +657,10 @@ class WP_Better_Attachments
 			'video/mpeg',
 			'video/ogg'
 		);
+
+		// Filter the video mime types
+		$video_mime_types = apply_filters( 'wpba_is_video', $video_mime_types );
+
 		if ( in_array( $mime_type, $video_mime_types ) )
 			return true;
 

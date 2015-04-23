@@ -7,7 +7,7 @@
 
 <?php
 				//  we create the modal window (initilly hidden, will show on clicking on a thumbnail).  We use it in gallery of images and in videos section. Opens this modal window
-						$html_header	= '  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						$html_header	= '  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">'.__("Close", "map").'</span></button>
                 <h4 class="modal-title" id="image-gallery-title"></h4>';
 						$html_body		=  '                <img id="image-gallery-image" class="img-responsive" src=""> <div id="content-gallery"><!-- this can be any html in data-content --></div>';
 						$html_footer		=	'<div class="col-md-2">  <button type="button" class="btn btn-primary" id="show-previous-image">Previous</button>  </div>
@@ -77,7 +77,7 @@
 
 					
 					if ($antes_ahora && ($img_before_id =	$antes_ahora["img_antes"])):
-					?>
+							global $preload_img;  $preload_img  = false;		?>
 
 							<?php get_template_part( "part", "before-now");  ?>
 
@@ -136,10 +136,7 @@
 				</div>			
 			<?php } ?>			
 	</div>
-	<?php endif; 
-	setup_postdata($current_post);		
-	$post	= $current_post;
-	?>
+	<?php endif; 	?>
 
 	
 </section><!--sidebar-->
