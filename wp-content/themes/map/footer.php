@@ -198,14 +198,20 @@
 			
 			/* esto es mio para hacerlo fullscreen*/
 			function beforeNowFullScreen (id, action){
+				jBeforeNow	=	$("#"+id);
+				jModal 			= jBeforeNow.parents(".modal:first");
 				if (action === "exit") {
-					$("#"+id).removeClass("fullscreen").parents(".modal-dialog.remove-modal-lg:first").removeClass("modal-lg");
+					jBeforeNow.removeClass("fullscreen").parents(".modal-dialog.remove-modal-lg:first").removeClass("modal-lg");
+					if (jModal.length)  jModal.animate({scrollTop : jModal.attr('data-scrolltop') }, "slow");
 				}
 				else {
-					$("#"+id).addClass("fullscreen");
-					$("#"+id+" .img-before").attr("src", $("#"+id+" .img-before").attr("data-imagefull"));
-					$("#"+id+" .img-now").attr("src", $("#"+id+" .img-now").attr("data-imagefull"));
-					if ($(".modal-dialog #"+id).length > 0) $( "#"+id).parents(".modal-dialog:first").addClass("modal-lg remove-modal-lg");
+					jBeforeNow.addClass("fullscreen");
+					jBeforeNow.find(".img-before").attr("src", jBeforeNow.find(".img-before").attr("data-imagefull"));
+					jBeforeNow.find(".img-now").attr("src", jBeforeNow.find(".img-now").attr("data-imagefull"));
+					if (jModal.length > 0) {
+							jModal.attr('data-scrolltop', jModal.scrollTop()).find(".modal-dialog").addClass("modal-lg remove-modal-lg"); // si está dentro de un modal
+							jModal.animate({scrollTop : 0}, "slow");
+					}
 				}
 				$(window).resize();
 				return ;

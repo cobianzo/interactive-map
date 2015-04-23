@@ -5028,7 +5028,7 @@ button.close {
     width: 300px; } }
 @media (min-width: 992px) {
   .modal-lg {
-    width: 800px; } }
+    width: 90%; } }
 .tooltip {
   position: absolute;
   z-index: 1070;

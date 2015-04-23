@@ -1,17 +1,20 @@
-		<div id="before-now-<?php the_ID();?>" class='before-now'>
+<?php
+		global $antes_ahora; // we set this before we call to this script
+		$id_rand	= rand(0, 10000);
+?>
+		<div id="before-now-<?php echo $id_rand;?>" class='before-now'>
 			
 			<h3 class="h2">
 				<?php printf( __('Before / now', 'map') ); ?>
-				<a class="btn btn-primary btn-xs pull-right" href='javascript: beforeNowFullScreen ("before-now-<?php the_ID();?>"); '>
+				<a class="btn btn-primary btn-xs pull-right" href='javascript: beforeNowFullScreen ("before-now-<?php echo $id_rand;?>"); '>
 						<i class="glyphicon glyphicon-fullscreen"></i>&nbsp;<?php _e("Enlarge", "map");  ?>
 				</a>
 			</h3>
 			
-			<a class='only-full-screen btn btn-primary text-center close-btn' href="javascript: beforeNowFullScreen('before-now-<?php the_ID();?>', 'exit'); "><i class="glyphicon glyphicon-remove-sign"></i></a>
+			<a class='only-full-screen btn btn-primary text-center close-btn' href="javascript: beforeNowFullScreen('before-now-<?php echo $id_rand;?>', 'exit'); "><i class="glyphicon glyphicon-remove-sign"></i></a>
 	<!--		<small><?php printf( __('Move the handle to compare both states', 'map') ); ?></small> -->
 							
 	<?php 
-		global $antes_ahora;
 		if (! isset($antes_ahora))   $antes_ahora		= (($aa = get_field("antes_ahora")) && is_array($aa) && count($aa))?  $aa[0] : null;					 
 
 		if (is_array($antes_ahora) && count($antes_ahora)) :
@@ -35,6 +38,6 @@
 	<?php if (strlen($descripcion)) echo "<br><i class='hide-full-screen text-center'>$descripcion</i>"; ?>
 	<?php endif; ?>
 	
-		<br class='only-full-screen'><a class='only-full-screen btn btn-primary text-center close-btn-2' href="javascript: beforeNowFullScreen('before-now-<?php the_ID();?>', 'exit'); "><?php _e("Close", "map");  ?></a>
+		<br class='only-full-screen'><a class='only-full-screen btn btn-primary text-center close-btn-2' href="javascript: beforeNowFullScreen('before-now-<?php echo $id_rand;?>', 'exit'); "><?php _e("Close", "map");  ?></a>
 
 	</div>

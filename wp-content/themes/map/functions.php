@@ -165,6 +165,7 @@
 	/* LOGIN FUNCTIONS */
 	
 	function check_url_login(){
+			return true;
 			$query_key		= "veras";					# TO_DO: set this in backend or config
 			$query_value		= "mapa-de-yucatan";
 
