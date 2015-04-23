@@ -73,9 +73,19 @@
 				if ( (url_redirect = $("#modal-"+locationCardName).attr("data-redirect")) && ( $("#modal-"+locationCardName).attr("data-goredirect") == "si"))
 					window.location	=	url_redirect; 
 				else 
-				$("#modal-"+locationCardName).modal({show: 'false'});	// al llamar esta función se ejecuta la de abajo (shown.bs.modal)
+				{
+					$("#modal-"+locationCardName).find("img.load-src-on-open-modal").each(function(index){
+							// $(this).attr("src", $(this).attr("data-preloadsrc"));
+					});
+					$("#modal-"+locationCardName).modal({show: 'false'});	// al llamar esta función se ejecuta la de abajo (shown.bs.modal)
+					
+				}
 			}
-				
+
+			jQuery(".modal").on('show.bs.modal', function () {
+			});
+
+			
 			jQuery(".modal").on('shown.bs.modal', function () {
 				  // necesario para q funcione el before/now
 				$(window).resize();		

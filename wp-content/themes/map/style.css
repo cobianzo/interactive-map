@@ -189,6 +189,9 @@ no-margin {
 .thumbnail {
   background-color: transparent; }
 
+.carousel-inner > .item > img {
+  margin: auto; }
+
 /* HEADER -------------------------------------------*/
 #header-navbar {
   height: 88px;

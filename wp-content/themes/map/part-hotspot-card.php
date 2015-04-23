@@ -66,8 +66,8 @@
 						
 										$img_url	=	wp_get_attachment_image_src( $img->ID, "large" );
 						?>
-									<div class="item<?php echo ($i == 0)? " active": ""; ?>">
-										<img src="<?php echo $img_url[0]; ?>" >
+									<div class="item<?php echo ($i == 0)? " active": ""; ?> text-center">
+										<img class='load-src-on-open-modal' data-preloadsrc="<?php echo $img_url[0]; ?>" src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">
 									</div>								
 						<?php endforeach;					?>
 								</div>
