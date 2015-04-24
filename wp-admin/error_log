@@ -1,0 +1,7 @@
+[22-Apr-2015 21:30:40 UTC] PHP Warning:  fileperms(): stat failed for /home2/radiofq1/public_html/maps/.htaccess in /home2/radiofq1/public_html/maps/wp-content/plugins/better-wp-security/core/content/perms.php on line 192
+[22-Apr-2015 21:30:40 UTC] PHP Warning:  fileperms(): stat failed for /home2/radiofq1/public_html/maps/.htaccess in /home2/radiofq1/public_html/maps/wp-content/plugins/better-wp-security/core/content/perms.php on line 195
+[23-Apr-2015 20:55:13 UTC] PHP Warning:  gmdate() expects parameter 2 to be long, string given in /home2/radiofq1/public_html/maps/wp-content/plugins/wp-dbmanager/database-manage.php on line 142
+[23-Apr-2015 20:55:31 UTC] PHP Warning:  gmdate() expects parameter 2 to be long, string given in /home2/radiofq1/public_html/maps/wp-content/plugins/wp-dbmanager/database-manage.php on line 25
+[23-Apr-2015 20:55:31 UTC] PHP Warning:  gmdate() expects parameter 2 to be long, string given in /home2/radiofq1/public_html/maps/wp-content/plugins/wp-dbmanager/database-manage.php on line 142
+[24-Apr-2015 16:36:36 UTC] PHP Warning:  gmdate() expects parameter 2 to be long, string given in /home2/radiofq1/public_html/maps/wp-content/plugins/wp-dbmanager/database-manage.php on line 142
+[24-Apr-2015 16:45:27 UTC] PHP Parse error:  syntax error, unexpected end of file in /home2/radiofq1/public_html/maps/wp-content/themes/map/functions.php on line 254
