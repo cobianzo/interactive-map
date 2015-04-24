@@ -125,7 +125,7 @@
 		  
 			<div class="navbar-header col-xs-1">
 			
-			  <a id='logo' href="<?php home_url(); ?>">
+			  <a id='logo' href="<?php echo esc_url(home_url()); ?>">
 					<img src="<?php echo( get_header_image() ); ?>" alt="<?php echo( get_bloginfo( 'title' ) ); ?>" />
 			  </a>	  
 			  
@@ -204,16 +204,19 @@
 						<!--  MOBILE  botón expandible  que abre el dropdown de idiomas -->
 				  
 				  	<div id="language-dropdown-mobile" class="dropdown pull-right "> 
-						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $lang; ?><span class="caret"></span></a>
+						  <a href="#" class="dropdown-toggle btn btn-primary btn-xs" data-toggle="dropdown" role="button" aria-expanded="false">
+								<span class='glyphicon glyphicon-globe' style='margin-right:5px;'> </span><?php echo $lang_slug; ?><span class="caret"></span></a>
 						  <ul id='language-dropdown-mobile-ul' class="dropdown-menu" role="menu">
-								<li class="dropdown-header"><?php _e("Other languages", "map"); ?></li>						  
-					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1));; ?>
+					  			<?php if (function_exists("pll_the_languages")) pll_the_languages(array("hide_current" => 1, "display_names_as" => "name"));; ?>
 						   </ul>
 					</div>
 
 		</nav>
 
-		<a id='mobile-home-btn' class="btn btn-default btn-xs" href="<?php home_url(); ?>"><i class="glyphicon glyphicon-home"></i></a>
+		<?php if (!(is_home() || is_front_page())) : ?>
+		<a id='mobile-home-btn' class="btn btn-default btn-xs" href="<?php echo home_url(); ?>"><i class="glyphicon glyphicon-home"></i></a>
+		<?php endif; ?>
+		<a id='mobile-down-btn' class="btn btn-default btn-xs" href="#sidebar" title='<?php _e("Move down to the gallery"); ?>'><i class="glyphicon glyphicon-hand-down"></i></a>
 	
 	
 	
