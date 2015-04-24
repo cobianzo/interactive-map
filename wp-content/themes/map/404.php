@@ -9,5 +9,5 @@
 		</div><!--.post-content-->
 	</div><!--#error404 .post-->
 </div><!--#content-->
-<?php get_sidebar(); ?>
+<?php // get_sidebar(); ?>
 <?php get_footer(); ?>

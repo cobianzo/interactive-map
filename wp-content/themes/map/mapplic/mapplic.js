@@ -1185,6 +1185,7 @@
 })(jQuery);
 
 
+// BOOK:OPTIMIZELOAD
 function alv_set_mapplic_hi() {
 
 			// ALV: this is  a trick to improve time loading. If Mapplic load maps imgs at low res .TENGO q encontrar un modo de cargarlo cuando mapplic acabe y cuando la img hi esté cargada

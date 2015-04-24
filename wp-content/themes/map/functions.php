@@ -412,7 +412,7 @@ function candado_si_password( $title, $id = null ) {
 			# we include the map in the array. The following function will include the locations of the map too
 			if ($aa = array_level_configuration(get_the_ID()))	$array_levels[]	=	$aa; 
 			if (!$map_width) {
-				$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);
+				$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);  // Define las dimensiones del mapa a mapplic (va al json)
 				$map_img_large				= 	wp_get_attachment_image_src( $map_img_id, "map_hi" ); 
 				$map_width						=	$map_img_large[1];
 				$map_height						=	$map_img_large[2];
@@ -497,7 +497,7 @@ function candado_si_password( $title, $id = null ) {
 			# 3.1 - First the image at high resolution and thumbnail.
 		$img_id						=	get_post_meta($id_map, "mapa_hi", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
-		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "medium" ); 
+		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "mapa_hi" );  // AQUI VA LA IMAGEN DEL MAPA para mapplic. Sus dimensiones están definidas  en otro sitio
 		
 			# 3.2 - Then the rest of params
 		if (!strlen($map_post->post_name)) return false;

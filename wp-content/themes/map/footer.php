@@ -74,19 +74,25 @@
 					window.location	=	url_redirect; 
 				else 
 				{
-					// this is to load dynamically the imgs
-					$("#modal-"+locationCardName).find("img.load-src-on-open-modal").each(function(index){		$(this).attr("src", $(this).attr("data-preloadsrc"));       });
 					$("#modal-"+locationCardName).modal({show: 'false'});	// al llamar esta función se ejecuta la de abajo (shown.bs.modal)
 					
 				}
 			}
 
 			jQuery(".modal").on('show.bs.modal', function () {
+
 			});
 
 			
 			jQuery(".modal").on('shown.bs.modal', function () {
 				  // necesario para q funcione el before/now
+					// this is to load dynamically the imgs carrusel and before/now. Para optimizar cargo la img en baja si estamos en un dispositivo de menos de 400.
+					$(this).find("img.load-src-on-open-modal").each(function(index){		
+						if ($(this).parents(".modal-content").width() > 400 )  	$(this).attr("src", $(this).attr("data-imagefull"));       
+							else 												$(this).attr("src", $(this).attr("data-preloadsrc"));      
+					});
+
+				  
 				$(window).resize();		
 			});
 			
@@ -172,6 +178,7 @@
 					});
 
 					function updateGallery(selector) { 
+						$('#image-gallery-image').attr('src', $("#logo > img").attr("src"));  // para que no se vea la img anterior  mientras carga
 						var $sel = selector;
 						current_image = $sel.data('image-id');
 						$('#image-gallery-caption').text($sel.data('caption'));
@@ -313,12 +320,13 @@
 
 		<!-- Truquito para que cargue más rápido -->
 				<?php 
+				//BOOK:OPTIMIZELOAD
 				# dejamos que mapplic acargue la imagen en baja resolución ("large, 1100x1100"). 
 				# cargamos la imagen a tamaño "mapa", 3000x3000
 				# cuando acabe de cargar, las remplazamos (img.mapplic-map-image)
-				$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);
+				/*$map_img_id					=	get_post_meta(get_the_ID(), "mapa_hi", true);
 				$map_img_large				= 	$map_img_id? wp_get_attachment_image_src( $map_img_id, "map_hi" ) : null; 
-				$map_img_low					= 	$map_img_id? wp_get_attachment_image_src( $map_img_id, "medium" ) : null;  /* same as mapplic json loads, set in functions.php*/ 
+				$map_img_low					= 	$map_img_id? wp_get_attachment_image_src( $map_img_id, "medium" ) : null;  //* same as mapplic json loads, set in functions.php
 				
 				if ($map_img_id) :
 				?>
@@ -333,7 +341,7 @@
 				}); </script>
 				<img class='mapa-image-hi' src='<?php echo $map_img_large[0]?>' data-srcreplace='<?php echo $map_img_low[0];?>'  style='position:absolute; left: -10000px; top: -10000px'>
 				<?php 
-				endif; ?>
+				endif;  */ ?>
 				
 </body>
 </html>

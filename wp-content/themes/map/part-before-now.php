@@ -33,7 +33,7 @@
 
 				<?php if ( $preload_img ) { ?>
 					<img class='img-before load-src-on-open-modal'   data-imagefull="<?php echo $img_before_large_src[0]; ?>" alt="" 
-							data-preloadsrc="<?php echo $img_before_src[0]; ?>" src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">
+							data-preloadsrc="<?php echo $img_before_src[0]; ?>"  src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">
 					<div class="resize">
 						<img class='img-now load-src-on-open-modal'  alt="" data-imagefull="<?php echo $img_now_large_src[0]; ?>" 
 							data-preloadsrc="<?php echo $img_now_src[0]; ?>" src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">

@@ -64,13 +64,18 @@
 						
 						
 						
-										$img_url	=	wp_get_attachment_image_src( $img->ID, "large" );
+										$img_url				=	wp_get_attachment_image_src( $img->ID,  "medium"  );
+										$img_url_large	=	wp_get_attachment_image_src( $img->ID,  "large");
+										
 						?>
 									<div class="item<?php echo ($i == 0)? " active": ""; ?> text-center">
-										<img class='load-src-on-open-modal' data-preloadsrc="<?php echo $img_url[0]; ?>" src="<?php echo get_template_directory_uri(); ?>/images/wide-logo.png">
+										<img 	class='load-src-on-open-modal' data-preloadsrc="<?php echo $img_url[0]; ?>" data-imagefull="<?php echo $img_url_large[0]; ?>"
+													src="<?php echo get_template_directory_uri(); ?>/images/loading-logo.gif">
 									</div>								
 						<?php endforeach;					?>
 								</div>
+								
+						<?php if (count($carousel_imgs) > 1 ) :?>
 								<!-- Controls -->
 								<a class="left carousel-control" href="#carousel-<?php echo $post->post_name; ?>" role="button" data-slide="prev">
 										<span class="glyphicon glyphicon-chevron-left"></span>
@@ -79,6 +84,7 @@
 								<a class="right carousel-control" href="#carousel-<?php echo $post->post_name; ?>" role="button" data-slide="next">
 										<span class="glyphicon glyphicon-chevron-right"></span>
 								</a>
+						<?php endif; ?>
 							</div>
 						<?php	}	?>
 							
