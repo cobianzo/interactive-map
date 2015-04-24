@@ -497,7 +497,7 @@ function candado_si_password( $title, $id = null ) {
 			# 3.1 - First the image at high resolution and thumbnail.
 		$img_id						=	get_post_meta($id_map, "mapa_hi", true);
 		$img_thumb_src		= 	wp_get_attachment_image_src( $img_id, "thumbnail" ); 
-		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "mapa_hi" );  // AQUI VA LA IMAGEN DEL MAPA para mapplic. Sus dimensiones están definidas  en otro sitio
+		$img_hi_src				= 	wp_get_attachment_image_src( $img_id, "map_hi" );  // AQUI VA LA IMAGEN DEL MAPA para mapplic. Sus dimensiones están definidas  en otro sitio
 		
 			# 3.2 - Then the rest of params
 		if (!strlen($map_post->post_name)) return false;
@@ -569,8 +569,8 @@ function candado_si_password( $title, $id = null ) {
 			"description"		=>	get_post_meta($id_monumento, "descripcion", true), //$post_monumento->post_excerpt,
 			"category"			=>	$category, //($cat = get_post_meta($mapa_padre_id, "category_name", true))? $mapa_padre_id : null,
 			"thumbnail"		=>	$img_thumb_src[0],
-			"x"						=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 100,
-			"y" 						=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 100,
+			"x"						=>	intval(get_post_meta($id_monumento, "pos_x", true)) / 10000,
+			"y" 						=>	intval(get_post_meta($id_monumento, "pos_y", true)) / 10000,
 			"link"					=>	$link,
 			"zoom"				=>	2,
 		);		
@@ -672,7 +672,7 @@ function candado_si_password( $title, $id = null ) {
 	 
 	function create_all_json_page(){
 			global $polylang;
-						
+									
 			if (!isset($polylang))			{
 				echo "<h1>Polylang no instalado!</h1>"; return;  
 			}

@@ -2,11 +2,11 @@
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /interactive-map/www/
+#RewriteBase /interactive-map/www/
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /interactive-map/www/index.php [L]
+RewriteRule . index.php [L]
 </IfModule>
 
 # END WordPress
@@ -17,3 +17,6 @@ php_value upload_max_filesize 10M
 
 #set max post size
 php_value post_max_size 10M
+
+# impedir q se haga browser de uploads
+Options -Indexes
